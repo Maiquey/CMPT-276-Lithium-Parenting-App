@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="pause_yellow">#E4B46B</color>
+    <color name="start_green">#85D98D</color>
+    <color name="reset_red">#E46B6B</color>
+    <color name="shortcut_grey">#DDDDDD</color>
+
+
+
+
 </resources>
