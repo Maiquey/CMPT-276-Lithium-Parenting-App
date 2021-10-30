@@ -61,7 +61,6 @@ public class TimeoutTimer extends AppCompatActivity {
     private Button btnStart;
     private Button btnReset;
     private Button btnPause;
-    private Button btn5Sec;
     private Button btn1Min;
     private Button btn2Min;
     private Button btn3Min;
@@ -115,6 +114,7 @@ public class TimeoutTimer extends AppCompatActivity {
         startTimeInMillies = 0;
         timeLeftInMillies = startTimeInMillies;
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
 
         btnSet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -391,8 +391,8 @@ public class TimeoutTimer extends AppCompatActivity {
         super.onStart();
 
         SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
-        startTimeInMillies = preferences.getLong(START_TIME_IN_MILLIS, 0);
-        timeLeftInMillies = preferences.getLong(MILLIS_LEFT, startTimeInMillies);
+        startTimeInMillies = preferences.getLong(START_TIME_IN_MILLIS, 60000);
+        timeLeftInMillies = preferences.getLong(MILLIS_LEFT, 60000);
         isTimerRunning = preferences.getBoolean(IS_TIMER_RUNNING, false);
         updateUI();
         updateCountdownText();
