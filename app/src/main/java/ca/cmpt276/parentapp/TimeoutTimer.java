@@ -49,6 +49,8 @@ public class TimeoutTimer extends AppCompatActivity {
     public static final String MILLIS_LEFT = "mill isLeft";
     public static final String IS_TIMER_RUNNING = "isTimerRunning";
     public static final String END_TIME = "endTime";
+    public static final int ONE_SECOND = 1000;
+    public static final int THREE_SECONDS = 3000;
     public static final int ONE_MINUTE = 60000;
     public static final int TWO_MINUTES = 120000;
     public static final int THREE_MINUTES = 180000;
@@ -88,8 +90,6 @@ public class TimeoutTimer extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
-
     }
 
     @Override
@@ -100,8 +100,10 @@ public class TimeoutTimer extends AppCompatActivity {
         ConstraintLayout constraintLayout = findViewById(R.id.timeout_layout);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
 
-        animationDrawable.setEnterFadeDuration(3000);
-        animationDrawable.setExitFadeDuration(3000);
+        TimeoutTimerModel timeoutTimerModel = new TimeoutTimerModel();
+
+        animationDrawable.setEnterFadeDuration(THREE_SECONDS);
+        animationDrawable.setExitFadeDuration(THREE_SECONDS);
         animationDrawable.start();
 
         /* setup Up button */
@@ -122,10 +124,9 @@ public class TimeoutTimer extends AppCompatActivity {
         btn5Min = findViewById(R.id.btnSet5Min);
         btn10Min = findViewById(R.id.btnSet10Min);
 
-        startTimeInMillies = 10000;
+        startTimeInMillies = ONE_MINUTE;
         timeLeftInMillies = startTimeInMillies;
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
 
         btnSet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,7 +258,7 @@ public class TimeoutTimer extends AppCompatActivity {
 
     private void startTimer() {
         endTime = System.currentTimeMillis() + timeLeftInMillies;
-        countDownTimer = new CountDownTimer(timeLeftInMillies, 1000) {
+        countDownTimer = new CountDownTimer(timeLeftInMillies, ONE_SECOND) {
             @Override
             public void onTick(long l) {
                 timeLeftInMillies = l;
@@ -308,9 +309,9 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void updateCountdownText() {
-        int hours = (int) (timeLeftInMillies / 1000) / 3600; //convert milliseconds to hours
-        int minutes = (int) ((timeLeftInMillies / 1000) % 3600) / 60; //convert milliseconds to minutes
-        int seconds = (int) (timeLeftInMillies / 1000) % 60; //convert milliseconds to seconds
+        int hours = (int) (timeLeftInMillies / ONE_SECOND) / 3600; //convert milliseconds to hours
+        int minutes = (int) ((timeLeftInMillies / ONE_SECOND) % 3600) / 60; //convert milliseconds to minutes
+        int seconds = (int) (timeLeftInMillies / ONE_SECOND) % 60; //convert milliseconds to seconds
 
         String timeLeftFormatted;
         if (hours > 0) {
@@ -318,9 +319,7 @@ public class TimeoutTimer extends AppCompatActivity {
         } else {
             timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         }
-
         txtCountDownTimer.setText(timeLeftFormatted);
-
     }
 
     private void updateUI() {
@@ -341,7 +340,7 @@ public class TimeoutTimer extends AppCompatActivity {
             txtEnterTime.setVisibility(View.VISIBLE);
             btnSet.setVisibility(View.VISIBLE);
             btnStart.setVisibility(View.VISIBLE);
-            if (timeLeftInMillies < 1000) {
+            if (timeLeftInMillies < ONE_SECOND) {
                 btnSet.setVisibility(View.INVISIBLE);
                 txtEnterTime.setVisibility(View.INVISIBLE);
                 btnStart.setVisibility(View.INVISIBLE);
@@ -375,7 +374,6 @@ public class TimeoutTimer extends AppCompatActivity {
         if (isTimerRunning) {
             countDownTimer.cancel();
         }
-
         SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(START_TIME_IN_MILLIS, startTimeInMillies);
@@ -388,16 +386,14 @@ public class TimeoutTimer extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
-        startTimeInMillies = preferences.getLong(START_TIME_IN_MILLIS, 60000);
-        timeLeftInMillies = preferences.getLong(MILLIS_LEFT, 60000);
+        startTimeInMillies = preferences.getLong(START_TIME_IN_MILLIS, ONE_MINUTE);
+        timeLeftInMillies = preferences.getLong(MILLIS_LEFT, ONE_MINUTE);
         isTimerRunning = preferences.getBoolean(IS_TIMER_RUNNING, false);
         updateUI();
         updateCountdownText();
