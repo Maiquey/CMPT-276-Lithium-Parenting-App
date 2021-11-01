@@ -24,7 +24,7 @@ public class ChildManager {
         return childList.size();
     }
 
-    public void add (Child child) {
+    public void addChild(Child child) {
         childList.add(child);
     }
 
@@ -67,5 +67,12 @@ public class ChildManager {
         if (pickingChild >= numOfChildren()){
             pickingChild = 0;
         }
+    }
+
+    //temporary method for unit tests
+    //should be removed later
+    public void cleanSingleton(){
+        childList.clear();
+        pickingChild = 0;
     }
 }
