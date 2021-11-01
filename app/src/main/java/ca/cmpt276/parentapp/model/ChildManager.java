@@ -16,7 +16,7 @@ public class ChildManager {
     }
 
     private ChildManager() {
-        childList = new ArrayList<Child>();
+        childList = new ArrayList<>();
         pickingChild = 0;
     }
 
@@ -53,8 +53,7 @@ public class ChildManager {
 
     public String getChildName(int i) {
         Child temp = childList.get(i);
-        String info = temp.getName();
-        return info;
+        return temp.getName();
     }
 
     public Child getPickingChild(){
