@@ -6,7 +6,7 @@ public class ChildManager {
 
     private static ChildManager instance;
     public ArrayList<Child> childList;
-    private int pickingChild;
+    private int pickingChildIndex;
 
     public static ChildManager getInstance() {
         if (instance == null) {
@@ -17,7 +17,7 @@ public class ChildManager {
 
     private ChildManager() {
         childList = new ArrayList<>();
-        pickingChild = 0;
+        pickingChildIndex = 0;
     }
 
     public int numOfChildren() {
@@ -30,15 +30,15 @@ public class ChildManager {
 
     public void removeChild(Child child) {
         int childIndex = childList.indexOf(child);
-        if (childIndex < pickingChild){
-            pickingChild--;
+        if (childIndex < pickingChildIndex){
+            pickingChildIndex--;
         }
         childList.remove(child);
     }
 
     public void removeChildAtIndex(int i){
-        if (i < pickingChild){
-            pickingChild--;
+        if (i < pickingChildIndex){
+            pickingChildIndex--;
         }
         childList.remove(i);
     }
@@ -57,22 +57,26 @@ public class ChildManager {
     }
 
     public Child getPickingChild(){
-        Child child = childList.get(pickingChild);
-        pickingChild++;
+        Child child = childList.get(pickingChildIndex);
+        pickingChildIndex++;
         updateChildTracker();
         return child;
     }
 
     private void updateChildTracker(){
-        if (pickingChild >= numOfChildren()){
-            pickingChild = 0;
+        if (pickingChildIndex >= numOfChildren()){
+            pickingChildIndex = 0;
         }
+    }
+
+    public int getPickingChildIndex() {
+        return pickingChildIndex;
     }
 
     //temporary method for unit tests
     //should be removed later
     public void cleanSingleton(){
         childList.clear();
-        pickingChild = 0;
+        pickingChildIndex = 0;
     }
 }

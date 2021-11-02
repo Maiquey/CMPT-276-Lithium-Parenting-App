@@ -114,6 +114,33 @@ class ChildManagerTest {
         Child c4 = new Child("Child-D");
         Child c5 = new Child("Child-E");
         ChildManager childManager = ChildManager.getInstance();
+        childManager.addChild(c1);
+        childManager.addChild(c2);
+        childManager.addChild(c3);
+        childManager.addChild(c4);
+        childManager.addChild(c5);
+        assertEquals(c1, childManager.getPickingChild());
+        assertEquals(c2, childManager.getPickingChild());
+        assertEquals(c3, childManager.getPickingChild());
+        assertEquals(c4, childManager.getPickingChild());
+        assertEquals(c5, childManager.getPickingChild());
+        assertEquals(c1, childManager.getPickingChild());
+        assertEquals(c2, childManager.getPickingChild());
+        assertEquals(c3, childManager.getPickingChild());
+        assertEquals(c4, childManager.getPickingChild());
+        assertEquals(c5, childManager.getPickingChild());
+        assertEquals(c1, childManager.getPickingChild());
+        assertEquals(1, childManager.getPickingChildIndex());
+        assertEquals(c2, childManager.getPickingChild());
+        assertEquals(2, childManager.getPickingChildIndex());
+        childManager.removeChildAtIndex(3);
+        assertEquals(c3, childManager.getChild(childManager.getPickingChildIndex()));
+        childManager.removeChildAtIndex(1);
+        assertEquals(1, childManager.getPickingChildIndex());
+        assertEquals(c3, childManager.getChild(childManager.getPickingChildIndex()));
+        childManager.removeChildAtIndex(1);
+        assertEquals(1, childManager.getPickingChildIndex());
+        assertEquals(c5, childManager.getChild(childManager.getPickingChildIndex()));
         childManager.cleanSingleton();
     }
 
