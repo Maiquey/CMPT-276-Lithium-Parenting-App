@@ -2,10 +2,14 @@ package ca.cmpt276.parentapp.model;
 
 import java.util.ArrayList;
 
+/*
+    ChildManager class - stores ArrayList of children and keeps track of which child gets to flip coin next
+ */
 public class ChildManager {
 
     private static ChildManager instance;
-    public ArrayList<Child> childList;
+    private ArrayList<Child> childList;
+    private ArrayList<CoinFlip> coinFlipHistory;
     private int pickingChildIndex;
 
     public static ChildManager getInstance() {
@@ -17,7 +21,12 @@ public class ChildManager {
 
     private ChildManager() {
         childList = new ArrayList<>();
+        coinFlipHistory = new ArrayList<>();
         pickingChildIndex = 0;
+    }
+
+    public boolean noChildren(){
+        return childList.isEmpty();
     }
 
     public int numOfChildren() {
@@ -26,6 +35,10 @@ public class ChildManager {
 
     public void addChild(Child child) {
         childList.add(child);
+    }
+
+    public void addCoinFlip(CoinFlip coinFlip){
+        coinFlipHistory.add(coinFlip);
     }
 
     public void removeChild(Child child) {

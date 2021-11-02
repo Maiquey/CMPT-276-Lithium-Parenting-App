@@ -144,4 +144,18 @@ class ChildManagerTest {
         childManager.cleanSingleton();
     }
 
+    @Test
+    void testNoChildren(){
+        Child c1 = new Child("Child-A");
+        Child c2 = new Child("Child-B");
+        Child c3 = new Child("Child-C");
+        ChildManager childManager = ChildManager.getInstance();
+        assertTrue(childManager.noChildren());
+        childManager.addChild(c1);
+        childManager.addChild(c2);
+        childManager.addChild(c3);
+        assertFalse(childManager.noChildren());
+        childManager.cleanSingleton();
+    }
+
 }
