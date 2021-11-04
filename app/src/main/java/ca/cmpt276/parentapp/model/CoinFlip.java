@@ -9,7 +9,7 @@ public class CoinFlip {
     private boolean isHeads;
     private boolean pickerPickedHeads;
     private boolean pickerWon;
-    private ChildManager childManager;
+    private final ChildManager childManager;
 
     public CoinFlip() {
         this.childManager = ChildManager.getInstance();
@@ -21,6 +21,7 @@ public class CoinFlip {
         int randomInt = (int) (Math.random() * 100);
         isHeads = (randomInt % 2 == 0);
         pickerWon = (isHeads == pickerPickedHeads);
+        childManager.updatePickingChild();
     }
 
     public void setPickerPickedHeads(boolean pickedHeads) {

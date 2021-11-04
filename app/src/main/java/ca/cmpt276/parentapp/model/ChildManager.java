@@ -70,13 +70,11 @@ public class ChildManager {
     }
 
     public Child getPickingChild(){
-        Child child = childList.get(pickingChildIndex);
-        pickingChildIndex++;
-        updateChildTracker();
-        return child;
+        return childList.get(pickingChildIndex);
     }
 
-    private void updateChildTracker(){
+    public void updatePickingChild() {
+        pickingChildIndex++;
         if (pickingChildIndex >= numOfChildren()){
             pickingChildIndex = 0;
         }
