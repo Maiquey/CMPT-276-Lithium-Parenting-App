@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LithiumParentApp">
         <activity
+            android:name=".CoinFlipRecordActivity"
+            android:exported="true"
+            android:parentActivityName=".CoinFlipActivity"/>
+        <activity
             android:name=".CoinFlipActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity" />

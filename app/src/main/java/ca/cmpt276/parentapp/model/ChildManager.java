@@ -90,4 +90,8 @@ public class ChildManager {
         childList.clear();
         pickingChildIndex = 0;
     }
+
+    public ArrayList<CoinFlip> getCoinFlipHistory() {
+        return coinFlipHistory;
+    }
 }

@@ -9,7 +9,7 @@ public class CoinFlip {
     private boolean isHeads;
     private boolean pickerPickedHeads;
     private boolean pickerWon;
-    private boolean noChildren;
+    private final boolean noChildren;
     private final ChildManager childManager;
 
     public CoinFlip() {
@@ -59,5 +59,9 @@ public class CoinFlip {
 
     public boolean isNoChildren() {
         return noChildren;
+    }
+
+    public boolean isPickerPickedHeads() {
+        return pickerPickedHeads;
     }
 }

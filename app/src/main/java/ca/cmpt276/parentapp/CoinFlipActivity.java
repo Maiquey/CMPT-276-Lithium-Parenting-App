@@ -22,6 +22,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private Button tailsButton;
     private Button flipButton;
     private Button flipAgainButton;
+    private Button coinFlipHistory;
     private TextView prompt;
     private TextView flipResult;
     private ImageView coinImage;
@@ -52,6 +53,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         tailsButton = findViewById(R.id.button_tails);
         flipButton = findViewById(R.id.button_flip);
         flipAgainButton = findViewById(R.id.button_flip_again);
+        coinFlipHistory = findViewById(R.id.button_coinflip_record);
         coinImage = findViewById(R.id.image_coin_state);
         prompt = findViewById(R.id.tv_flip_prompt);
         flipResult = findViewById(R.id.tv_result);
@@ -102,6 +104,14 @@ public class CoinFlipActivity extends AppCompatActivity {
             public void onClick(View view) {
                 coinFlip = new CoinFlip();
                 updateUI();
+            }
+        });
+
+        coinFlipHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = CoinFlipRecordActivity.makeIntent(CoinFlipActivity.this);
+                startActivity(intent);
             }
         });
     }
