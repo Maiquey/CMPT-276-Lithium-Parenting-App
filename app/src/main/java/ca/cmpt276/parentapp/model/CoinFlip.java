@@ -9,19 +9,32 @@ public class CoinFlip {
     private boolean isHeads;
     private boolean pickerPickedHeads;
     private boolean pickerWon;
+    private boolean noChildren;
     private final ChildManager childManager;
 
     public CoinFlip() {
         this.childManager = ChildManager.getInstance();
         this.timeOfFlip = LocalDateTime.now();
-        this.whoPicked = childManager.getPickingChild();
+        if (childManager.noChildren()){
+            this.noChildren = true;
+            this.whoPicked = null;
+        }
+        else{
+            this.noChildren = false;
+            this.whoPicked = childManager.getPickingChild();
+        }
     }
 
-    public void initiateCoinFlip(){
+    public void doCoinFlip(){
         int randomInt = (int) (Math.random() * 100);
         isHeads = (randomInt % 2 == 0);
         pickerWon = (isHeads == pickerPickedHeads);
         childManager.updatePickingChild();
+    }
+
+    public void randomFlip(){
+        int randomInt = (int) (Math.random() * 100);
+        isHeads = (randomInt % 2 == 0);
     }
 
     public void setPickerPickedHeads(boolean pickedHeads) {
@@ -42,5 +55,9 @@ public class CoinFlip {
 
     public boolean isPickerWon() {
         return pickerWon;
+    }
+
+    public boolean isNoChildren() {
+        return noChildren;
     }
 }

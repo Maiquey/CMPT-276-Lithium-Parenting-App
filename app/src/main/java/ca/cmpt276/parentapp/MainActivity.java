@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import ca.cmpt276.parentapp.databinding.ActivityMainBinding;
+import ca.cmpt276.parentapp.model.CoinFlip;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setupTimeoutTimerPage();
+        setupCoinFlip();
 
     }
 
@@ -55,6 +57,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = TimeoutTimer.makeIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setupCoinFlip(){
+        Button coinFlipButton = findViewById(R.id.button_coinflip_launch);
+        coinFlipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = CoinFlipActivity.makeIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
