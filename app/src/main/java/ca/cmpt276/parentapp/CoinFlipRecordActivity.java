@@ -24,6 +24,12 @@ import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.CoinFlip;
 
+/**
+ * CoinFlipRecordActivity class:
+ *
+ * Uses an adapter to create dynamic listview of previous coin flips
+ * Displays important information about each flip
+ */
 public class CoinFlipRecordActivity extends AppCompatActivity {
 
     private ChildManager childManager;

@@ -1,5 +1,12 @@
 package ca.cmpt276.parentapp.model;
 
+/**
+ * Child class:
+ *
+ * Class representing a configured child
+ * Stores the child's name
+ *
+ */
 public class Child {
     private String name;
 

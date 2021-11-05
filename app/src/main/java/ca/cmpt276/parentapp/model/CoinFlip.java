@@ -2,6 +2,13 @@ package ca.cmpt276.parentapp.model;
 
 import java.time.LocalDateTime;
 
+/**
+ * CoinFlip class:
+ *
+ * Stores DateTime of the flip
+ * Stores information of a coin flip: who picked, what they picked, result of flip, whether picker won or lost
+ * Model functionality of the coin flip
+ */
 public class CoinFlip {
 
     private final LocalDateTime timeOfFlip;
@@ -10,10 +17,9 @@ public class CoinFlip {
     private boolean pickerPickedHeads;
     private boolean pickerWon;
     private final boolean noChildren;
-    private final ChildManager childManager;
+    private final ChildManager childManager = ChildManager.getInstance();
 
     public CoinFlip() {
-        this.childManager = ChildManager.getInstance();
         this.timeOfFlip = LocalDateTime.now();
         if (childManager.noChildren()){
             this.noChildren = true;
@@ -23,6 +29,15 @@ public class CoinFlip {
             this.noChildren = false;
             this.whoPicked = childManager.getPickingChild();
         }
+    }
+
+    public CoinFlip(LocalDateTime timeOfFlip, Child whoPicked, boolean isHeads, boolean pickerPickedHeads, boolean pickerWon) {
+        this.timeOfFlip = timeOfFlip;
+        this.whoPicked = whoPicked;
+        this.isHeads = isHeads;
+        this.pickerPickedHeads = pickerPickedHeads;
+        this.pickerWon = pickerWon;
+        this.noChildren = false;
     }
 
     public void doCoinFlip(){

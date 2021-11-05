@@ -16,6 +16,14 @@ import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.CoinFlip;
 
+/**
+ * CoinFlipActivity class:
+ *
+ * UI class for activity of flipping a coin
+ * offers a choice of heads or tails to the child who's turn it is to pick
+ * Uses coinFlip model to randomly generate outcome of the coin flip and show result
+ * offers navigation to CoinFlipRecordActivity
+ */
 public class CoinFlipActivity extends AppCompatActivity {
 
     private Button headsButton;
@@ -57,8 +65,6 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinImage = findViewById(R.id.image_coin_state);
         prompt = findViewById(R.id.tv_flip_prompt);
         flipResult = findViewById(R.id.tv_result);
-
-
 
         setUpButtons();
         updateUI();
