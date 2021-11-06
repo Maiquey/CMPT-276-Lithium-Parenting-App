@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         childManager = ChildManager.getInstance();
         setSupportActionBar(binding.toolbar);
 
-        childManager.getChildList().clear();
+        //childManager.getChildList().clear();
         childManager.getCoinFlipHistory().clear();
 
         setupTimeoutTimerPage();

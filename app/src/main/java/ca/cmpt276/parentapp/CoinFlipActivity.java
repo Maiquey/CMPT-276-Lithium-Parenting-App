@@ -104,7 +104,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         childManager.setPickingChildIndex(pickingChildIndex);
 
         childManager.getCoinFlipHistory().clear();
-        testPurposeOnly();
+        //testPurposeOnly();
         loadFlipHistoryList();
 
         coinFlip = new CoinFlip();
