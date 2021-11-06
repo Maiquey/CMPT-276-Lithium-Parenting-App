@@ -9,11 +9,12 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="start_button_text">START</string>
-    <string name="resume_button_text">RESUME</string>
-    <string name="timer_ab_title">Timeout Timer</string>
-    <string name="edittext_warning_empty">Field cannot be empty!</string>
-    <string name="edittext_warning_positive_num">Please enter a number that is greater than 0!</string>
-    <string name="notification_content">Timer is up!</string>
-    <string name="notification_title">Cool Down Timer</string>
+    <string name="btnAdd">add</string>
+    <string name="child_name_placeholder">Name</string>
+    <string name="delete_child">Delete Child</string>
+    <string name="name">Name</string>
+    <string name="apply_change">Apply Changes</string>
+    <string name="select_name_to_make_changes">Select name to make changes.</string>
+    <string name="use_the_below_to_add_a_child">Use the \'+\' below to add a child, or select a child to edit or delete it.</string>
+    <string name="child_config_item_name_placeholder">Child Name</string>
 </resources>
