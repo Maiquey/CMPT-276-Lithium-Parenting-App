@@ -34,8 +34,6 @@ public class ChildManager {
         return childList;
     }
 
-
-
     public boolean noChildren(){
         return childList.isEmpty();
     }
