@@ -3,14 +3,19 @@ package ca.cmpt276.parentapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-    ChildManager class - stores ArrayList of children and keeps track of which child gets to flip coin next
+/**
+ * ChildManager class:
+ *
+ * Singleton
+ * Stores Arraylist of configured children
+ * Stores Arraylist of CoinFlip objects representing a history of coin flips done by children
+ * Stores an index representing the next child that gets to flip the coin
  */
 public class ChildManager {
 
     private static ChildManager instance;
     private ArrayList<Child> childList;
-    private ArrayList<CoinFlip> coinFlipHistory;
+    private ArrayList<CoinFlipData> coinFlipHistory;
     private int pickingChildIndex;
 
     public static ChildManager getInstance() {
@@ -23,7 +28,10 @@ public class ChildManager {
     private ChildManager() {
         childList = new ArrayList<>();
         coinFlipHistory = new ArrayList<>();
-        pickingChildIndex = 0;
+    }
+
+    public ArrayList<Child> getChildList(){
+        return childList;
     }
 
     public boolean noChildren(){
@@ -38,7 +46,7 @@ public class ChildManager {
         childList.add(child);
     }
 
-    public void addCoinFlip(CoinFlip coinFlip){
+    public void addCoinFlip(CoinFlipData coinFlip){
         coinFlipHistory.add(coinFlip);
     }
 
@@ -71,16 +79,21 @@ public class ChildManager {
     }
 
     public Child getPickingChild(){
-        Child child = childList.get(pickingChildIndex);
-        pickingChildIndex++;
-        updateChildTracker();
-        return child;
+        if (pickingChildIndex >= childList.size()){
+            pickingChildIndex = 0;
+        }
+        return childList.get(pickingChildIndex);
     }
 
-    private void updateChildTracker(){
+    public void updatePickingChild() {
+        pickingChildIndex++;
         if (pickingChildIndex >= numOfChildren()){
             pickingChildIndex = 0;
         }
+    }
+
+    public void setPickingChildIndex(int pickingChildIndex){
+        this.pickingChildIndex = pickingChildIndex;
     }
 
     public int getPickingChildIndex() {
@@ -96,5 +109,9 @@ public class ChildManager {
     public void cleanSingleton(){
         childList.clear();
         pickingChildIndex = 0;
+    }
+
+    public ArrayList<CoinFlipData> getCoinFlipHistory() {
+        return coinFlipHistory;
     }
 }

@@ -3,10 +3,19 @@ package ca.cmpt276.parentapp;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -15,18 +24,38 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import ca.cmpt276.parentapp.databinding.ActivityMainBinding;
+import ca.cmpt276.parentapp.model.Child;
+import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.CoinFlip;
+import ca.cmpt276.parentapp.model.CoinFlipData;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageButton;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String COIN_FLIP_HISTORY_FILENAME = "CoinFlipHistory.json";
+    public static final String SAVE_CHILD_INFO_FILENAME = "SaveChildInfo.json";
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    ChildManager childManager;
+    CoinFlipData coinFlipData;
+
+
+    File fileName;
+    String childFilePath;
+
+    File inputChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +64,21 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+        fileName = new File(" ");
+        childFilePath = this.getFilesDir().getPath().toString() + "/SaveChildInfo2.json";
+
+        inputChild = new File(childFilePath);
+
+
+        childManager = ChildManager.getInstance();
         setSupportActionBar(binding.toolbar);
 
-        binding.gotochildadd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        childManager.getChildList().clear();
+        childManager.getCoinFlipHistory().clear();
 
         setupTimeoutTimerPage();
+        setupCoinFlip();
         setupChildBtn();
 
     }
@@ -72,32 +105,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void setupCoinFlip(){
+        Button coinFlipButton = findViewById(R.id.button_coinflip_launch);
+        coinFlipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = CoinFlipActivity.makeIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
 }
