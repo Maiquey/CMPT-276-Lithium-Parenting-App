@@ -31,15 +31,6 @@ public class CoinFlip {
         }
     }
 
-    public CoinFlip(LocalDateTime timeOfFlip, String whoPicked, boolean isHeads, boolean pickerPickedHeads, boolean pickerWon) {
-        this.timeOfFlip = timeOfFlip;
-        this.whoPicked = whoPicked;
-        this.isHeads = isHeads;
-        this.pickerPickedHeads = pickerPickedHeads;
-        this.pickerWon = pickerWon;
-        this.noChildren = false;
-    }
-
     public void doCoinFlip(){
         int randomInt = (int) (Math.random() * 100);
         isHeads = (randomInt % 2 == 0);

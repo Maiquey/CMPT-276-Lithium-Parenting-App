@@ -98,6 +98,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         inputFlipHistory = new File(flipFilePath);
 
         childManager = ChildManager.getInstance();
+
         SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
         int pickingChildIndex = preferences.getInt(PICKING_CHILD_INDEX, 0);
         childManager.setPickingChildIndex(pickingChildIndex);
@@ -105,6 +106,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         childManager.getCoinFlipHistory().clear();
         testPurposeOnly();
         loadFlipHistoryList();
+
         coinFlip = new CoinFlip();
 
         headsButton = findViewById(R.id.button_heads);
@@ -211,7 +213,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                                                             coinFlip.isPickerWon());
             childManager.addCoinFlip(coinFlipData);
         }
-        //childManager.updatePickingChild();
+
         flipAgainButton.setVisibility(View.VISIBLE);
 
     }
@@ -297,7 +299,5 @@ public class CoinFlipActivity extends AppCompatActivity {
         childManager.addChild(c4);
         childManager.addChild(c5);
     }
-
-
 
 }

@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     File fileName;
-    //String currentDirectory;
     String childFilePath;
 
     File inputChild;
@@ -81,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         setupTimeoutTimerPage();
         setupCoinFlip();
 
-
     }
 
     private void setupTimeoutTimerPage() {
@@ -105,74 +103,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-/*
-    public void loadChildList(){
-        try{
-            JsonElement childElement = JsonParser.parseReader(new FileReader(inputChild));
-            JsonArray jsonArrayChild = childElement.getAsJsonArray();
-            for (JsonElement child : jsonArrayChild){
-                JsonObject childObject = child.getAsJsonObject();
-                String name = childObject.get("name").getAsString();
-                Child newChild = new Child(name);
-                childManager.addChild(newChild);
-            }
-        } catch (FileNotFoundException e) {
-            //do nothing if no file found
-            Log.e("TAG", "childList Json not found");
-        }
-    }
 
-    public void saveChildList(){
-        try {
-            ArrayList<Child> childList = childManager.getChildList();
-            String jsonChildName = myGson.toJson(childList);
-            FileWriter fileWriter = new FileWriter(childFilePath);
-            fileWriter.write(jsonChildName);
-            fileWriter.close();
-        } catch (IOException exception){
-            System.out.println("Exception " + exception.getMessage());
-        }
-    }
-
-
- */
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        /*
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-         */
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
 }

@@ -27,7 +27,6 @@ public class ChildManager {
     private ChildManager() {
         childList = new ArrayList<>();
         coinFlipHistory = new ArrayList<>();
-        //pickingChildIndex = 0;
     }
 
     public ArrayList<Child> getChildList(){
