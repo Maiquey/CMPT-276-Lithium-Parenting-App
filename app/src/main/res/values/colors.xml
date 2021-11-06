@@ -11,6 +11,9 @@
     <color name="start_green">#85D98D</color>
     <color name="reset_red">#E46B6B</color>
     <color name="shortcut_grey">#DDDDDD</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
 
 
 

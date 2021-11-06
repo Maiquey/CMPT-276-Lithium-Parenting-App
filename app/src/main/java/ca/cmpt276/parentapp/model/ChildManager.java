@@ -1,6 +1,7 @@
 package ca.cmpt276.parentapp.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*
     ChildManager class - stores ArrayList of children and keeps track of which child gets to flip coin next
@@ -84,6 +85,10 @@ public class ChildManager {
 
     public int getPickingChildIndex() {
         return pickingChildIndex;
+    }
+
+    public List children() {
+        return childList;
     }
 
     //temporary method for unit tests
