@@ -75,6 +75,7 @@ public class ChildList extends AppCompatActivity {
 //        });
 
         childManager = ChildManager.getInstance();
+        childManager.getChildList().clear();
         childFilePath = ChildList.this.getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
         inputChildLit = new File(childFilePath);
         loadChildList();
