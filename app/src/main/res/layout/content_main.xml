@@ -41,4 +41,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnTimerPage" />
+
+    <Button
+        android:id="@+id/childbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="155dp"
+        tools:layout_editor_absoluteY="521dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         setupTimeoutTimerPage();
         setupCoinFlip();
+        setupChildBtn();
 
     }
 
@@ -92,6 +93,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void setupChildBtn(){
+        Button btn1 = findViewById(R.id.childbtn);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ChildList.makeIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+    }
+
 
     private void setupCoinFlip(){
         Button coinFlipButton = findViewById(R.id.button_coinflip_launch);
