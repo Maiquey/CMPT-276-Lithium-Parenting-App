@@ -51,24 +51,12 @@ public class MainActivity extends AppCompatActivity {
     ChildManager childManager;
     CoinFlipData coinFlipData;
 
-    Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
-            new TypeAdapter<LocalDateTime>() {
-                @Override
-                public void write(JsonWriter jsonWriter,
-                                  LocalDateTime localDateTime) throws IOException {
-                    jsonWriter.value(localDateTime.toString());
-                }
-                @Override
-                public LocalDateTime read(JsonReader jsonReader) throws IOException {
-                    return LocalDateTime.parse(jsonReader.nextString());
-                }
-            }).create();
+
     File fileName;
     //String currentDirectory;
     String childFilePath;
-    String flipFilePath;
+
     File inputChild;
-    File inputFlipHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +67,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         fileName = new File(" ");
-        childFilePath = this.getFilesDir().getPath().toString() + "/SaveChildInfo.json";
-        flipFilePath = this.getFilesDir().getPath().toString() + "/CoinFlipHistory.json";
+        childFilePath = this.getFilesDir().getPath().toString() + "/SaveChildInfo2.json";
+
         inputChild = new File(childFilePath);
-        inputFlipHistory = new File(flipFilePath);
+
 
         childManager = ChildManager.getInstance();
         setSupportActionBar(binding.toolbar);
-        loadChildList();
-        loadFlipHistoryList();
+
+        childManager.getChildList().clear();
+        childManager.getCoinFlipHistory().clear();
 
         setupTimeoutTimerPage();
         setupCoinFlip();
@@ -116,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+/*
     public void loadChildList(){
         try{
             JsonElement childElement = JsonParser.parseReader(new FileReader(inputChild));
@@ -145,43 +134,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void loadFlipHistoryList(){
-        try{
-            JsonElement flipHistoryElement = JsonParser.parseReader(new FileReader(inputFlipHistory));
-            JsonArray jsonArrayFlip = flipHistoryElement.getAsJsonArray();
-            for (JsonElement flip : jsonArrayFlip){
-                JsonObject flipObject = flip.getAsJsonObject();
-                String dateAsString = flipObject.get("timeOfFlip").getAsString();
-                LocalDateTime timeOfFlip = LocalDateTime.parse(dateAsString);
-                String nameOfPicker = flipObject.get("whoPicked").getAsString();
-                boolean isHeads = flipObject.get("isHeads").getAsBoolean();
-                boolean pickerPickedHeads = flipObject.get("pickerPickedHeads").getAsBoolean();
-                boolean pickerWon = flipObject.get("pickerWon").getAsBoolean();
-                CoinFlipData coinFlip = new CoinFlipData(timeOfFlip, nameOfPicker,
-                        isHeads, pickerPickedHeads, pickerWon);
-                childManager.addCoinFlip(coinFlip);
-            }
-        } catch (FileNotFoundException e) {
-            //do nothing if no file found
-        }
-    }
 
-    public void saveFlipHistoryList(){
-        try{
-            List<CoinFlipData> flipHistory = childManager.getCoinFlipHistory();
-            String jsonString = myGson.toJson(flipHistory);
-            FileWriter fileWriter = new FileWriter(flipFilePath);
-            fileWriter.write(jsonString);
-            fileWriter.close();
-        } catch (IOException exception) {
-            System.out.println("Exception " + exception.getMessage());
-        }
-    }
+ */
+
 
     @Override
     protected void onStop() {
-        saveChildList();
-        saveFlipHistoryList();
         super.onStop();
 
     }

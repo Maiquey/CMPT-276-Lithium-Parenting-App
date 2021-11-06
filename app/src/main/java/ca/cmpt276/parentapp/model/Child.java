@@ -1,5 +1,7 @@
 package ca.cmpt276.parentapp.model;
 
+import androidx.annotation.NonNull;
+
 /**
  * Child class:
  *
@@ -20,6 +22,12 @@ public class Child {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 }
 
