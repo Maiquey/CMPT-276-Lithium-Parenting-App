@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.CoinFlip;
+import ca.cmpt276.parentapp.model.CoinFlipData;
 
 /**
  * CoinFlipRecordActivity class:
@@ -33,7 +34,7 @@ import ca.cmpt276.parentapp.model.CoinFlip;
 public class CoinFlipRecordActivity extends AppCompatActivity {
 
     private ChildManager childManager;
-    private ArrayList<CoinFlip> flipHistory;
+    private ArrayList<CoinFlipData> flipHistory;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinFlipRecordActivity.class);
@@ -57,12 +58,12 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
     }
 
     private void populateListView() {
-        ArrayAdapter<CoinFlip> adapter = new MyListAdapter();
+        ArrayAdapter<CoinFlipData> adapter = new MyListAdapter();
         ListView list = findViewById(R.id.listview_coinflips);
         list.setAdapter(adapter);
     }
 
-    private class MyListAdapter extends ArrayAdapter<CoinFlip> {
+    private class MyListAdapter extends ArrayAdapter<CoinFlipData> {
         public MyListAdapter() {
             super(CoinFlipRecordActivity.this, R.layout.item_view, flipHistory);
         }
@@ -77,7 +78,7 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
             }
 
             //Find car to work with
-            CoinFlip currentFlip = flipHistory.get(position);
+            CoinFlipData currentFlip = flipHistory.get(position);
 
             //Fill the view
             ImageView image = (ImageView) itemView.findViewById(R.id.item_icon);

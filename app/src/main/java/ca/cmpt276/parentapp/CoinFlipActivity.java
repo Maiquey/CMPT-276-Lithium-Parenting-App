@@ -15,6 +15,7 @@ import android.widget.TextView;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.CoinFlip;
+import ca.cmpt276.parentapp.model.CoinFlipData;
 
 /**
  * CoinFlipActivity class:
@@ -152,7 +153,12 @@ public class CoinFlipActivity extends AppCompatActivity {
             else{
                 prompt.setText("" + coinFlip.getWhoPicked() + " lost!");
             }
-            childManager.addCoinFlip(coinFlip);
+            CoinFlipData coinFlipData = new CoinFlipData(coinFlip.getTimeOfFlip(),
+                                                            coinFlip.getWhoPicked(),
+                                                            coinFlip.isHeads(),
+                                                            coinFlip.isPickerPickedHeads(),
+                                                            coinFlip.isPickerWon());
+            childManager.addCoinFlip(coinFlipData);
         }
 
         flipAgainButton.setVisibility(View.VISIBLE);

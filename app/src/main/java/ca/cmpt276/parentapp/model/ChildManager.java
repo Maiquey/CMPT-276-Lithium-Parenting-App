@@ -14,7 +14,7 @@ public class ChildManager {
 
     private static ChildManager instance;
     private ArrayList<Child> childList;
-    private ArrayList<CoinFlip> coinFlipHistory;
+    private ArrayList<CoinFlipData> coinFlipHistory;
     private int pickingChildIndex;
 
     public static ChildManager getInstance() {
@@ -42,7 +42,7 @@ public class ChildManager {
         childList.add(child);
     }
 
-    public void addCoinFlip(CoinFlip coinFlip){
+    public void addCoinFlip(CoinFlipData coinFlip){
         coinFlipHistory.add(coinFlip);
     }
 
@@ -96,7 +96,7 @@ public class ChildManager {
         pickingChildIndex = 0;
     }
 
-    public ArrayList<CoinFlip> getCoinFlipHistory() {
+    public ArrayList<CoinFlipData> getCoinFlipHistory() {
         return coinFlipHistory;
     }
 }
