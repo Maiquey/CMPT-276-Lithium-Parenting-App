@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        binding.gotochildadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setupTimeoutTimerPage();
+        setupChildBtn();
 
     }
 
@@ -59,6 +60,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void setupChildBtn(){
+        Button btn1 = findViewById(R.id.childbtn);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ChildList.makeIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -2,11 +2,6 @@ package ca.cmpt276.parentapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 
@@ -17,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,25 +28,38 @@ public class ChildList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_list);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Child List");
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setTitle("Child List");
+//
+//        ActionBar ab = getSupportActionBar();
+//        ab.setDisplayHomeAsUpEnabled(true);
+//
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = ChildAdd.makeIntent(ChildList.this);
+//                startActivity(intent);
+//            }
+//        });
 
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        manager = ChildManager.getInstance();
+        childClickHandler();
+        setupChildAdd();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+    }
+    private void setupChildAdd() {
+        FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.gotochildadd);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = ChildAdd.makeIntent(ChildList.this);
                 startActivity(intent);
             }
         });
-
-        manager = ChildManager.getInstance();
-        childClickHandler();
     }
+
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, ChildList.class);

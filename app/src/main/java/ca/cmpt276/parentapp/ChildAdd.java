@@ -26,13 +26,19 @@ public class ChildAdd extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_add);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        getSupportActionBar().setTitle("Add Child");
-
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        getSupportActionBar().setTitle("Add Child");
+//
+//        ActionBar ab = getSupportActionBar();
+//        ab.setDisplayHomeAsUpEnabled(true);
 
         setupAdd();
+        setupChildEdit();
+
+    }
+
+    private void setupChildEdit() {
+
     }
 
     public static Intent makeIntent(Context context) {
