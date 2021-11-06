@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.SaveLoadData;
 
 import android.content.Context;
 import android.content.Intent;

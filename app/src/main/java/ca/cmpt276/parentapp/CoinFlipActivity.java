@@ -16,6 +16,7 @@ import android.widget.TextView;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.CoinFlip;
 import ca.cmpt276.parentapp.model.CoinFlipData;
+import ca.cmpt276.parentapp.model.SaveLoadData;
 
 /**
  * CoinFlipActivity class:

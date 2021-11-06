@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.model;
 
 import android.util.Log;
 
@@ -41,6 +41,7 @@ public class SaveLoadData {
                 @Override
                 public LocalDateTime read(JsonReader jsonReader) throws IOException {
                     return LocalDateTime.parse(jsonReader.nextString());
+
                 }
             }).create();
 
