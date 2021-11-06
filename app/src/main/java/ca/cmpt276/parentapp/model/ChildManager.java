@@ -1,7 +1,6 @@
 package ca.cmpt276.parentapp.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ChildManager class:
@@ -117,5 +116,9 @@ public class ChildManager {
 
     public ArrayList<CoinFlipData> getCoinFlipHistory() {
         return coinFlipHistory;
+    }
+
+    public void setCoinFlipHistory(ArrayList<CoinFlipData> coinFlipHistory) {
+        this.coinFlipHistory = coinFlipHistory;
     }
 }

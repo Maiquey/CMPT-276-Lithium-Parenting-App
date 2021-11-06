@@ -1,6 +1,5 @@
 package ca.cmpt276.parentapp;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -20,23 +19,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.CoinFlipData;
 
 public class SaveLoadData {
-    /*
-    String childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
-    File inputChildList = new File(childFilePath);
 
-     */
     private SaveLoadData(){
     }
     private final static File file = new File(" ");
-    //private final static String currentWorkingDirectory = file.getAbsolutePath();
-    //private final static String childFilePath = System.getProperty("user.dir") + "SaveChildInfo3.json";
-    //private final static File inputChildList = new File(System.getProperty("user.dir") + "SaveChildInfo3.json");
     private static ChildManager childManager = ChildManager.getInstance();
 
     private static Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
@@ -51,6 +43,41 @@ public class SaveLoadData {
                     return LocalDateTime.parse(jsonReader.nextString());
                 }
             }).create();
+
+    public static void saveFlipHistoryList(String flipFilePath, ArrayList<CoinFlipData> coinFlipData){
+        try{
+            String jsonString = myGson.toJson(coinFlipData);
+            FileWriter fileWriter = new FileWriter(flipFilePath);
+            fileWriter.write(jsonString);
+            fileWriter.close();
+        } catch (IOException exception) {
+            System.out.println("Exception " + exception.getMessage());
+        }
+    }
+
+    public static ArrayList<CoinFlipData> loadFlipHistoryList(String flipHistoryPath){
+        File inputFlipHistory = new File(flipHistoryPath);
+        try{
+            JsonElement flipHistoryElement = JsonParser.parseReader(new FileReader(inputFlipHistory));
+            JsonArray jsonArrayFlip = flipHistoryElement.getAsJsonArray();
+            for (JsonElement flip : jsonArrayFlip){
+                JsonObject flipObject = flip.getAsJsonObject();
+                String dateAsString = flipObject.get("timeOfFlip").getAsString();
+                LocalDateTime timeOfFlip = LocalDateTime.parse(dateAsString);
+                String nameOfPicker = flipObject.get("whoPicked").getAsString();
+                boolean isHeads = flipObject.get("isHeads").getAsBoolean();
+                boolean pickerPickedHeads = flipObject.get("pickerPickedHeads").getAsBoolean();
+                boolean pickerWon = flipObject.get("pickerWon").getAsBoolean();
+                CoinFlipData coinFlip = new CoinFlipData(timeOfFlip, nameOfPicker,
+                        isHeads, pickerPickedHeads, pickerWon);
+                childManager.addCoinFlip(coinFlip);
+            }
+        } catch (FileNotFoundException e) {
+            //do nothing if no file found
+            Log.e("TAG", "history Json not found");
+        }
+        return childManager.getCoinFlipHistory();
+    }
 
     public static void saveChildList(String childFilePath, ArrayList<Child> childrenList){
         try {
