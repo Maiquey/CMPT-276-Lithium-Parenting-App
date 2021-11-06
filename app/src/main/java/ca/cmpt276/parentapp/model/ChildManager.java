@@ -100,7 +100,7 @@ public class ChildManager {
         return pickingChildIndex;
     }
 
-    public List children() {
+    public ArrayList<Child> children() {
         return childList;
     }
 

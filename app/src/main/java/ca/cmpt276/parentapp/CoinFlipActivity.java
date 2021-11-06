@@ -283,7 +283,6 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-
         super.onStart();
     }
 

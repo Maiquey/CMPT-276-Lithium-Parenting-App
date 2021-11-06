@@ -8,21 +8,51 @@ import ca.cmpt276.parentapp.model.ChildManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class ChildList extends AppCompatActivity {
 
-    private ChildManager manager;
+    private ChildManager childManager;
     private ArrayAdapter<Child> adapter;
+    String childFilePath;
+    File inputChildLit;
+    Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
+            new TypeAdapter<LocalDateTime>() {
+                @Override
+                public void write(JsonWriter jsonWriter,
+                                  LocalDateTime localDateTime) throws IOException {
+                    jsonWriter.value(localDateTime.toString());
+                }
+                @Override
+                public LocalDateTime read(JsonReader jsonReader) throws IOException {
+                    return LocalDateTime.parse(jsonReader.nextString());
+                }
+            }).create();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +74,10 @@ public class ChildList extends AppCompatActivity {
 //            }
 //        });
 
-        manager = ChildManager.getInstance();
+        childManager = ChildManager.getInstance();
+        childFilePath = ChildList.this.getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
+        inputChildLit = new File(childFilePath);
+        loadChildList();
         childClickHandler();
         setupChildAdd();
 
@@ -79,7 +112,7 @@ public class ChildList extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                String message = "Editing " + manager.getChild(position).getName();
+                String message = "Editing " + childManager.getChild(position).getName();
                 Toast.makeText(ChildList.this, message, Toast.LENGTH_LONG).show();
 
                 Intent intent = ChildEdit.makeIntent(ChildList.this, position);
@@ -88,9 +121,42 @@ public class ChildList extends AppCompatActivity {
         });
     }
 
+    public void saveChildList(){
+        try {
+            String jsonChildName = myGson.toJson(childManager.children());
+            FileWriter fileWriter = new FileWriter(childFilePath);
+            fileWriter.write(jsonChildName);
+            fileWriter.close();
+        } catch (IOException exception){
+            System.out.println("Exception " + exception.getMessage());
+        }
+    }
+
+    public void loadChildList(){
+        try{
+            JsonElement childElement = JsonParser.parseReader(new FileReader(inputChildLit));
+            JsonArray jsonArrayChild = childElement.getAsJsonArray();
+            for (JsonElement child : jsonArrayChild){
+                JsonObject childObject = child.getAsJsonObject();
+                String name = childObject.get("name").getAsString();
+                Child newChild = new Child(name);
+                childManager.addChild(newChild);
+            }
+        } catch (FileNotFoundException e) {
+            //do nothing if no file found
+            Log.e("TAG", "CHILD FILE NOT FOUND");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        saveChildList();
+        super.onPause();
+    }
+
     private class MyListAdapter extends ArrayAdapter<Child> {
         public MyListAdapter() {
-            super(ChildList.this, R.layout.child_config_item, manager.children());
+            super(ChildList.this, R.layout.child_config_item, childManager.children());
         }
 
         @Override
@@ -100,7 +166,7 @@ public class ChildList extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.child_config_item, parent, false);
             }
 
-            Child currentChild = manager.getChild(position);
+            Child currentChild = childManager.getChild(position);
 
             TextView nameView = (TextView) itemView.findViewById(R.id.config_item_name);
             nameView.setText(currentChild.getName());
@@ -113,6 +179,5 @@ public class ChildList extends AppCompatActivity {
         protected void onResume() {
             super.onResume();
             populateChildrenList();
-
         }
-    }
+}
