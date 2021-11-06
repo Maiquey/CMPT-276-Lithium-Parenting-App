@@ -30,6 +30,12 @@ public class ChildManager {
         pickingChildIndex = 0;
     }
 
+    public ArrayList<Child> getChildList(){
+        return childList;
+    }
+
+
+
     public boolean noChildren(){
         return childList.isEmpty();
     }

@@ -108,11 +108,19 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
             TextView dateTime = (TextView) itemView.findViewById(R.id.item_DateTime);
 
             LocalDateTime time = currentFlip.getTimeOfFlip();
+
             DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("MMM d");
             DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("h:mma");
             String formatted = time.format(formatter1) + " @ " + time.format(formatter2);
 
+            /*
+            DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formatted = timeFormat.format(time).toString();
+
+             */
             dateTime.setText("Date and time: " + formatted);
+
+
 
             return itemView;
         }

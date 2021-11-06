@@ -12,6 +12,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.CoinFlip;
@@ -188,4 +198,5 @@ public class CoinFlipActivity extends AppCompatActivity {
         childManager.addChild(c4);
         childManager.addChild(c5);
     }
+
 }
