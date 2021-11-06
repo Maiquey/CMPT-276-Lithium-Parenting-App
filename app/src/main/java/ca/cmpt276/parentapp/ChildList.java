@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.SaveLoadData;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,39 +13,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+
 public class ChildList extends AppCompatActivity {
 
-    private ChildManager manager;
+    private ChildManager childManager;
     private ArrayAdapter<Child> adapter;
-
+    String childFilePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_list);
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("Child List");
-//
-//        ActionBar ab = getSupportActionBar();
-//        ab.setDisplayHomeAsUpEnabled(true);
-//
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = ChildAdd.makeIntent(ChildList.this);
-//                startActivity(intent);
-//            }
-//        });
 
-        manager = ChildManager.getInstance();
+        childManager = ChildManager.getInstance();
+        childManager.getChildList().clear();
+
+        childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
+        childManager.setChildList(SaveLoadData.loadChildList(childFilePath));
         childClickHandler();
         setupChildAdd();
 
@@ -59,7 +49,6 @@ public class ChildList extends AppCompatActivity {
             }
         });
     }
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, ChildList.class);
@@ -79,7 +68,7 @@ public class ChildList extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                String message = "Editing " + manager.getChild(position).getName();
+                String message = "Editing " + childManager.getChild(position).getName();
                 Toast.makeText(ChildList.this, message, Toast.LENGTH_LONG).show();
 
                 Intent intent = ChildEdit.makeIntent(ChildList.this, position);
@@ -88,9 +77,16 @@ public class ChildList extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        SaveLoadData.saveChildList(childFilePath,
+                childManager.getChildList());
+        super.onPause();
+    }
+
     private class MyListAdapter extends ArrayAdapter<Child> {
         public MyListAdapter() {
-            super(ChildList.this, R.layout.child_config_item, manager.children());
+            super(ChildList.this, R.layout.child_config_item, childManager.children());
         }
 
         @Override
@@ -100,7 +96,7 @@ public class ChildList extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.child_config_item, parent, false);
             }
 
-            Child currentChild = manager.getChild(position);
+            Child currentChild = childManager.getChild(position);
 
             TextView nameView = (TextView) itemView.findViewById(R.id.config_item_name);
             nameView.setText(currentChild.getName());
@@ -113,6 +109,5 @@ public class ChildList extends AppCompatActivity {
         protected void onResume() {
             super.onResume();
             populateChildrenList();
-
         }
-    }
+}
