@@ -91,9 +91,9 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
             TextView flipper = (TextView) itemView.findViewById(R.id.item_who_flipped);
 
             if (currentFlip.isPickerPickedHeads()){
-                flipper.setText("" + currentFlip.getWhoPicked().getName() + " picked: Heads.");
+                flipper.setText("" + currentFlip.getWhoPicked() + " picked: Heads.");
             }else{
-                flipper.setText("" + currentFlip.getWhoPicked().getName() + " picked: Tails.");
+                flipper.setText("" + currentFlip.getWhoPicked() + " picked: Tails.");
             }
 
             TextView result = (TextView) itemView.findViewById(R.id.item_flip_result);

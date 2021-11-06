@@ -124,7 +124,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private void updateUI() {
         if (!coinFlip.isNoChildren()){
-            prompt.setText("" + coinFlip.getWhoPicked().getName() + " gets to pick!");
+            prompt.setText("" + coinFlip.getWhoPicked() + " gets to pick!");
         }
         else{
             prompt.setText("Heads or Tails?");
@@ -147,10 +147,10 @@ public class CoinFlipActivity extends AppCompatActivity {
             coinFlip.doCoinFlip();
             showResults();
             if(coinFlip.isPickerWon()){
-                prompt.setText("" + coinFlip.getWhoPicked().getName() + " won!");
+                prompt.setText("" + coinFlip.getWhoPicked() + " won!");
             }
             else{
-                prompt.setText("" + coinFlip.getWhoPicked().getName() + " lost!");
+                prompt.setText("" + coinFlip.getWhoPicked() + " lost!");
             }
             childManager.addCoinFlip(coinFlip);
         }

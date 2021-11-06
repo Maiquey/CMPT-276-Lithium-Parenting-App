@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class CoinFlip {
 
     private final LocalDateTime timeOfFlip;
-    private final Child whoPicked;
+    private final String whoPicked;
     private boolean isHeads;
     private boolean pickerPickedHeads;
     private boolean pickerWon;
@@ -27,11 +27,11 @@ public class CoinFlip {
         }
         else{
             this.noChildren = false;
-            this.whoPicked = childManager.getPickingChild();
+            this.whoPicked = childManager.getPickingChild().getName();
         }
     }
 
-    public CoinFlip(LocalDateTime timeOfFlip, Child whoPicked, boolean isHeads, boolean pickerPickedHeads, boolean pickerWon) {
+    public CoinFlip(LocalDateTime timeOfFlip, String whoPicked, boolean isHeads, boolean pickerPickedHeads, boolean pickerWon) {
         this.timeOfFlip = timeOfFlip;
         this.whoPicked = whoPicked;
         this.isHeads = isHeads;
@@ -60,7 +60,7 @@ public class CoinFlip {
         return timeOfFlip;
     }
 
-    public Child getWhoPicked() {
+    public String getWhoPicked() {
         return whoPicked;
     }
 
