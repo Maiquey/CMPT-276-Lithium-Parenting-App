@@ -8,31 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.CoinFlip;
 import ca.cmpt276.parentapp.model.CoinFlipData;
@@ -59,24 +39,9 @@ public class CoinFlipActivity extends AppCompatActivity {
     private ImageView coinImage;
     private CoinFlip coinFlip;
     private ChildManager childManager;
-    String flipFilePath;
-    File inputFlipHistory;
+    private String flipFilePath;
+    private String childFilePath;
     private final String PREF = "PICKING_CHILD_INDEX";
-
-    Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
-            new TypeAdapter<LocalDateTime>() {
-                @Override
-                public void write(JsonWriter jsonWriter,
-                                  LocalDateTime localDateTime) throws IOException {
-                    jsonWriter.value(localDateTime.toString());
-                }
-                @Override
-                public LocalDateTime read(JsonReader jsonReader) throws IOException {
-                    return LocalDateTime.parse(jsonReader.nextString());
-                }
-            }).create();
-
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinFlipActivity.class);
@@ -87,15 +52,13 @@ public class CoinFlipActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip);
 
-
         ConstraintLayout constraintLayout = findViewById(R.id.coinflip_layout);
 
         ActionBar ab = getSupportActionBar();
         ab.setTitle("Coin Flip");
         ab.setDisplayHomeAsUpEnabled(true);
-
-        flipFilePath = CoinFlipActivity.this.getFilesDir().getPath().toString() + "/CoinFlipHistory6.json";
-        inputFlipHistory = new File(flipFilePath);
+        flipFilePath = getFilesDir().getPath().toString() + "/CoinFlipHistory6.json";
+        childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
 
         childManager = ChildManager.getInstance();
 
@@ -104,8 +67,10 @@ public class CoinFlipActivity extends AppCompatActivity {
         childManager.setPickingChildIndex(pickingChildIndex);
 
         childManager.getCoinFlipHistory().clear();
-        //testPurposeOnly();
-        loadFlipHistoryList();
+        childManager.setCoinFlipHistory(SaveLoadData.loadFlipHistoryList(flipFilePath));
+
+        childManager.getChildList().clear();
+        childManager.setChildList(SaveLoadData.loadChildList(childFilePath));
 
         coinFlip = new CoinFlip();
 
@@ -239,41 +204,12 @@ public class CoinFlipActivity extends AppCompatActivity {
             flipResult.setText("Tails");
         }
     }
-    public void loadFlipHistoryList(){
-        try{
-            JsonElement flipHistoryElement = JsonParser.parseReader(new FileReader(inputFlipHistory));
-            JsonArray jsonArrayFlip = flipHistoryElement.getAsJsonArray();
-            for (JsonElement flip : jsonArrayFlip){
-                JsonObject flipObject = flip.getAsJsonObject();
-                String dateAsString = flipObject.get("timeOfFlip").getAsString();
-                LocalDateTime timeOfFlip = LocalDateTime.parse(dateAsString);
-                String nameOfPicker = flipObject.get("whoPicked").getAsString();
-                boolean isHeads = flipObject.get("isHeads").getAsBoolean();
-                boolean pickerPickedHeads = flipObject.get("pickerPickedHeads").getAsBoolean();
-                boolean pickerWon = flipObject.get("pickerWon").getAsBoolean();
-                CoinFlipData coinFlip = new CoinFlipData(timeOfFlip, nameOfPicker,
-                        isHeads, pickerPickedHeads, pickerWon);
-                childManager.addCoinFlip(coinFlip);
-            }
-        } catch (FileNotFoundException e) {
-            //do nothing if no file found
-            Log.e("TAG", "history Json not found");
-        }
-    }
 
-    public void saveFlipHistoryList(){
-        try{
-            String jsonString = myGson.toJson(childManager.getCoinFlipHistory());
-            FileWriter fileWriter = new FileWriter(flipFilePath);
-            fileWriter.write(jsonString);
-            fileWriter.close();
-        } catch (IOException exception) {
-            System.out.println("Exception " + exception.getMessage());
-        }
-    }
     @Override
     protected void onPause() {
-        saveFlipHistoryList();
+
+        SaveLoadData.saveFlipHistoryList(flipFilePath,
+                childManager.getCoinFlipHistory());
         SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(PICKING_CHILD_INDEX, childManager.getPickingChildIndex());
@@ -286,17 +222,5 @@ public class CoinFlipActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void testPurposeOnly(){
-        Child c1 = new Child("Alice");
-        Child c2 = new Child("Beth");
-        Child c3 = new Child("Chris");
-        Child c4 = new Child("Darren");
-        Child c5 = new Child("Emily");
-        childManager.addChild(c1);
-        childManager.addChild(c2);
-        childManager.addChild(c3);
-        childManager.addChild(c4);
-        childManager.addChild(c5);
-    }
 
 }
