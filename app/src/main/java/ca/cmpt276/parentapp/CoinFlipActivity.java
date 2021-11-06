@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,7 @@ import ca.cmpt276.parentapp.model.CoinFlipData;
  */
 public class CoinFlipActivity extends AppCompatActivity {
 
+    public static final String PICKING_CHILD_INDEX = "picking child index new";
     private Button headsButton;
     private Button tailsButton;
     private Button flipButton;
@@ -59,6 +61,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private ChildManager childManager;
     String flipFilePath;
     File inputFlipHistory;
+    private final String PREF = "PICKING_CHILD_INDEX";
 
     Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
             new TypeAdapter<LocalDateTime>() {
@@ -84,6 +87,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip);
 
+
         ConstraintLayout constraintLayout = findViewById(R.id.coinflip_layout);
 
         ActionBar ab = getSupportActionBar();
@@ -94,6 +98,10 @@ public class CoinFlipActivity extends AppCompatActivity {
         inputFlipHistory = new File(flipFilePath);
 
         childManager = ChildManager.getInstance();
+        SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
+        int pickingChildIndex = preferences.getInt(PICKING_CHILD_INDEX, 0);
+        childManager.setPickingChildIndex(pickingChildIndex);
+
         childManager.getCoinFlipHistory().clear();
         testPurposeOnly();
         loadFlipHistoryList();
@@ -109,8 +117,6 @@ public class CoinFlipActivity extends AppCompatActivity {
         flipResult = findViewById(R.id.tv_result);
 
         setUpClearHistoryButton();
-
-
 
         setUpButtons();
         updateUI();
@@ -205,7 +211,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                                                             coinFlip.isPickerWon());
             childManager.addCoinFlip(coinFlipData);
         }
-        childManager.updatePickingChild();
+        //childManager.updatePickingChild();
         flipAgainButton.setVisibility(View.VISIBLE);
 
     }
@@ -266,7 +272,17 @@ public class CoinFlipActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         saveFlipHistoryList();
+        SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(PICKING_CHILD_INDEX, childManager.getPickingChildIndex());
+        editor.apply();
         super.onPause();
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
     }
 
     private void testPurposeOnly(){

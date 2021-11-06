@@ -27,7 +27,7 @@ public class ChildManager {
     private ChildManager() {
         childList = new ArrayList<>();
         coinFlipHistory = new ArrayList<>();
-        pickingChildIndex = 0;
+        //pickingChildIndex = 0;
     }
 
     public ArrayList<Child> getChildList(){
@@ -90,6 +90,10 @@ public class ChildManager {
         if (pickingChildIndex >= numOfChildren()){
             pickingChildIndex = 0;
         }
+    }
+
+    public void setPickingChildIndex(int pickingChildIndex){
+        this.pickingChildIndex = pickingChildIndex;
     }
 
     public int getPickingChildIndex() {
