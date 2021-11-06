@@ -34,6 +34,10 @@ public class ChildManager {
         return childList;
     }
 
+    public void setChildList(ArrayList<Child> childList){
+        this.childList = childList;
+    }
+
     public boolean noChildren(){
         return childList.isEmpty();
     }
