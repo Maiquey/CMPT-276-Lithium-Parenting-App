@@ -79,6 +79,9 @@ public class ChildManager {
     }
 
     public Child getPickingChild(){
+        if (pickingChildIndex >= childList.size()){
+            pickingChildIndex = 0;
+        }
         return childList.get(pickingChildIndex);
     }
 

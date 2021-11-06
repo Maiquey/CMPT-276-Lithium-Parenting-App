@@ -205,7 +205,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                                                             coinFlip.isPickerWon());
             childManager.addCoinFlip(coinFlipData);
         }
-
+        childManager.updatePickingChild();
         flipAgainButton.setVisibility(View.VISIBLE);
 
     }
