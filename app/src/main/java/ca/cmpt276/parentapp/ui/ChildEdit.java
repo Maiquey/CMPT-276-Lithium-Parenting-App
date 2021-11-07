@@ -1,5 +1,6 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.ui;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -10,15 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.app.ActionBar;
-
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 
 /*
-UI for Editing Child
+ui for Editing Child
  */
 
 public class ChildEdit extends AppCompatActivity {
@@ -29,6 +27,10 @@ public class ChildEdit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_edit);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("Edit Child");
+        ab.setDisplayHomeAsUpEnabled(true);
 
         extractExtras();
         inputFields();
@@ -47,7 +49,7 @@ public class ChildEdit extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = ChildManager.getInstance().getChild(childIndex).getName() + "deleted";
+                String message = ChildManager.getInstance().getChild(childIndex).getName() + " Deleted";
                 ChildManager.getInstance().removeChildAtIndex(childIndex);
 
                 Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();

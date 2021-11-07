@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChildEdit">
+    tools:context=".ui.ChildEdit">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -12,34 +12,37 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnDeleteChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
+        android:layout_marginTop="244dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#F12F2F"
         android:text="@string/delete_child"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#BD6D6D"
         android:textColorLink="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.291"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSelectedChild"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnApplyChange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginTop="244dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#36972B"
         android:text="@string/apply_change"
-        app:layout_constraintBottom_toBottomOf="@+id/btnDeleteChild"
-        app:layout_constraintStart_toEndOf="@+id/btnDeleteChild"
-        app:layout_constraintTop_toTopOf="@+id/btnDeleteChild"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnDeleteChild"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSelectedChild" />
 
     <EditText
         android:id="@+id/editTextSelectedChild"
@@ -47,23 +50,21 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/name"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.152"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="14dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="92dp"
-        android:text="@string/select_name_to_make_changes"
-        app:layout_constraintBottom_toTopOf="@+id/btnDeleteChild"
+        android:text="Enter a new name"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextSelectedChild"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

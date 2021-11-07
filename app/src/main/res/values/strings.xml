@@ -13,10 +13,11 @@
     <string name="child_name_placeholder">Name</string>
     <string name="delete_child">Delete Child</string>
     <string name="name">Name</string>
-    <string name="apply_change">Apply Changes</string>
+    <string name="apply_change">Save Changes</string>
     <string name="select_name_to_make_changes">Select name to make changes.</string>
     <string name="use_the_below_to_add_a_child">Use the \'+\' below to add a child, or select a child to edit or delete it.</string>
     <string name="child_config_item_name_placeholder">Child Name</string>
+    <string name="congigure_child">Configure Children</string>
 
     <string name="start_button_text">START</string>
     <string name="resume_button_text">RESUME</string>

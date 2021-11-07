@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.ui;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +30,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 
+import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.CoinFlip;
@@ -40,7 +40,7 @@ import ca.cmpt276.parentapp.model.CoinFlipData;
 /**
  * CoinFlipActivity class:
  *
- * UI class for activity of flipping a coin
+ * ui class for activity of flipping a coin
  * offers a choice of heads or tails to the child who's turn it is to pick
  * Uses coinFlip model to randomly generate outcome of the coin flip and show result
  * offers navigation to CoinFlipRecordActivity
