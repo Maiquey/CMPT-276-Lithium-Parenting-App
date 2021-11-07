@@ -7,8 +7,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,9 +28,12 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
  * offers a choice of heads or tails to the child who's turn it is to pick
  * Uses coinFlip model to randomly generate outcome of the coin flip and show result
  * offers navigation to CoinFlipRecordActivity
+ * sound effect from https://elements.envato.com/coin-throws-5-P6YRTSZ?utm_source=mixkit&utm_medium=referral&utm_campaign=elements_mixkit_cs_sfx_tag
  */
 public class CoinFlipActivity extends AppCompatActivity {
 
+    private MediaPlayer coinTossSound;
+    private Animation coinFlipAnimation;
     public static final String PICKING_CHILD_INDEX = "picking child index new";
     private Button headsButton;
     private Button tailsButton;
@@ -83,11 +89,15 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinImage = findViewById(R.id.image_coin_state);
         prompt = findViewById(R.id.tv_flip_prompt);
         flipResult = findViewById(R.id.tv_result);
+        coinFlipAnimation = AnimationUtils.loadAnimation(this, R.anim.coin_flip);
+        coinTossSound = MediaPlayer.create(this, R.raw.coin_sound_effect);
 
         setUpClearHistoryButton();
 
         setUpButtons();
         updateUI();
+
+        setUpAnimationListener();
     }
 
     private void setUpButtons() {
@@ -98,7 +108,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                 coinFlip.setPickerPickedHeads(true);
                 headsButton.setVisibility(View.INVISIBLE);
                 tailsButton.setVisibility(View.INVISIBLE);
-                initiateCoinFlip();
+                playFlipAnimation();
             }
         });
 
@@ -108,7 +118,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                 coinFlip.setPickerPickedHeads(false);
                 headsButton.setVisibility(View.INVISIBLE);
                 tailsButton.setVisibility(View.INVISIBLE);
-                initiateCoinFlip();
+                playFlipAnimation();
             }
         });
 
@@ -120,7 +130,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                     headsButton.setVisibility(View.VISIBLE);
                     tailsButton.setVisibility(View.VISIBLE);
                 }else{
-                    initiateCoinFlip();
+                    playFlipAnimation();
                 }
             }
         });
@@ -150,7 +160,7 @@ public class CoinFlipActivity extends AppCompatActivity {
             prompt.setText("Heads or Tails?");
         }
         flipResult.setText("");
-        coinImage.setImageResource(R.drawable.unflipped);
+        coinImage.setImageResource(R.drawable.question_coloured);
         headsButton.setVisibility(View.INVISIBLE);
         tailsButton.setVisibility(View.INVISIBLE);
         flipButton.setVisibility(View.VISIBLE);
@@ -197,11 +207,11 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private void showResults() {
         if(coinFlip.isHeads()){
-            coinImage.setImageResource(R.drawable.heads);
+            coinImage.setImageResource(R.drawable.heads_coloured);
             flipResult.setText("Heads");
         }
         else{
-            coinImage.setImageResource(R.drawable.tails);
+            coinImage.setImageResource(R.drawable.tails_coloured);
             flipResult.setText("Tails");
         }
     }
@@ -223,5 +233,32 @@ public class CoinFlipActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    private void playFlipAnimation(){
+        coinImage.setImageResource(R.drawable.blank_coloured);
+        coinTossSound.start();
+        coinImage.startAnimation(coinFlipAnimation);
+    }
+
+    private void setUpAnimationListener(){
+        coinFlipAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                deleteButton.setVisibility(View.INVISIBLE);
+                coinFlipHistory.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                deleteButton.setVisibility(View.VISIBLE);
+                coinFlipHistory.setVisibility(View.VISIBLE);
+                initiateCoinFlip();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
 
 }
