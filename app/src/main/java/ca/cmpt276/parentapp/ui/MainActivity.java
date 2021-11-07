@@ -21,18 +21,10 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String COIN_FLIP_HISTORY_FILENAME = "CoinFlipHistory.json";
-    public static final String SAVE_CHILD_INFO_FILENAME = "SaveChildInfo.json";
+
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     ChildManager childManager;
-    CoinFlipData coinFlipData;
-
-
-    File fileName;
-    String childFilePath;
-
-    File inputChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +33,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-        fileName = new File(" ");
-        childFilePath = this.getFilesDir().getPath().toString() + "/SaveChildInfo2.json";
-
-        inputChild = new File(childFilePath);
-
-
         childManager = ChildManager.getInstance();
         setSupportActionBar(binding.toolbar);
 
-        childManager.getChildList().clear();
         childManager.getCoinFlipHistory().clear();
 
         setupTimeoutTimerPage();

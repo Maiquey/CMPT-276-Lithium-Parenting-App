@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.SaveLoadData;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,15 +21,11 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-/*
-UI to List Chilren
- */
-
 public class ChildList extends AppCompatActivity {
 
-    private ChildManager manager;
+    private ChildManager childManager;
     private ArrayAdapter<Child> adapter;
-
+    String childFilePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +35,11 @@ public class ChildList extends AppCompatActivity {
         ab.setTitle("Children List");
         ab.setDisplayHomeAsUpEnabled(true);
 
-        manager = ChildManager.getInstance();
+        childManager = ChildManager.getInstance();
+        childManager.getChildList().clear();
+
+        childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
+        childManager.setChildList(SaveLoadData.loadChildList(childFilePath));
         childClickHandler();
         setupChildAdd();
 
@@ -53,7 +54,6 @@ public class ChildList extends AppCompatActivity {
             }
         });
     }
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, ChildList.class);
@@ -79,9 +79,16 @@ public class ChildList extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        SaveLoadData.saveChildList(childFilePath,
+                childManager.getChildList());
+        super.onPause();
+    }
+
     private class MyListAdapter extends ArrayAdapter<Child> {
         public MyListAdapter() {
-            super(ChildList.this, R.layout.child_config_item, manager.children());
+            super(ChildList.this, R.layout.child_config_item, childManager.children());
         }
 
         @Override
@@ -91,7 +98,7 @@ public class ChildList extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.child_config_item, parent, false);
             }
 
-            Child currentChild = manager.getChild(position);
+            Child currentChild = childManager.getChild(position);
 
             TextView nameView = (TextView) itemView.findViewById(R.id.config_item_name);
             nameView.setText(currentChild.getName());
@@ -104,6 +111,5 @@ public class ChildList extends AppCompatActivity {
         protected void onResume() {
             super.onResume();
             populateChildrenList();
-
         }
-    }
+}

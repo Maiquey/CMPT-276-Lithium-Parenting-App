@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,8 @@ ui for Editing Child
 public class ChildEdit extends AppCompatActivity {
 
     private int childIndex;
+    private final String PREF = "PICKING_CHILD_INDEX";
+    public static final String PICKING_CHILD_INDEX = "picking child index new";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,12 @@ public class ChildEdit extends AppCompatActivity {
             public void onClick(View view) {
                 String message = ChildManager.getInstance().getChild(childIndex).getName() + " deleted";
                 ChildManager.getInstance().removeChildAtIndex(childIndex);
+
+                //save new pickingChildIndex which may have changed due to deletion
+                SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt(PICKING_CHILD_INDEX, ChildManager.getInstance().getPickingChildIndex());
+                editor.apply();
 
                 Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                 finish();

@@ -7,46 +7,33 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDateTime;
-
-import ca.cmpt276.parentapp.R;
-import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.CoinFlip;
 import ca.cmpt276.parentapp.model.CoinFlipData;
+import ca.cmpt276.parentapp.model.SaveLoadData;
 
 /**
  * CoinFlipActivity class:
  *
- * ui class for activity of flipping a coin
+ * UI class for activity of flipping a coin
  * offers a choice of heads or tails to the child who's turn it is to pick
  * Uses coinFlip model to randomly generate outcome of the coin flip and show result
  * offers navigation to CoinFlipRecordActivity
+ * sound effect from https://elements.envato.com/coin-throws-5-P6YRTSZ?utm_source=mixkit&utm_medium=referral&utm_campaign=elements_mixkit_cs_sfx_tag
  */
 public class CoinFlipActivity extends AppCompatActivity {
 
+    private MediaPlayer coinTossSound;
+    private Animation coinFlipAnimation;
     public static final String PICKING_CHILD_INDEX = "picking child index new";
     private Button headsButton;
     private Button tailsButton;
@@ -59,24 +46,9 @@ public class CoinFlipActivity extends AppCompatActivity {
     private ImageView coinImage;
     private CoinFlip coinFlip;
     private ChildManager childManager;
-    String flipFilePath;
-    File inputFlipHistory;
+    private String flipFilePath;
+    private String childFilePath;
     private final String PREF = "PICKING_CHILD_INDEX";
-
-    Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
-            new TypeAdapter<LocalDateTime>() {
-                @Override
-                public void write(JsonWriter jsonWriter,
-                                  LocalDateTime localDateTime) throws IOException {
-                    jsonWriter.value(localDateTime.toString());
-                }
-                @Override
-                public LocalDateTime read(JsonReader jsonReader) throws IOException {
-                    return LocalDateTime.parse(jsonReader.nextString());
-                }
-            }).create();
-
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinFlipActivity.class);
@@ -87,15 +59,13 @@ public class CoinFlipActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip);
 
-
         ConstraintLayout constraintLayout = findViewById(R.id.coinflip_layout);
 
         ActionBar ab = getSupportActionBar();
         ab.setTitle("Coin Flip");
         ab.setDisplayHomeAsUpEnabled(true);
-
-        flipFilePath = CoinFlipActivity.this.getFilesDir().getPath().toString() + "/CoinFlipHistory6.json";
-        inputFlipHistory = new File(flipFilePath);
+        flipFilePath = getFilesDir().getPath().toString() + "/CoinFlipHistory6.json";
+        childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
 
         childManager = ChildManager.getInstance();
 
@@ -104,8 +74,10 @@ public class CoinFlipActivity extends AppCompatActivity {
         childManager.setPickingChildIndex(pickingChildIndex);
 
         childManager.getCoinFlipHistory().clear();
-        testPurposeOnly();
-        loadFlipHistoryList();
+        childManager.setCoinFlipHistory(SaveLoadData.loadFlipHistoryList(flipFilePath));
+
+        childManager.getChildList().clear();
+        childManager.setChildList(SaveLoadData.loadChildList(childFilePath));
 
         coinFlip = new CoinFlip();
 
@@ -117,11 +89,15 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinImage = findViewById(R.id.image_coin_state);
         prompt = findViewById(R.id.tv_flip_prompt);
         flipResult = findViewById(R.id.tv_result);
+        coinFlipAnimation = AnimationUtils.loadAnimation(this, R.anim.coin_flip);
+        coinTossSound = MediaPlayer.create(this, R.raw.coin_sound_effect);
 
         setUpClearHistoryButton();
 
         setUpButtons();
         updateUI();
+
+        setUpAnimationListener();
     }
 
     private void setUpButtons() {
@@ -132,7 +108,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                 coinFlip.setPickerPickedHeads(true);
                 headsButton.setVisibility(View.INVISIBLE);
                 tailsButton.setVisibility(View.INVISIBLE);
-                initiateCoinFlip();
+                playFlipAnimation();
             }
         });
 
@@ -142,7 +118,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                 coinFlip.setPickerPickedHeads(false);
                 headsButton.setVisibility(View.INVISIBLE);
                 tailsButton.setVisibility(View.INVISIBLE);
-                initiateCoinFlip();
+                playFlipAnimation();
             }
         });
 
@@ -154,7 +130,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                     headsButton.setVisibility(View.VISIBLE);
                     tailsButton.setVisibility(View.VISIBLE);
                 }else{
-                    initiateCoinFlip();
+                    playFlipAnimation();
                 }
             }
         });
@@ -184,7 +160,7 @@ public class CoinFlipActivity extends AppCompatActivity {
             prompt.setText("Heads or Tails?");
         }
         flipResult.setText("");
-        coinImage.setImageResource(R.drawable.unflipped);
+        coinImage.setImageResource(R.drawable.question_coloured);
         headsButton.setVisibility(View.INVISIBLE);
         tailsButton.setVisibility(View.INVISIBLE);
         flipButton.setVisibility(View.VISIBLE);
@@ -231,49 +207,20 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private void showResults() {
         if(coinFlip.isHeads()){
-            coinImage.setImageResource(R.drawable.heads);
+            coinImage.setImageResource(R.drawable.heads_coloured);
             flipResult.setText("Heads");
         }
         else{
-            coinImage.setImageResource(R.drawable.tails);
+            coinImage.setImageResource(R.drawable.tails_coloured);
             flipResult.setText("Tails");
         }
     }
-    public void loadFlipHistoryList(){
-        try{
-            JsonElement flipHistoryElement = JsonParser.parseReader(new FileReader(inputFlipHistory));
-            JsonArray jsonArrayFlip = flipHistoryElement.getAsJsonArray();
-            for (JsonElement flip : jsonArrayFlip){
-                JsonObject flipObject = flip.getAsJsonObject();
-                String dateAsString = flipObject.get("timeOfFlip").getAsString();
-                LocalDateTime timeOfFlip = LocalDateTime.parse(dateAsString);
-                String nameOfPicker = flipObject.get("whoPicked").getAsString();
-                boolean isHeads = flipObject.get("isHeads").getAsBoolean();
-                boolean pickerPickedHeads = flipObject.get("pickerPickedHeads").getAsBoolean();
-                boolean pickerWon = flipObject.get("pickerWon").getAsBoolean();
-                CoinFlipData coinFlip = new CoinFlipData(timeOfFlip, nameOfPicker,
-                        isHeads, pickerPickedHeads, pickerWon);
-                childManager.addCoinFlip(coinFlip);
-            }
-        } catch (FileNotFoundException e) {
-            //do nothing if no file found
-            Log.e("TAG", "history Json not found");
-        }
-    }
 
-    public void saveFlipHistoryList(){
-        try{
-            String jsonString = myGson.toJson(childManager.getCoinFlipHistory());
-            FileWriter fileWriter = new FileWriter(flipFilePath);
-            fileWriter.write(jsonString);
-            fileWriter.close();
-        } catch (IOException exception) {
-            System.out.println("Exception " + exception.getMessage());
-        }
-    }
     @Override
     protected void onPause() {
-        saveFlipHistoryList();
+
+        SaveLoadData.saveFlipHistoryList(flipFilePath,
+                childManager.getCoinFlipHistory());
         SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(PICKING_CHILD_INDEX, childManager.getPickingChildIndex());
@@ -283,21 +230,35 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-
         super.onStart();
     }
 
-    private void testPurposeOnly(){
-        Child c1 = new Child("Alice");
-        Child c2 = new Child("Beth");
-        Child c3 = new Child("Chris");
-        Child c4 = new Child("Darren");
-        Child c5 = new Child("Emily");
-        childManager.addChild(c1);
-        childManager.addChild(c2);
-        childManager.addChild(c3);
-        childManager.addChild(c4);
-        childManager.addChild(c5);
+    private void playFlipAnimation(){
+        coinImage.setImageResource(R.drawable.blank_coloured);
+        coinTossSound.start();
+        coinImage.startAnimation(coinFlipAnimation);
+    }
+
+    private void setUpAnimationListener(){
+        coinFlipAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                deleteButton.setVisibility(View.INVISIBLE);
+                coinFlipHistory.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                deleteButton.setVisibility(View.VISIBLE);
+                coinFlipHistory.setVisibility(View.VISIBLE);
+                initiateCoinFlip();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
 }
