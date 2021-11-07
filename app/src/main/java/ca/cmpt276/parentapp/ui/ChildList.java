@@ -1,7 +1,9 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.ui;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.SaveLoadData;
@@ -19,7 +21,6 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-
 public class ChildList extends AppCompatActivity {
 
     private ChildManager childManager;
@@ -29,6 +30,10 @@ public class ChildList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_list);
+//
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("Children List");
+        ab.setDisplayHomeAsUpEnabled(true);
 
         childManager = ChildManager.getInstance();
         childManager.getChildList().clear();
@@ -68,9 +73,6 @@ public class ChildList extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                String message = "Editing " + childManager.getChild(position).getName();
-                Toast.makeText(ChildList.this, message, Toast.LENGTH_LONG).show();
-
                 Intent intent = ChildEdit.makeIntent(ChildList.this, position);
                 startActivity(intent);
             }

@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,9 +20,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import ca.cmpt276.parentapp.model.Child;
+import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.ChildManager;
-import ca.cmpt276.parentapp.model.CoinFlip;
 import ca.cmpt276.parentapp.model.CoinFlipData;
 
 /**

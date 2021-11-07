@@ -13,28 +13,31 @@
 
         android:theme="@style/Theme.LithiumParentApp">
         <activity
-            android:name=".CoinFlipRecordActivity"
+            android:name=".ui.CoinFlipRecordActivity"
             android:exported="true"
-            android:parentActivityName=".CoinFlipActivity"/>
+            android:parentActivityName=".ui.CoinFlipActivity"/>
         <activity
-            android:name=".CoinFlipActivity"
+            android:name=".ui.CoinFlipActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".ui.MainActivity"/>
         <activity
-            android:name=".ChildList"
-            android:exported="false" />
+            android:name=".ui.ChildList"
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity"/>
         <activity
-            android:name=".ChildEdit"
-            android:exported="false" />
+            android:name=".ui.ChildEdit"
+            android:exported="false"
+            android:parentActivityName=".ui.ChildList"/>
         <activity
-            android:name=".ChildAdd"
-            android:exported="false" />
+            android:name=".ui.ChildAdd"
+            android:exported="false"
+            android:parentActivityName=".ui.ChildList"/>
         <activity
             android:name=".TimeoutTimer"
             android:exported="true"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".ui.MainActivity"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.LithiumParentApp.NoActionBar">

@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.ui;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,14 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 
 /*
-UI for Adding Child
+ui for Adding Child
  */
 
 public class ChildAdd extends AppCompatActivity {
@@ -26,19 +25,12 @@ public class ChildAdd extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_add);
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        getSupportActionBar().setTitle("Add Child");
-//
-//        ActionBar ab = getSupportActionBar();
-//        ab.setDisplayHomeAsUpEnabled(true);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("Add Child");
+        ab.setDisplayHomeAsUpEnabled(true);
 
         setupAdd();
-        setupChildEdit();
-
-    }
-
-    private void setupChildEdit() {
-
     }
 
     public static Intent makeIntent(Context context) {
@@ -61,7 +53,7 @@ public class ChildAdd extends AppCompatActivity {
                     Child child = new Child(name);
                     ChildManager.getInstance().addChild(child);
 
-                    String message = name + "added!";
+                    String message = name + " added!";
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                     finish();
                 }

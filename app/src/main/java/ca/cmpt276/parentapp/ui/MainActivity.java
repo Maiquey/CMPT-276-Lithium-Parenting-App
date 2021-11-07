@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,15 @@ import android.view.View;
 
 import androidx.navigation.ui.AppBarConfiguration;
 
+import ca.cmpt276.parentapp.R;
+import ca.cmpt276.parentapp.TimeoutTimer;
 import ca.cmpt276.parentapp.databinding.ActivityMainBinding;
 import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.CoinFlipData;
 
 import android.widget.Button;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
