@@ -9,6 +9,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +50,8 @@ public class TimeoutTimer extends AppCompatActivity {
     public static final String MILLIS_LEFT = "mill isLeft";
     public static final String IS_TIMER_RUNNING = "isTimerRunning";
     public static final String END_TIME = "endTime";
+    public static final int ONE_SECOND = 1000;
+    public static final int THREE_SECONDS = 3000;
     public static final int ONE_MINUTE = 60000;
     public static final int TWO_MINUTES = 120000;
     public static final int THREE_MINUTES = 180000;
@@ -73,10 +77,20 @@ public class TimeoutTimer extends AppCompatActivity {
     private long endTime;
     private long setStartTime;
     private AlarmManager alarmManager;
-    private NotificationManagerCompat notificationManager;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TimeoutTimer.class);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -87,15 +101,13 @@ public class TimeoutTimer extends AppCompatActivity {
         ConstraintLayout constraintLayout = findViewById(R.id.timeout_layout);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
 
-        animationDrawable.setEnterFadeDuration(3000);
-        animationDrawable.setExitFadeDuration(3000);
+        animationDrawable.setEnterFadeDuration(THREE_SECONDS);
+        animationDrawable.setExitFadeDuration(THREE_SECONDS);
         animationDrawable.start();
-
-        notificationManager = NotificationManagerCompat.from(this);
 
         /* setup Up button */
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("Timeout Timer");
+        ab.setTitle(R.string.timer_ab_title);
         ab.setDisplayHomeAsUpEnabled(true);
 
         txtEnterTime = findViewById(R.id.txtEnterTime);
@@ -111,26 +123,21 @@ public class TimeoutTimer extends AppCompatActivity {
         btn5Min = findViewById(R.id.btnSet5Min);
         btn10Min = findViewById(R.id.btnSet10Min);
 
-        startTimeInMillies = 0;
+        startTimeInMillies = ONE_MINUTE;
         timeLeftInMillies = startTimeInMillies;
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
 
         btnSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String inputTime = txtEnterTime.getText().toString();
                 if (inputTime.length() == 0) {
-                    Toast.makeText(TimeoutTimer.this,
-                            "Field cannot be empty!",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TimeoutTimer.this, R.string.edittext_warning_empty, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 long millisStart = Long.parseLong(inputTime) * ONE_MINUTE;
                 if (millisStart <= 0) {
-                    Toast.makeText(TimeoutTimer.this,
-                            "Please enter a number that is greater than 0!",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TimeoutTimer.this, R.string.edittext_warning_positive_num, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 setTime(millisStart);
@@ -148,14 +155,10 @@ public class TimeoutTimer extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isTimerRunning) {
-                    pauseTimer();
-                } else {
-                    long alarmTime = System.currentTimeMillis() + timeLeftInMillies;
-                    scheduleNotification(getNotification("Timer is up!"), alarmTime);
-                    updateCountdownText();
-                    startTimer();
-                }
+                long alarmTime = System.currentTimeMillis() + timeLeftInMillies;
+                scheduleNotification(getNotification(getString(R.string.notification_content)), alarmTime);
+                updateCountdownText();
+                startTimer();
             }
         });
 
@@ -213,7 +216,6 @@ public class TimeoutTimer extends AppCompatActivity {
 
     private void scheduleNotification(Notification notification, long alarmTime) {
         Intent intent = new Intent(TimeoutTimer.this, NotificationReceiver.class);
-        intent.putExtra("message", "Hello");
         intent.putExtra(NotificationReceiver.NOTIF_ID, 1);
         intent.putExtra(NotificationReceiver.NOTIFICATION, notification);
 
@@ -227,23 +229,18 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private Notification getNotification(String content) {
-        String title = "Cool Down Timer";
-        String description = "Your cool down timer is up!";
+        String title = getString(R.string.notification_title);
 
-        Intent intent = new Intent(this, TimeoutTimer.class);
+        Intent intent = makeIntent(this);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, intent, 0);
-
-        Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
-        broadcastIntent.putExtra("message", "MESSAGE");
-        PendingIntent actionIntent = pendingIntent.getBroadcast(this,
-                0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
         builder.setContentTitle(title);
-        builder.setContentText(description);
+        builder.setContentText(content);
         builder.setSmallIcon(R.drawable.alarm_png_3);
         builder.setContentIntent(pendingIntent);
+        builder.setFullScreenIntent(pendingIntent, true);
         builder.setAutoCancel(true);
         Uri soundUri = Uri.parse("android.resource://"
                 + TimeoutTimer.this.getPackageName() + "/" + R.raw.blue_danube_alarm);
@@ -260,8 +257,7 @@ public class TimeoutTimer extends AppCompatActivity {
 
     private void startTimer() {
         endTime = System.currentTimeMillis() + timeLeftInMillies;
-
-        countDownTimer = new CountDownTimer(timeLeftInMillies, 1000) {
+        countDownTimer = new CountDownTimer(timeLeftInMillies, ONE_SECOND) {
             @Override
             public void onTick(long l) {
                 timeLeftInMillies = l;
@@ -284,9 +280,8 @@ public class TimeoutTimer extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(TimeoutTimer.this,
                 0,
                 intent,
-                0);
+                PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
-
         countDownTimer.cancel();
         isTimerRunning = false;
         updateUI();
@@ -300,10 +295,12 @@ public class TimeoutTimer extends AppCompatActivity {
                 intent,
                 0);
 
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_ID);
         alarmManager.cancel(pendingIntent);
         updateCountdownText();
         updateUI();
-        btnStart.setText("START");
+        btnStart.setText(R.string.start_button_text);
         btnPause.setVisibility(View.INVISIBLE);
         btn1Min.setVisibility(View.VISIBLE);
         btn2Min.setVisibility(View.VISIBLE);
@@ -313,9 +310,9 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void updateCountdownText() {
-        int hours = (int) (timeLeftInMillies / 1000) / 3600; //convert milliseconds to hours
-        int minutes = (int) ((timeLeftInMillies / 1000) % 3600) / 60; //convert milliseconds to minutes
-        int seconds = (int) (timeLeftInMillies / 1000) % 60; //convert milliseconds to seconds
+        int hours = (int) (timeLeftInMillies / ONE_SECOND) / 3600; //convert milliseconds to hours
+        int minutes = (int) ((timeLeftInMillies / ONE_SECOND) % 3600) / 60; //convert milliseconds to minutes
+        int seconds = (int) (timeLeftInMillies / ONE_SECOND) % 60; //convert milliseconds to seconds
 
         String timeLeftFormatted;
         if (hours > 0) {
@@ -323,9 +320,7 @@ public class TimeoutTimer extends AppCompatActivity {
         } else {
             timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         }
-
         txtCountDownTimer.setText(timeLeftFormatted);
-
     }
 
     private void updateUI() {
@@ -341,12 +336,12 @@ public class TimeoutTimer extends AppCompatActivity {
             btn5Min.setVisibility(View.INVISIBLE);
             btn10Min.setVisibility(View.INVISIBLE);
         } else {
-            btnStart.setText("START");
+            btnStart.setText(R.string.start_button_text);
             btnPause.setVisibility(View.INVISIBLE);
             txtEnterTime.setVisibility(View.VISIBLE);
             btnSet.setVisibility(View.VISIBLE);
             btnStart.setVisibility(View.VISIBLE);
-            if (timeLeftInMillies < 1000) {
+            if (timeLeftInMillies < ONE_SECOND) {
                 btnSet.setVisibility(View.INVISIBLE);
                 txtEnterTime.setVisibility(View.INVISIBLE);
                 btnStart.setVisibility(View.INVISIBLE);
@@ -357,7 +352,7 @@ public class TimeoutTimer extends AppCompatActivity {
                 btn10Min.setVisibility(View.INVISIBLE);
             } else {
                 if (timeLeftInMillies < startTimeInMillies) {
-                    btnStart.setText("RESUME");
+                    btnStart.setText(R.string.resume_button_text);
                     btnSet.setVisibility(View.INVISIBLE);
                     txtEnterTime.setVisibility(View.INVISIBLE);
                 }
@@ -377,6 +372,9 @@ public class TimeoutTimer extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
+        if (isTimerRunning) {
+            countDownTimer.cancel();
+        }
         SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(START_TIME_IN_MILLIS, startTimeInMillies);
@@ -387,17 +385,21 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
-
         SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
-        startTimeInMillies = preferences.getLong(START_TIME_IN_MILLIS, 60000);
-        timeLeftInMillies = preferences.getLong(MILLIS_LEFT, 60000);
+        startTimeInMillies = preferences.getLong(START_TIME_IN_MILLIS, ONE_MINUTE);
+        timeLeftInMillies = preferences.getLong(MILLIS_LEFT, ONE_MINUTE);
         isTimerRunning = preferences.getBoolean(IS_TIMER_RUNNING, false);
         updateUI();
         updateCountdownText();
-
         if (isTimerRunning) {
+
             endTime = preferences.getLong(END_TIME, 0);
             timeLeftInMillies = endTime - System.currentTimeMillis();
 
