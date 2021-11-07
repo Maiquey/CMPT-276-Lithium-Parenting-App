@@ -20,6 +20,10 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+/*
+UI to List Chilren
+ */
+
 public class ChildList extends AppCompatActivity {
 
     private ChildManager manager;

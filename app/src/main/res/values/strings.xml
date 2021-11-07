@@ -26,5 +26,6 @@
     <string name="edittext_warning_positive_num">Please enter a number that is greater than 0!</string>
     <string name="notification_content">Timer is up!</string>
     <string name="notification_title">Cool Down Timer</string>
+    <string name="enter_a_new_name">Enter a new name</string>
 
 </resources>

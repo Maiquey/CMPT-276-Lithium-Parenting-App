@@ -60,7 +60,7 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter a new name"
+        android:text="@string/enter_a_new_name"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextSelectedChild"
         app:layout_constraintEnd_toEndOf="parent"
