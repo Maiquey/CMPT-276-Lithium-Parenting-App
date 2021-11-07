@@ -9,6 +9,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -294,6 +295,8 @@ public class TimeoutTimer extends AppCompatActivity {
                 intent,
                 0);
 
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_ID);
         alarmManager.cancel(pendingIntent);
         updateCountdownText();
         updateUI();
@@ -395,8 +398,8 @@ public class TimeoutTimer extends AppCompatActivity {
         isTimerRunning = preferences.getBoolean(IS_TIMER_RUNNING, false);
         updateUI();
         updateCountdownText();
-
         if (isTimerRunning) {
+
             endTime = preferences.getLong(END_TIME, 0);
             timeLeftInMillies = endTime - System.currentTimeMillis();
 
