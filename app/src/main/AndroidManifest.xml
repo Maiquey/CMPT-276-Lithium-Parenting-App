@@ -19,16 +19,19 @@
         <activity
             android:name=".ui.CoinFlipActivity"
             android:exported="true"
-            android:parentActivityName=".ui.MainActivity" />
+            android:parentActivityName=".ui.MainActivity"/>
         <activity
             android:name=".ui.ChildList"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity"/>
         <activity
             android:name=".ui.ChildEdit"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.ChildList"/>
         <activity
             android:name=".ui.ChildAdd"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.ChildList"/>
         <activity
             android:name=".TimeoutTimer"
             android:exported="true"

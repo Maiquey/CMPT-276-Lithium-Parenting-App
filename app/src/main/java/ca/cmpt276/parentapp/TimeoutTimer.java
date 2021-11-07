@@ -100,8 +100,6 @@ public class TimeoutTimer extends AppCompatActivity {
         ConstraintLayout constraintLayout = findViewById(R.id.timeout_layout);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
 
-        TimeoutTimerModel timeoutTimerModel = new TimeoutTimerModel();
-
         animationDrawable.setEnterFadeDuration(THREE_SECONDS);
         animationDrawable.setExitFadeDuration(THREE_SECONDS);
         animationDrawable.start();

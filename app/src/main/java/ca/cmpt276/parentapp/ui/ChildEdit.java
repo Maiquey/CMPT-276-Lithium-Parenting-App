@@ -49,7 +49,7 @@ public class ChildEdit extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = ChildManager.getInstance().getChild(childIndex).getName() + " Deleted";
+                String message = ChildManager.getInstance().getChild(childIndex).getName() + " deleted";
                 ChildManager.getInstance().removeChildAtIndex(childIndex);
 
                 Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();

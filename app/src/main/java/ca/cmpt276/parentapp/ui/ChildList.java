@@ -73,9 +73,6 @@ public class ChildList extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                String message = "Editing " + manager.getChild(position).getName();
-                Toast.makeText(ChildList.this, message, Toast.LENGTH_LONG).show();
-
                 Intent intent = ChildEdit.makeIntent(ChildList.this, position);
                 startActivity(intent);
             }

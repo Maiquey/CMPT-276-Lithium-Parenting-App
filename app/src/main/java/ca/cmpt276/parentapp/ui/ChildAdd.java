@@ -53,7 +53,7 @@ public class ChildAdd extends AppCompatActivity {
                     Child child = new Child(name);
                     ChildManager.getInstance().addChild(child);
 
-                    String message = name + " Added!";
+                    String message = name + " added!";
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                     finish();
                 }
