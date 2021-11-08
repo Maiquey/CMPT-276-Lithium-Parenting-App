@@ -16,22 +16,27 @@
         <activity
             android:name=".ui.CoinFlipRecordActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.CoinFlipActivity"/>
         <activity
             android:name=".ui.CoinFlipActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.MainActivity"/>
         <activity
             android:name=".ui.ChildList"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.MainActivity"/>
         <activity
             android:name=".ui.ChildEdit"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.ChildList"/>
         <activity
             android:name=".ui.ChildAdd"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.ChildList"/>
         <activity
             android:name=".TimeoutTimer"

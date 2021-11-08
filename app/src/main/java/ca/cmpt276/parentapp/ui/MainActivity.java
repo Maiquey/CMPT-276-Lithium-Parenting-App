@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void setupChildBtn(){
-        Button btn1 = findViewById(R.id.childbtn);
+        Button btn1 = findViewById(R.id.configButton);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setupCoinFlip(){
-        Button coinFlipButton = findViewById(R.id.button_coinflip_launch);
+        Button coinFlipButton = findViewById(R.id.coinFlipButton);
         coinFlipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
