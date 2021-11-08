@@ -20,10 +20,11 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import ca.cmpt276.parentapp.model.Child;
-import ca.cmpt276.parentapp.model.ChildManager;
-import ca.cmpt276.parentapp.model.CoinFlipData;
-
+/**
+ * SaveLoadData class:
+ *
+ * class used to save/load configured children and coin flip history
+ */
 public class SaveLoadData {
 
     private SaveLoadData(){

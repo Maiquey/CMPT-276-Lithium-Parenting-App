@@ -107,8 +107,7 @@ public class ChildManager {
         return childList;
     }
 
-    //temporary method for unit tests
-    //should be removed later
+    //method for unit tests
     public void cleanSingleton(){
         childList.clear();
         pickingChildIndex = 0;

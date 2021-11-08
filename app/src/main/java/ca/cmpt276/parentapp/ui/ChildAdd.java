@@ -15,10 +15,11 @@ import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 
-/*
-ui for Adding Child
+/**
+ * ChildAdd class:
+ *
+ * UI class for adding a child in the configure child activity
  */
-
 public class ChildAdd extends AppCompatActivity {
 
     @Override
@@ -27,7 +28,7 @@ public class ChildAdd extends AppCompatActivity {
         setContentView(R.layout.activity_child_add);
 
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("Add Child");
+        ab.setTitle(R.string.add_child_title);
         ab.setDisplayHomeAsUpEnabled(true);
 
         setupAdd();
@@ -46,14 +47,14 @@ public class ChildAdd extends AppCompatActivity {
                 EditText textBox = (EditText) findViewById(R.id.editTextChildAdd);
                 String name = textBox.getText().toString();
                 if(name.matches("")) {
-                    String message = "Name Empty!";
+                    String message = getString(R.string.warning_name_empty);
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Child child = new Child(name);
                     ChildManager.getInstance().addChild(child);
 
-                    String message = name + " added!";
+                    String message = name + getString(R.string.x_added);
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                     finish();
                 }

@@ -17,10 +17,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+/**
+ * ChildList class:
+ *
+ * UI class which displays a list of configured children using a listview.
+ * allows user to click on entries in the list to edit a child.
+ * floating action button to add a new child.
+ */
 public class ChildList extends AppCompatActivity {
 
     private ChildManager childManager;
@@ -32,7 +38,7 @@ public class ChildList extends AppCompatActivity {
         setContentView(R.layout.activity_child_list);
 //
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("Children List");
+        ab.setTitle(R.string.child_list);
         ab.setDisplayHomeAsUpEnabled(true);
 
         childManager = ChildManager.getInstance();

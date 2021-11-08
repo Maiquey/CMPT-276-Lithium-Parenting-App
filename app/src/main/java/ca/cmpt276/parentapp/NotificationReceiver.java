@@ -11,7 +11,13 @@ import android.net.Uri;
 import android.os.Build;
 import static ca.cmpt276.parentapp.TimeoutTimer.NOTIFICATION_CHANNEL_ID;
 
+import ca.cmpt276.parentapp.R;
 
+/**
+ * NotificationReceiver class:
+ *
+ * broadcast receiver for timeout timer pop-up notification
+ */
 public class NotificationReceiver extends BroadcastReceiver {
     public static String NOTIF_ID = "notifid";
     public static String NOTIFICATION = "notification";
@@ -27,7 +33,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                     "Cool Down Timer",
                     NotificationManager.IMPORTANCE_HIGH
             );
-            channel1.setDescription("Your cool down timer is up!");
+            channel1.setDescription(context.getString(R.string.cool_down_timer_done));
             channel1.enableVibration(true);
             channel1.setVibrationPattern(new long[]{1000, 1000, 1000, 1000, 1000});
             Uri soundUri = Uri.parse("android.resource://"

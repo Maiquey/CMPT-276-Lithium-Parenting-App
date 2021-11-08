@@ -16,10 +16,11 @@ import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 
-/*
-ui for Editing Child
+/**
+ * ChildEdit class:
+ *
+ * UI class for editing a configured child's name in the configure child activity
  */
-
 public class ChildEdit extends AppCompatActivity {
 
     private int childIndex;
@@ -32,7 +33,7 @@ public class ChildEdit extends AppCompatActivity {
         setContentView(R.layout.activity_child_edit);
 
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("Edit Child");
+        ab.setTitle(R.string.edit_child_title);
         ab.setDisplayHomeAsUpEnabled(true);
 
         extractExtras();
@@ -52,7 +53,7 @@ public class ChildEdit extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = ChildManager.getInstance().getChild(childIndex).getName() + " deleted";
+                String message = ChildManager.getInstance().getChild(childIndex).getName() + getString(R.string.x_deleted);
                 ChildManager.getInstance().removeChildAtIndex(childIndex);
 
                 //save new pickingChildIndex which may have changed due to deletion
@@ -75,13 +76,13 @@ public class ChildEdit extends AppCompatActivity {
                 EditText editBox = (EditText) findViewById(R.id.editTextSelectedChild);
                 String name = editBox.getText().toString();
                 if (name.matches("")) {
-                    String message = "Empty Name!";
+                    String message = getString(R.string.warning_name_empty);
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     ChildManager.getInstance().getChild(childIndex).setName(name);
 
-                    String message = "Edited!";
+                    String message = getString(R.string.edited);
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                     finish();
                 }

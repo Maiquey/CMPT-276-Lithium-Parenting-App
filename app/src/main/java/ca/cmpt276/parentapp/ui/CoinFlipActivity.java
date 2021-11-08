@@ -63,7 +63,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         ConstraintLayout constraintLayout = findViewById(R.id.coinflip_layout);
 
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("Coin Flip");
+        ab.setTitle(R.string.coin_flip_title);
         ab.setDisplayHomeAsUpEnabled(true);
         flipFilePath = getFilesDir().getPath().toString() + "/CoinFlipHistory6.json";
         childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
@@ -155,10 +155,10 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private void updateUI() {
         if (!coinFlip.isNoChildren()){
-            prompt.setText("" + coinFlip.getWhoPicked() + " gets to pick!");
+            prompt.setText("" + coinFlip.getWhoPicked() + getString(R.string.x_gets_to_pick));
         }
         else{
-            prompt.setText("Heads or Tails?");
+            prompt.setText(R.string.heads_or_tails);
         }
         flipResult.setText("");
         coinImage.setImageResource(R.drawable.question_coloured);
@@ -178,10 +178,10 @@ public class CoinFlipActivity extends AppCompatActivity {
             coinFlip.doCoinFlip();
             showResults();
             if(coinFlip.isPickerWon()){
-                prompt.setText("" + coinFlip.getWhoPicked() + " won!");
+                prompt.setText("" + coinFlip.getWhoPicked() + getString(R.string.x_won));
             }
             else{
-                prompt.setText("" + coinFlip.getWhoPicked() + " lost!");
+                prompt.setText("" + coinFlip.getWhoPicked() + getString(R.string.x_lost));
             }
             CoinFlipData coinFlipData = new CoinFlipData(coinFlip.getTimeOfFlip(),
                                                             coinFlip.getWhoPicked(),
@@ -209,11 +209,11 @@ public class CoinFlipActivity extends AppCompatActivity {
     private void showResults() {
         if(coinFlip.isHeads()){
             coinImage.setImageResource(R.drawable.heads_coloured);
-            flipResult.setText("Heads");
+            flipResult.setText(R.string.heads);
         }
         else{
             coinImage.setImageResource(R.drawable.tails_coloured);
-            flipResult.setText("Tails");
+            flipResult.setText(R.string.tails);
         }
     }
 

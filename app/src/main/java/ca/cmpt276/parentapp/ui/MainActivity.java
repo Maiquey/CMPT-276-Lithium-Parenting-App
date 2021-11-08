@@ -13,12 +13,15 @@ import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.TimeoutTimer;
 import ca.cmpt276.parentapp.databinding.ActivityMainBinding;
 import ca.cmpt276.parentapp.model.ChildManager;
-import ca.cmpt276.parentapp.model.CoinFlipData;
 
 import android.widget.Button;
 
-import java.io.File;
-
+/**
+ * MainActivity class:
+ *
+ * functions as the app's main menu UI screen
+ * support for launching different activities using intents
+ */
 public class MainActivity extends AppCompatActivity {
 
 
