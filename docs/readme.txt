@@ -1,3 +1,8 @@
 Iteration 1:
 Delete Coin Flip History button implemented initially for testing.
 This wasn't part of the requirements but since it was already there it can act as a bonus feature.
+
+For Timeout Timer, user must complete the "Finish Setup" steps (user may skip all steps) in order for the notification ringtone to work.
+User may find the "Finish Setup" page under Settings in the emulator ("Finish setting up your device").
+
+App compatible 4", 5", 6", and 10" screen sizes.

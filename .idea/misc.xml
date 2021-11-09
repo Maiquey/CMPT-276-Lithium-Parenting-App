@@ -4,12 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_child_add.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_child_edit.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_child_edit.xml" value="0.25" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_child_list.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_coin_flip.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_coin_flip.xml" value="0.25" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_coin_flip_record.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_timeout_timer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_timeout_timer.xml" value="0.25" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/child_config_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/content_child_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/content_main.xml" value="0.25" />

@@ -25,22 +25,21 @@
         android:id="@+id/btnTimerPage"
         android:layout_width="200dp"
         android:layout_height="51dp"
-        android:text="@string/Timeout_Timer"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:textAllCaps="false"
         android:background='@drawable/custom_button'
+        android:text="@string/Timeout_Timer"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.802"/>
+        app:layout_constraintTop_toBottomOf="@+id/space3" />
 
     <Button
         android:id="@+id/coinFlipButton"
         android:layout_width="200dp"
         android:layout_height="51dp"
+        android:layout_marginBottom="16dp"
         android:background='@drawable/custom_button'
         android:text="@string/flip_a_coin"
         android:textAllCaps="false"
@@ -48,24 +47,28 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btnTimerPage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.974" />
+        app:layout_constraintStart_toStartOf="@+id/nav_host_fragment_content_main" />
 
     <Button
         android:id="@+id/configButton"
         android:layout_width="200dp"
         android:layout_height="51dp"
+        android:layout_marginTop="16dp"
         android:background='@drawable/custom_button'
         android:text="@string/Configure"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTimerPage"
-        app:layout_constraintVertical_bias="0.202" />
+        app:layout_constraintTop_toBottomOf="@+id/btnTimerPage" />
+
+    <Space
+        android:id="@+id/space3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/nav_host_fragment_content_main"
+        app:layout_constraintStart_toStartOf="@+id/nav_host_fragment_content_main"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment_content_main" />
 </androidx.constraintlayout.widget.ConstraintLayout>

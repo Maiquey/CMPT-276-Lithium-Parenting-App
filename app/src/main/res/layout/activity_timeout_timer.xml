@@ -13,16 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="128dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:hint="@string/minutes"
         android:inputType="number"
         android:maxLength="3"
-        app:layout_constraintBottom_toBottomOf="@+id/btnSetTime"
-        app:layout_constraintEnd_toStartOf="@+id/btnSetTime"
-        app:layout_constraintHorizontal_bias="0.915"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/txtCountDown"
+        app:layout_constraintEnd_toStartOf="@+id/btnSetTime" />
 
     <TextView
         android:id="@+id/txtCountDown"
@@ -30,14 +26,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtEnterTime"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
         android:text="@string/time_zero"
         android:textColor="@android:color/black"
         android:textSize="60sp"
-        app:layout_constraintEnd_toEndOf="@+id/btnSetTime"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/txtEnterTime"
-        app:layout_constraintTop_toBottomOf="@+id/txtEnterTime" />
+        app:layout_constraintBottom_toTopOf="@+id/space2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnStart"
@@ -45,16 +40,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtCountDown"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="4dp"
         android:backgroundTint="#85D98D"
         android:text="@string/start"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnReset"
         app:layout_constraintEnd_toEndOf="@+id/txtCountDown"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="@+id/txtCountDown"
-        app:layout_constraintTop_toBottomOf="@+id/txtCountDown"
-        app:layout_constraintVertical_bias="0.062" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCountDown" />
 
     <Button
         android:id="@+id/btnPause"
@@ -83,17 +76,15 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:backgroundTint="#E46B6B"
         android:text="@string/reset"
         android:textColor="#000000"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/space2"
         app:layout_constraintEnd_toEndOf="@+id/btnStart"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btnStart"
-        app:layout_constraintTop_toBottomOf="@+id/btnStart"
-        app:layout_constraintVertical_bias="0.019" />
+        app:layout_constraintTop_toTopOf="@+id/space2" />
 
     <Button
         android:id="@+id/btnSetTime"
@@ -102,12 +93,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
 
-        android:layout_marginTop="124dp"
+        android:layout_marginEnd="-8dp"
         android:text="@string/set"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.612"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/txtCountDown"
+        app:layout_constraintEnd_toEndOf="@+id/txtCountDown" />
 
     <Button
         android:id="@+id/btnSet1Min"
@@ -116,18 +105,15 @@
         android:layout_alignTop="@+id/btnSet2Min"
         android:layout_alignBottom="@+id/btnSet2Min"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="120dp"
         android:layout_toStartOf="@+id/btnSet2Min"
         android:layout_weight="1"
         android:backgroundTint="#CCCCCC"
         android:text="@string/_1_min"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/btnSet2Min"
-        app:layout_constraintEnd_toStartOf="@+id/btnStart"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/btnSet2Min"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnStart" />
+        app:layout_constraintTop_toTopOf="@+id/btnSet2Min" />
 
     <Button
         android:id="@+id/btnSet2Min"
@@ -135,15 +121,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
         android:layout_weight="1"
         android:backgroundTint="#CCCCCC"
         android:text="@string/_2_min"
         android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="@+id/btnStart"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="@+id/btnStart"
-        app:layout_constraintTop_toBottomOf="@+id/btnStart" />
+        app:layout_constraintBottom_toTopOf="@+id/space6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space2" />
 
     <Button
         android:id="@+id/btnSet3Min"
@@ -152,7 +137,6 @@
         android:layout_alignTop="@+id/btnSet2Min"
         android:layout_alignBottom="@+id/btnSet2Min"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="120dp"
         android:layout_toEndOf="@+id/btnSet2Min"
         android:layout_weight="1"
         android:backgroundTint="#CCCCCC"
@@ -160,9 +144,8 @@
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/btnSet2Min"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.783"
-        app:layout_constraintStart_toEndOf="@+id/btnStart"
-        app:layout_constraintTop_toBottomOf="@+id/btnStart" />
+        app:layout_constraintStart_toEndOf="@+id/btnSet2Min"
+        app:layout_constraintTop_toTopOf="@+id/btnSet2Min" />
 
     <Button
         android:id="@+id/btnSet10Min"
@@ -174,12 +157,10 @@
         android:backgroundTint="#CCCCCC"
         android:text="@string/_10_min"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnSet3Min"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/btnSet2Min"
-        app:layout_constraintTop_toBottomOf="@+id/btnSet3Min"
-        app:layout_constraintVertical_bias="0.254" />
+        app:layout_constraintBottom_toBottomOf="@+id/space6"
+        app:layout_constraintEnd_toEndOf="@+id/btnSet3Min"
+        app:layout_constraintStart_toStartOf="@+id/btnSet2Min"
+        app:layout_constraintTop_toTopOf="@+id/space6" />
 
     <Button
         android:id="@+id/btnSet5Min"
@@ -192,14 +173,43 @@
         android:backgroundTint="#CCCCCC"
         android:text="@string/_5_min"
         android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/space6"
+        app:layout_constraintEnd_toEndOf="@+id/btnSet2Min"
+        app:layout_constraintStart_toStartOf="@+id/btnSet1Min"
+        app:layout_constraintTop_toTopOf="@+id/space6" />
+
+    <Space
+        android:id="@+id/space2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnSet2Min"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/btnSet1Min"
-        app:layout_constraintTop_toBottomOf="@+id/btnSet1Min"
-        app:layout_constraintVertical_bias="0.254" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="306dp" />
 
+    <Space
+        android:id="@+id/space5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/space2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCountDown" />
+
+    <Space
+        android:id="@+id/space6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
