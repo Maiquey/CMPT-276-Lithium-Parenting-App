@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LithiumParentApp</string>
+    <string name="app_name">Lithium Parenting App</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -44,7 +44,7 @@
     <string name="x_picked_tails">\ picked: Tails.</string>
     <string name="result_heads">Result was: Heads.</string>
     <string name="result_tails">Result was: Tails.</string>
-    <string name="date_time">Date and time: </string>
+    <string name="date_time">Date and time:\  </string>
     <string name="add_child_title">Add Child</string>
     <string name="warning_name_empty">Name Empty!</string>
     <string name="x_added">\ added!</string>
