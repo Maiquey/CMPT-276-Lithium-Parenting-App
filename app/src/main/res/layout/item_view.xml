@@ -26,7 +26,6 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/item_icon"
-        android:text="Player 1 Won!"
         android:textSize="20sp" />
 
     <TextView
@@ -36,8 +35,7 @@
         android:layout_below="@+id/item_who_flipped"
         android:layout_marginStart="2dp"
         android:layout_marginTop="1dp"
-        android:layout_toEndOf="@+id/item_icon"
-        android:text="TextView" />
+        android:layout_toEndOf="@+id/item_icon" />
 
     <TextView
         android:id="@+id/item_DateTime"
@@ -46,6 +44,5 @@
         android:layout_below="@+id/item_flip_result"
         android:layout_marginStart="1dp"
         android:layout_marginTop="3dp"
-        android:layout_toEndOf="@+id/item_icon"
-        android:text="TextView" />
+        android:layout_toEndOf="@+id/item_icon" />
 </RelativeLayout>

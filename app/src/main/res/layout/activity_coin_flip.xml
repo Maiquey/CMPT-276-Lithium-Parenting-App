@@ -21,21 +21,21 @@
         android:id="@+id/button_heads"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Heads"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/heads"
+        app:layout_constraintBottom_toBottomOf="@+id/button_flip"
         app:layout_constraintEnd_toStartOf="@+id/space"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_coin_state" />
+        app:layout_constraintTop_toTopOf="@+id/button_flip" />
 
     <Button
         android:id="@+id/button_tails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tails"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/tails"
+        app:layout_constraintBottom_toBottomOf="@+id/button_flip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/space"
-        app:layout_constraintTop_toBottomOf="@+id/image_coin_state" />
+        app:layout_constraintTop_toTopOf="@+id/button_flip" />
 
     <Space
         android:id="@+id/space"
@@ -50,7 +50,6 @@
         android:id="@+id/tv_flip_prompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/image_coin_state"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,29 +59,26 @@
         android:id="@+id/button_flip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
-        android:text="Flip"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_coin_state" />
+        android:text="@string/flip"
+        app:layout_constraintBottom_toBottomOf="@+id/button_flip_again"
+        app:layout_constraintEnd_toEndOf="@+id/button_flip_again"
+        app:layout_constraintStart_toStartOf="@+id/button_flip_again"
+        app:layout_constraintTop_toTopOf="@+id/button_flip_again" />
 
     <Button
         android:id="@+id/button_flip_again"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
-        android:text="Flip again"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/flip_again"
+        app:layout_constraintBottom_toTopOf="@+id/button_clear_history_flip_coin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_coin_state" />
+        app:layout_constraintTop_toTopOf="@+id/tv_result" />
 
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_coin_state" />
@@ -92,8 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Flip History"
+        android:text="@string/flip_history"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -102,8 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Clear Flip History"
+        android:text="@string/clear_history"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

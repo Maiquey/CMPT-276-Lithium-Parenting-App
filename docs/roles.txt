@@ -1,0 +1,6 @@
+Iteration 1 Roles:
+
+Jan - Repo Manager
+Sam - Scrum Master
+Hitesh - Team Member
+Janit - Product Owner

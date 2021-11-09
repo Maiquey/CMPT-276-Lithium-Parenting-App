@@ -2,6 +2,11 @@ package ca.cmpt276.parentapp.model;
 
 import java.time.LocalDateTime;
 
+/**
+ * CoinFlipData Class:
+ *
+ * Used to store important data from coin flips to be saved/loaded
+ */
 public class CoinFlipData {
 
     private final LocalDateTime timeOfFlip;

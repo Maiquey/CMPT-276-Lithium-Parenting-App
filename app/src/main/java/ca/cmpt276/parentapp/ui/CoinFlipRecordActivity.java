@@ -47,7 +47,7 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
         ConstraintLayout constraintLayout = findViewById(R.id.coinflip_record_layout);
 
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("History of Coin Flips");
+        ab.setTitle(R.string.coin_flip_record_title);
         ab.setDisplayHomeAsUpEnabled(true);
 
         childManager = ChildManager.getInstance();
@@ -77,10 +77,8 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
             }
 
-            //Find car to work with
             CoinFlipData currentFlip = flipHistory.get(position);
 
-            //Fill the view
             ImageView image = (ImageView) itemView.findViewById(R.id.item_icon);
 
             if (currentFlip.isPickerWon()){
@@ -92,17 +90,17 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
             TextView flipper = (TextView) itemView.findViewById(R.id.item_who_flipped);
 
             if (currentFlip.isPickerPickedHeads()){
-                flipper.setText("" + currentFlip.getWhoPicked() + " picked: Heads.");
+                flipper.setText("" + currentFlip.getWhoPicked() + getString(R.string.x_picked_heads));
             }else{
-                flipper.setText("" + currentFlip.getWhoPicked() + " picked: Tails.");
+                flipper.setText("" + currentFlip.getWhoPicked() + getString(R.string.x_picked_tails));
             }
 
             TextView result = (TextView) itemView.findViewById(R.id.item_flip_result);
 
             if (currentFlip.isHeads()){
-                result.setText("Result was: Heads.");
+                result.setText(R.string.result_heads);
             }else{
-                result.setText("Result was: Tails.");
+                result.setText(R.string.result_tails);
             }
 
             TextView dateTime = (TextView) itemView.findViewById(R.id.item_DateTime);
@@ -113,12 +111,7 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
             DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("h:mma");
             String formatted = time.format(formatter1) + " @ " + time.format(formatter2);
 
-            /*
-            DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            String formatted = timeFormat.format(time).toString();
-
-             */
-            dateTime.setText("Date and time: " + formatted);
+            dateTime.setText(getString(R.string.date_time) + formatted);
 
             return itemView;
         }
