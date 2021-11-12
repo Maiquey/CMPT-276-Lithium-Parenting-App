@@ -3,38 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_child_add.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_child_edit.xml" value="0.25" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_child_list.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_coin_flip.xml" value="0.25" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_coin_flip_record.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_timeout_timer.xml" value="0.25" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/child_config_item.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/content_child_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/content_main.xml" value="0.25" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/item_view.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/list_gradient.xml" value="0.14537037037037037" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/round.xml" value="0.590625" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/timer_background_1.xml" value="0.47129629629629627" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/timer_background_2.xml" value="0.47129629629629627" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/timer_background_3.xml" value="0.47129629629629627" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_coin_flip.xml" value="0.4015625" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_coin_flip_record.xml" value="0.4015625" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_main.xml" value="0.2759259259259259" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_timeout_timer.xml" value="0.33" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/content_main.xml" value="0.2759259259259259" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/timeout_timer_main.xml" value="0.5" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/menu/menu_main.xml" value="0.2759259259259259" />
-        <entry key="app/src/main/res/drawable/custom_button.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_child_add.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_child_add.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_child_edit.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_child_list.xml" value="0.125" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/activity_timeout_timer.xml" value="0.15070921985815602" />
-        <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
-        <entry key="app/src/main/res/menu/menu_main.xml" value="0.2861111111111111" />
+        <entry key="app/src/main/res/layout/activity_child_list.xml" value="0.11246200607902736" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.11820652173913043" />
       </map>
     </option>
   </component>

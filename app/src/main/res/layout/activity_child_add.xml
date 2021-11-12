@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/child_screen_background"
     tools:context=".ui.ChildAdd">
 
     <Button
@@ -13,8 +14,10 @@
         android:text="@string/btnAdd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextChildAdd"
+        app:layout_constraintTop_toBottomOf="@+id/takePhotobtn"
+        app:layout_constraintVertical_bias="0.349"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -24,11 +27,13 @@
         android:ems="10"
         android:gravity="center"
         android:inputType="textPersonName"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.125"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -37,9 +42,58 @@
         android:layout_height="wrap_content"
         android:text="@string/enter_child_name"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editTextChildAdd"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.542" />
+
+    <Button
+        android:id="@+id/takePhotobtn"
+        android:layout_width="167dp"
+        android:layout_height="65dp"
+        android:text="Take Photo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/choosePhotobtn"
+        app:layout_constraintHorizontal_bias="0.313"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.616" />
+
+    <Button
+        android:id="@+id/choosePhotobtn"
+        android:layout_width="167dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="16dp"
+        android:text="Choose From Gallery"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.616" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="278dp"
+        android:layout_height="190dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextChildAdd"
+        app:layout_constraintVertical_bias="0.09"
+        app:srcCompat="@drawable/childphoto" />
+
+    <Button
+        android:id="@+id/Cancelbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddChild"
+        app:layout_constraintVertical_bias="0.157" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
