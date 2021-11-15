@@ -21,6 +21,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private WhosTurnManager whosTurnManager;
     private ChildManager childManager;
     private EditText editTextTask;
+    private TextView currentChild;
     private int taskIndex;
     private String childFilePath;
 
@@ -48,11 +49,10 @@ public class EditTaskActivity extends AppCompatActivity {
         whosTurnManager = WhosTurnManager.getInstance();
         task = whosTurnManager.getTasks().get(taskIndex);
         editTextTask = findViewById(R.id.editTextEditTaskName);
-        //editTextTask.setText(task.getTaskName());
-        updateUI();
-        TextView currentChild = findViewById(R.id.txtCurrentChild);
-        currentChild.setText(task.getChildName());
 
+        currentChild = findViewById(R.id.txtCurrentChild);
+
+        updateUI();
         setupEditButton();
         setupConfirmButton();
         setupCancelButton();
@@ -71,6 +71,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
     private void updateUI() {
         editTextTask.setText(task.getTaskName());
+        currentChild.setText(task.getChildName());
     }
 
 
