@@ -56,6 +56,18 @@ public class EditTaskActivity extends AppCompatActivity {
         setupEditButton();
         setupConfirmButton();
         setupCancelButton();
+        setupDeleteButton();
+    }
+
+    private void setupDeleteButton() {
+        Button deleteButton = findViewById(R.id.btnDeleteTask);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                whosTurnManager.getTasks().remove(taskIndex);
+                finish();
+            }
+        });
     }
 
     private void setupEditButton() {
@@ -71,7 +83,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
     private void updateUI() {
         editTextTask.setText(task.getTaskName());
-        currentChild.setText(task.getChildName());
+        currentChild.setText(childManager.getChildName(task.getCurrentChildID()));
     }
 
 

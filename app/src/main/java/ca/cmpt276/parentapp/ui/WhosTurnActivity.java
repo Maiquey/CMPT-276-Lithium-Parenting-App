@@ -10,18 +10,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import ca.cmpt276.parentapp.R;
+import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.SaveLoadData;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.WhosTurnManager;
 
 public class WhosTurnActivity extends AppCompatActivity {
     private WhosTurnManager whosTurnManager;
+    private ChildManager childManager;
     private ArrayAdapter<Task> adapter;
+    String taskFilePath;
+    String childFilePath;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, WhosTurnActivity.class);
@@ -35,7 +41,17 @@ public class WhosTurnActivity extends AppCompatActivity {
         ab.setTitle("Who's Turn");
         ab.setDisplayHomeAsUpEnabled(true);
 
+        taskFilePath = getFilesDir().getPath().toString() + "/SaveTaskInfo1.json";
+        childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
+
         whosTurnManager = WhosTurnManager.getInstance();
+        childManager = ChildManager.getInstance();
+
+        whosTurnManager.getTasks().clear();
+        whosTurnManager.setTaskList(SaveLoadData.loadTaskList(taskFilePath));
+        childManager.getChildList().clear();
+        childManager.setChildList(SaveLoadData.loadChildList(childFilePath));
+
         setupBtnAdd();
         registerClickCallback();
     }
@@ -89,7 +105,7 @@ public class WhosTurnActivity extends AppCompatActivity {
             txtTaskName.setText(currentTask.getTaskName());
 
             TextView txtNextChild = (TextView) itemView.findViewById(R.id.txtNextChildName);
-            txtNextChild.setText(currentTask.getChildName());
+            txtNextChild.setText(childManager.getChildName(currentTask.getCurrentChildID()));
 
             return itemView;
         }
@@ -98,6 +114,29 @@ public class WhosTurnActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        TextView txtDirection = findViewById(R.id.txtAddTask);
+        TextView txtEmptyMsg = findViewById(R.id.txtEmpty);
+        ImageView imgRocketPNG = findViewById(R.id.imgRocket);
+        ImageView imgArrowPNG = findViewById(R.id.imgArrow);
+
+        if (whosTurnManager.getTasks().size() > 0){
+            txtDirection.setVisibility(View.GONE);
+            txtEmptyMsg.setVisibility(View.GONE);
+            imgRocketPNG.setVisibility(View.GONE);
+            imgArrowPNG.setVisibility(View.GONE);
+        }else{
+            txtDirection.setVisibility(View.VISIBLE);
+            txtEmptyMsg.setVisibility(View.VISIBLE);
+            imgRocketPNG.setVisibility(View.VISIBLE);
+            imgArrowPNG.setVisibility(View.VISIBLE);
+        }
         populateTaskList();
+    }
+
+    @Override
+    protected void onPause() {
+        SaveLoadData.saveTaskList(taskFilePath,
+                whosTurnManager.getTasks());
+        super.onPause();
     }
 }

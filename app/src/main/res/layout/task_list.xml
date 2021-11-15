@@ -7,26 +7,45 @@
 
     <TextView
         android:id="@+id/txtTaskName"
-        android:layout_width="257dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="77dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="14dp"
         android:gravity="center"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/txtNextChildName"
-        android:layout_width="246dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="52dp"
+        android:layout_toEndOf="@+id/txtChildToDo"
+        android:gravity="center"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/txtTaskNameList"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="81dp"
-        android:layout_marginTop="61dp"
-        android:gravity="center"
-        android:textSize="30sp" />
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="23dp"
+        android:text="Task:" />
+
+    <TextView
+        android:id="@+id/txtChildToDo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtTaskNameList"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="68dp"
+        android:text="Child To Do the Task:" />
 
 </RelativeLayout>

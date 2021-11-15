@@ -24,4 +24,8 @@ public class WhosTurnManager {
         tasks.add(newTask);
     }
 
+    public void setTaskList(ArrayList<Task> newTask) {
+        this.tasks = newTask;
+    }
+
 }
