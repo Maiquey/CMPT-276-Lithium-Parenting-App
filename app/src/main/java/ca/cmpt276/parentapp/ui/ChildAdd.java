@@ -43,9 +43,12 @@ public class ChildAdd extends AppCompatActivity {
 
     EditText editTextChildAdd;
     ImageView imageView;
-    ImageView image;
-    String directoryPath;
+    private ChildManager children;
+    private String directoryPath;
     Button btnOpen;
+    Button btnGallery;
+    private static final int IMAGE_FROM_GALLERY = 1000;
+    String storagePermission[];
     ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
@@ -56,12 +59,19 @@ public class ChildAdd extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.add_child_title);
         ab.setDisplayHomeAsUpEnabled(true);
+        editTextChildAdd = findViewById(R.id.editTextChildAdd);
+        storagePermission= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         setupAdd();
         setupTakePhoto();
-
+        setupAddPhotoFromGallery();
 
     }
+
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, ChildAdd.class);
+    }
+
 
     //https://www.youtube.com/watch?v=qO3FFuBrT2E
     private void setupTakePhoto() {
@@ -85,6 +95,8 @@ public class ChildAdd extends AppCompatActivity {
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     imageView.setImageBitmap(bitmap);
                 }
+
+
             }
         });
         btnOpen.setOnClickListener(new View.OnClickListener() {
@@ -100,9 +112,47 @@ public class ChildAdd extends AppCompatActivity {
 
     }
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, ChildAdd.class);
+    //setup gallery selection issue.
+
+    private void setupAddPhotoFromGallery() {
+
+        imageView = findViewById(R.id.childPhoto);
+        btnGallery = findViewById(R.id.chooseFromGallerybtn);
+
+        if(ContextCompat.checkSelfPermission(ChildAdd.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(ChildAdd.this,
+                    new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    },
+                    IMAGE_FROM_GALLERY);
+        }
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if(result.getResultCode()== RESULT_OK && result.getData() != null){
+                            Bundle bundle = result.getData().getExtras();
+                            Bitmap bitmap = (Bitmap) bundle.get("data");
+                            imageView.setImageBitmap(bitmap);
+                        }
+
+                    }
+                });
+        btnGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                if(intent.resolveActivity(getPackageManager())!= null){
+                    activityResultLauncher.launch(intent);
+                }
+            }
+        });
+
     }
+
+
 
     private void setupAdd() {
         Button save = (Button) findViewById(R.id.btnAddChild);
@@ -110,47 +160,52 @@ public class ChildAdd extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                EditText textBox = (EditText) findViewById(R.id.editTextChildAdd);
-                String name = textBox.getText().toString();
+                String name = editTextChildAdd.getText().toString();
                 if(name.matches("")) {
                     String message = getString(R.string.warning_name_empty);
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                 }
 
                 else {
-                    Child child = new Child(name);
-                    ChildManager.getInstance().addChild(child);
 
-                    String message = name + getString(R.string.x_added);
-                    Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                BitmapDrawable drawable = (BitmapDrawable) image.getDrawable();
-                Bitmap bitmapImage = drawable.getBitmap();
-                ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
 
-                File directory = contextWrapper.getDir("imageDirectory", Context.MODE_PRIVATE);
+                    //https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-
+                    // from-internal-memory-in-android
+                    BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+                    Bitmap bitmapImage = drawable.getBitmap();
+                    ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
 
-                //creating imageDirectory
-                File mPath= new File(directory, editTextChildAdd.getText().toString() + ".jpg");
+                    File directory = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);
 
-                FileOutputStream fos = null;
-                try {
-                    fos = new FileOutputStream(mPath);
-                    bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                }
-                catch(Exception exception) {
-                    exception.printStackTrace();
-                }
-                finally {
+                    File mPath= new File(directory, editTextChildAdd.getText().toString() + ".jpg");
+
+                    FileOutputStream fos = null;
                     try {
-                        fos.close();
+                        fos = new FileOutputStream(mPath);
+                        bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
                     }
-                    catch(IOException exception) {
+                    catch(Exception exception) {
                         exception.printStackTrace();
                     }
+                    finally {
+                        try {
+                            fos.close();
+                        }
+                        catch(IOException exception) {
+                            exception.printStackTrace();
+                        }
+                    }
+                    directoryPath = directory.getAbsolutePath();
+
+                    Child child = new Child(name);
+                    ChildManager.getInstance().addChild(child);
+                    String message = name + getString(R.string.x_added);
+                    Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
+                    children.setPath(directoryPath);
+                    finish();
                 }
-                directoryPath = directory.getAbsolutePath();
+
+
             }
         });
     }

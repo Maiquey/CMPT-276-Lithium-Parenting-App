@@ -10,6 +10,8 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,10 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 /**
  * ChildList class:
  *
@@ -31,6 +37,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class ChildList extends AppCompatActivity {
 
     private ChildManager childManager;
+    private ChildManager child;
     private ArrayAdapter<Child> adapter;
     String childFilePath;
     @Override
@@ -109,6 +116,16 @@ public class ChildList extends AppCompatActivity {
 
             TextView nameView = (TextView) itemView.findViewById(R.id.config_item_name);
             nameView.setText(currentChild.getName());
+
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.photo);
+            try{
+                File file = new File(child.getPath(), currentChild + ".jpg");
+                Bitmap bm = BitmapFactory.decodeStream(new FileInputStream(file));
+
+                imageView.setImageBitmap(bm);
+            }catch(FileNotFoundException fileNotFoundException){
+                fileNotFoundException.printStackTrace();
+            }
 
 
             return itemView;
