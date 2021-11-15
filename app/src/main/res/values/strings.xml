@@ -70,5 +70,6 @@
     <string name="flip_a_coin">Flip a Coin</string>
     <string name="player_1_won">Player 1 Won!</string>
     <string name="clear_history">clear history</string>
+    <string name="who_s_turn">Who\'s Turn</string>
 
 </resources>
