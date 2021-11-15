@@ -17,7 +17,7 @@ import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.WhosTurnManager;
 
 public class EditTaskActivity extends AppCompatActivity {
-    public static final String TASK_SELECTED_INDEX = "TaskSelectedIndex";
+    public static final String TASK_SELECTED_INDEX = "TaskSelectIndex";
     private WhosTurnManager whosTurnManager;
     private ChildManager childManager;
     private EditText editTextTask;
