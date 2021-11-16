@@ -58,6 +58,7 @@ public class AddTaskActivity extends AppCompatActivity {
                         task = new Task(taskName, unknown.getName(), 0, R.drawable.heads_coloured);
                     } else {
                         task = new Task(taskName, childManager.getChildName(0), 0, R.drawable.heads); //change R.drawable.heads to childManager.getChildPortrait(0);
+
                     }
                     whosTurnManager.addTask(task);
                     Toast.makeText(AddTaskActivity.this,
