@@ -16,8 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/takePhotobtn"
-        app:layout_constraintVertical_bias="0.349"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.796"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -50,29 +50,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.542" />
 
-    <Button
-        android:id="@+id/takePhotobtn"
-        android:layout_width="167dp"
-        android:layout_height="65dp"
-        android:text="Take Photo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/chooseFromGallerybtn"
-        app:layout_constraintHorizontal_bias="0.313"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.616" />
-
-    <Button
-        android:id="@+id/chooseFromGallerybtn"
-        android:layout_width="167dp"
-        android:layout_height="65dp"
-        android:layout_marginEnd="16dp"
-        android:text="Choose From Gallery"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.616" />
-
     <ImageView
         android:id="@+id/childPhoto"
         android:layout_width="278dp"
@@ -82,18 +59,18 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextChildAdd"
-        app:layout_constraintVertical_bias="0.09"
+        app:layout_constraintVertical_bias="0.175"
         app:srcCompat="@drawable/childphoto" />
 
-    <Button
-        android:id="@+id/Cancelbtn"
+    <TextView
+        android:id="@+id/add_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="44dp"
+        android:text="Tap on the picture to add a new image"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddChild"
-        app:layout_constraintVertical_bias="0.157" />
+        app:layout_constraintTop_toBottomOf="@+id/childPhoto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

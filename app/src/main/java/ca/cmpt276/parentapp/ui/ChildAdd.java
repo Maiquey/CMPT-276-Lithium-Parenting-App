@@ -5,6 +5,8 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -18,6 +20,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -25,6 +28,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,7 +53,10 @@ public class ChildAdd extends AppCompatActivity {
     private String directoryPath;
     Button btnOpen;
     Button btnGallery;
-    private static final int IMAGE_FROM_GALLERY = 1000;
+//    private static final int IMAGE_FROM_GALLERY = 100;
+    private static final int CAMERA_REQUEST = 100;
+    private static final int STORAGE_REQUEST = 101;
+    String cameraPermission[];
     String storagePermission[];
     ActivityResultLauncher<Intent> activityResultLauncher;
 
@@ -60,12 +69,39 @@ public class ChildAdd extends AppCompatActivity {
         ab.setTitle(R.string.add_child_title);
         ab.setDisplayHomeAsUpEnabled(true);
         editTextChildAdd = findViewById(R.id.editTextChildAdd);
-        storagePermission= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         setupAdd();
-        setupTakePhoto();
-        setupAddPhotoFromGallery();
+        //      setupTakePhoto();
+//        setupAddPhotoFromGallery();
 
+        storagePermission= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        cameraPermission = new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        //adding new image.
+        imageView = (ImageView) findViewById(R.id.childPhoto);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 int picd = 0;
+                 if(picd ==0){
+                     if(!checkCameraPermission()){
+                         requestCameraPermission();
+
+                     }else{
+                         pickFromGallery();
+                     }
+
+                 }else if(picd==1){
+                     if(!checkStoragePermission()){
+                         requestStoragePermission();
+                     }else{
+                         pickFromGallery();
+                     }
+                 }
+            }
+        });
     }
 
     public static Intent makeIntent(Context context) {
@@ -73,84 +109,155 @@ public class ChildAdd extends AppCompatActivity {
     }
 
 
-    //https://www.youtube.com/watch?v=qO3FFuBrT2E
-    private void setupTakePhoto() {
-
-        imageView = findViewById(R.id.childPhoto);
-        btnOpen = findViewById(R.id.takePhotobtn);
-        if(ContextCompat.checkSelfPermission(ChildAdd.this,
-                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(ChildAdd.this,
-                    new String[]{
-                        Manifest.permission.CAMERA
-                    },
-                    100);
-        }
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if(result.getResultCode()== RESULT_OK && result.getData() != null){
-                    Bundle bundle = result.getData().getExtras();
-                    Bitmap bitmap = (Bitmap) bundle.get("data");
-                    imageView.setImageBitmap(bitmap);
-                }
-
-
-            }
-        });
-        btnOpen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(intent.resolveActivity(getPackageManager())!= null){
-                    activityResultLauncher.launch(intent);
-                }
-            }
-        });
+    private boolean checkCameraPermission(){
+          boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                  ==(PackageManager.PERMISSION_GRANTED);
+          boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                  ==(PackageManager.PERMISSION_GRANTED);
+          return result && result1;
 
     }
 
-    //setup gallery selection issue.
+    private void requestCameraPermission(){
+        requestPermissions(cameraPermission,CAMERA_REQUEST);
+    }
 
-    private void setupAddPhotoFromGallery() {
+    private void pickFromGallery(){
+        CropImage.activity().start(this);
+    }
 
-        imageView = findViewById(R.id.childPhoto);
-        btnGallery = findViewById(R.id.chooseFromGallerybtn);
+    private boolean checkStoragePermission(){
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                ==(PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
 
-        if(ContextCompat.checkSelfPermission(ChildAdd.this,
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(ChildAdd.this,
-                    new String[]{
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                    },
-                    IMAGE_FROM_GALLERY);
+    private void requestStoragePermission(){
+        requestPermissions(storagePermission, STORAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if(resultCode==RESULT_OK){
+                Uri uriResult = result.getUri();
+                Picasso.with(this).load(uriResult).into(imageView);
+
+            }
         }
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if(result.getResultCode()== RESULT_OK && result.getData() != null){
-                            Bundle bundle = result.getData().getExtras();
-                            Bitmap bitmap = (Bitmap) bundle.get("data");
-                            imageView.setImageBitmap(bitmap);
-                        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch(requestCode){
+            case CAMERA_REQUEST:{
+                if(grantResults.length>0){
+                    boolean camera_granted = grantResults[0]==(PackageManager.PERMISSION_GRANTED);
+                    boolean storage_granted = grantResults[1]==(PackageManager.PERMISSION_GRANTED);
+                    if(camera_granted && storage_granted){
+                        pickFromGallery();
+                    }else{
+                        Toast.makeText(this, "Please enable your camera and gallery permission",
+                                Toast.LENGTH_SHORT).show();
 
                     }
-                });
-        btnGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                if(intent.resolveActivity(getPackageManager())!= null){
-                    activityResultLauncher.launch(intent);
                 }
             }
-        });
-
+            break;
+            case STORAGE_REQUEST:{
+                if(grantResults.length>0){
+                    boolean storage_granted = grantResults[0]==(PackageManager.PERMISSION_GRANTED);
+                    if(storage_granted){
+                        pickFromGallery();
+                    }else{
+                        Toast.makeText(this, "Please enable your gallery permission", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
     }
+
+    //https://www.youtube.com/watch?v=qO3FFuBrT2E
+//    private void setupTakePhoto() {
+//
+//        imageView = findViewById(R.id.childPhoto);
+//        btnOpen = findViewById(R.id.takePhotobtn);
+//        if(ContextCompat.checkSelfPermission(ChildAdd.this,
+//                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+//            ActivityCompat.requestPermissions(ChildAdd.this,
+//                    new String[]{
+//                        Manifest.permission.CAMERA
+//                    },
+//                    100);
+//        }
+//        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+//                new ActivityResultCallback<ActivityResult>() {
+//            @Override
+//            public void onActivityResult(ActivityResult result) {
+//                if(result.getResultCode()== RESULT_OK && result.getData() != null){
+//                    Bundle bundle = result.getData().getExtras();
+//                    Bitmap bitmap = (Bitmap) bundle.get("data");
+//                    imageView.setImageBitmap(bitmap);
+//                }
+//
+//
+//            }
+//        });
+//        btnOpen.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                if(intent.resolveActivity(getPackageManager())!= null){
+//                    activityResultLauncher.launch(intent);
+//                }
+//            }
+//        });
+//
+//    }
+//
+//    //setup gallery selection issue.
+//
+//    private void setupAddPhotoFromGallery() {
+//
+//        imageView = findViewById(R.id.childPhoto);
+//        btnGallery = findViewById(R.id.chooseFromGallerybtn);
+//
+//        if(ContextCompat.checkSelfPermission(ChildAdd.this,
+//                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+//            ActivityCompat.requestPermissions(ChildAdd.this,
+//                    new String[]{
+//                            Manifest.permission.READ_EXTERNAL_STORAGE
+//                    },
+//                    IMAGE_FROM_GALLERY);
+//        }
+//        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+//                new ActivityResultCallback<ActivityResult>() {
+//                    @Override
+//                    public void onActivityResult(ActivityResult result) {
+//                        if(result.getResultCode()== RESULT_OK && result.getData() != null){
+//                            Bundle bundle = result.getData().getExtras();
+//                            Bitmap bitmap = (Bitmap) bundle.get("data");
+//                            imageView.setImageBitmap(bitmap);
+//                        }
+//
+//                    }
+//                });
+//        btnGallery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(Intent.ACTION_PICK);
+//                if(intent.resolveActivity(getPackageManager())!= null){
+//                    activityResultLauncher.launch(intent);
+//                }
+//            }
+//        });
+//
+//    }
 
 
 
@@ -195,13 +302,13 @@ public class ChildAdd extends AppCompatActivity {
                             exception.printStackTrace();
                         }
                     }
-                    directoryPath = directory.getAbsolutePath();
+//                    directoryPath = directory.getAbsolutePath();
 
                     Child child = new Child(name);
                     ChildManager.getInstance().addChild(child);
                     String message = name + getString(R.string.x_added);
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
-                    children.setPath(directoryPath);
+//                    children.setPath(directoryPath);
                     finish();
                 }
 
