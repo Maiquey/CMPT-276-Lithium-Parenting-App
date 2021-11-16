@@ -51,7 +51,7 @@ public class AddTaskActivity extends AppCompatActivity {
                             "Task name cannot be empty!", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Task task = new Task(taskName, childManager.getChildName(0), 0);
+                    Task task = new Task(taskName, childManager.getChildName(0), 0, R.drawable.heads);
                     whosTurnManager.addTask(task);
                     Toast.makeText(AddTaskActivity.this,
                             "Added Task!", Toast.LENGTH_SHORT).show();

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import ca.cmpt276.parentapp.R;
@@ -84,6 +85,8 @@ public class EditTaskActivity extends AppCompatActivity {
     private void updateUI() {
         editTextTask.setText(task.getTaskName());
         currentChild.setText(childManager.getChildName(task.getCurrentChildID()));
+        ImageView childImg = findViewById(R.id.imgEditTaskChild);
+        childImg.setImageResource(task.getChildImgID());
     }
 
 

@@ -33,7 +33,7 @@
         android:id="@+id/txtTaskChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="32dp"
         android:text="Child to do the task: "
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
         android:id="@+id/txtCurrentChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toEndOf="@+id/txtTaskChild"
         app:layout_constraintTop_toBottomOf="@+id/editTextEditTaskName" />
@@ -92,4 +92,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgEditTaskChild"
+        android:layout_width="56dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtCurrentChild"
+        app:layout_constraintStart_toEndOf="@+id/txtCurrentChild"
+        app:layout_constraintTop_toTopOf="@+id/txtCurrentChild"
+        app:layout_constraintVertical_bias="0.542"
+        app:srcCompat="@drawable/heads_coloured" />
 </androidx.constraintlayout.widget.ConstraintLayout>

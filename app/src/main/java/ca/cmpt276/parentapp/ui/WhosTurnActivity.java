@@ -41,7 +41,7 @@ public class WhosTurnActivity extends AppCompatActivity {
         ab.setTitle("Who's Turn");
         ab.setDisplayHomeAsUpEnabled(true);
 
-        taskFilePath = getFilesDir().getPath().toString() + "/SaveTaskInfo1.json";
+        taskFilePath = getFilesDir().getPath().toString() + "/SaveTaskInfo3.json";
         childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
 
         whosTurnManager = WhosTurnManager.getInstance();
@@ -106,6 +106,9 @@ public class WhosTurnActivity extends AppCompatActivity {
 
             TextView txtNextChild = (TextView) itemView.findViewById(R.id.txtNextChildName);
             txtNextChild.setText(childManager.getChildName(currentTask.getCurrentChildID()));
+
+            ImageView imgChild = (ImageView) itemView.findViewById(R.id.imgChildTask);
+            imgChild.setImageResource(R.drawable.heads_coloured);
 
             return itemView;
         }

@@ -134,7 +134,8 @@ public class SaveLoadData {
                 String taskName = taskObject.get("taskName").getAsString();
                 String childName = taskObject.get("childName").getAsString();
                 int childID = taskObject.get("currentChildID").getAsInt();
-                Task newTask = new Task(taskName, childName, childID);
+                int childImgID = taskObject.get("childImgID").getAsInt();
+                Task newTask = new Task(taskName, childName, childID, childImgID);
                 whosTurnManager.addTask(newTask);
             }
 
