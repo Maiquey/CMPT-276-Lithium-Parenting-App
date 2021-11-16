@@ -38,7 +38,7 @@ public class WhosTurnActivity extends AppCompatActivity {
         setContentView(R.layout.activity_whos_turn);
 
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("Who's Turn");
+        ab.setTitle(R.string.whos_turn_title);
         ab.setDisplayHomeAsUpEnabled(true);
 
         taskFilePath = getFilesDir().getPath().toString() + "/SaveTaskInfo3.json";

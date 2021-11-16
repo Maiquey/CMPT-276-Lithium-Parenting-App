@@ -37,7 +37,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="21dp"
         android:layout_marginTop="23dp"
-        android:text="Task:" />
+        android:text="@string/task" />
 
     <TextView
         android:id="@+id/txtChildToDo"
@@ -47,7 +47,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="68dp"
-        android:text="Child To Do the Task:" />
+        android:text="@string/child_to_do_the_task" />
 
     <ImageView
         android:id="@+id/imgChildTask"

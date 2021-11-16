@@ -48,13 +48,13 @@ public class AddTaskActivity extends AppCompatActivity {
                 String taskName = txtTask.getText().toString();
                 if (taskName.isEmpty()) {
                     Toast.makeText(AddTaskActivity.this,
-                            "Task name cannot be empty!", Toast.LENGTH_SHORT).show();
+                            "" + R.string.task_name_empty_warning, Toast.LENGTH_SHORT).show();
 
                 } else {
                     Task task = new Task(taskName, childManager.getChildName(0), 0, R.drawable.heads);
                     whosTurnManager.addTask(task);
                     Toast.makeText(AddTaskActivity.this,
-                            "Added Task!", Toast.LENGTH_SHORT).show();
+                            "" + R.string.added_task, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

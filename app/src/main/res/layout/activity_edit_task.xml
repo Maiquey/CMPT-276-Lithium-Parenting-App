@@ -11,7 +11,7 @@
         android:layout_width="203dp"
         android:layout_height="25dp"
         android:layout_marginTop="128dp"
-        android:text="Edit Task"
+        android:text="@string/edit_task"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="32dp"
-        android:text="Child to do the task: "
+        android:text="@string/child_to_do_the_task"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEditTaskName" />
 
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="32dp"
-        android:text="Back"
+        android:text="@string/back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -65,7 +65,7 @@
         android:layout_marginStart="42dp"
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="32dp"
-        android:text="Assign Next Child"
+        android:text="@string/assign_next_child"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.372"
@@ -77,7 +77,7 @@
         android:layout_height="41dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="SET"
+        android:text="@string/button_set"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editTextEditTaskName"
         app:layout_constraintTop_toTopOf="@+id/editTextEditTaskName" />
@@ -87,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
-        android:text="Delete Task"
+        android:text="@string/delete_task"
         app:layout_constraintBottom_toTopOf="@+id/btnNextChild"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
