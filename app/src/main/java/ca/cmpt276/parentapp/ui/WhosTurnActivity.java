@@ -103,12 +103,26 @@ public class WhosTurnActivity extends AppCompatActivity {
 
             TextView txtTaskName = (TextView) itemView.findViewById(R.id.txtTaskName);
             txtTaskName.setText(currentTask.getTaskName());
-
             TextView txtNextChild = (TextView) itemView.findViewById(R.id.txtNextChildName);
-            txtNextChild.setText(childManager.getChildName(currentTask.getCurrentChildID()));
 
+            if (childManager.noChildren()) {
+                txtNextChild.setText("Unknown");
+                currentTask.setChildName("Unknown");
+                currentTask.setCurrentChildID(0);
+            } else if (childManager.getChildList().size() == 1) {
+                currentTask.setChildName(childManager.getChildName(0));
+                currentTask.setCurrentChildID(0);
+                //add currentTask.setChildImgID(childManager.getChildPortrait(0));
+            } else {
+                if (currentTask.getCurrentChildID() >= childManager.getChildList().size()) {
+                    currentTask.setCurrentChildID(currentTask.getCurrentChildID() - 1);
+                }
+                currentTask.setChildName(childManager.getChildName(currentTask.getCurrentChildID()));
+            }
+
+            txtNextChild.setText(currentTask.getChildName());
             ImageView imgChild = (ImageView) itemView.findViewById(R.id.imgChildTask);
-            imgChild.setImageResource(R.drawable.heads_coloured);
+            imgChild.setImageResource(currentTask.getChildImgID());
 
             return itemView;
         }

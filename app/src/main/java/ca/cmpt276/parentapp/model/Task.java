@@ -40,4 +40,8 @@ public class Task {
     public int getChildImgID() {
         return childImgID;
     }
+
+    public void setChildImgID(int id) {
+        this.childImgID = id;
+    }
 }

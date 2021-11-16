@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ca.cmpt276.parentapp.R;
+import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.SaveLoadData;
 import ca.cmpt276.parentapp.model.Task;
@@ -51,7 +52,13 @@ public class AddTaskActivity extends AppCompatActivity {
                             "" + R.string.task_name_empty_warning, Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Task task = new Task(taskName, childManager.getChildName(0), 0, R.drawable.heads);
+                    Task task;
+                    if (childManager.noChildren()) {
+                        Child unknown = new Child("Unknown");
+                        task = new Task(taskName, unknown.getName(), 0, R.drawable.heads_coloured);
+                    } else {
+                        task = new Task(taskName, childManager.getChildName(0), 0, R.drawable.heads); //change R.drawable.heads to childManager.getChildPortrait(0);
+                    }
                     whosTurnManager.addTask(task);
                     Toast.makeText(AddTaskActivity.this,
                             "" + R.string.added_task, Toast.LENGTH_SHORT).show();

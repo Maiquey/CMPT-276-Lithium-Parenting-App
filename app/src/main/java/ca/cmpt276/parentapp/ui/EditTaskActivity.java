@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.ChildManager;
@@ -33,6 +34,7 @@ public class EditTaskActivity extends AppCompatActivity {
         intent.putExtra(TASK_SELECTED_INDEX, index);
         return intent;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +86,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
     private void updateUI() {
         editTextTask.setText(task.getTaskName());
-        currentChild.setText(childManager.getChildName(task.getCurrentChildID()));
+        currentChild.setText(task.getChildName());
         ImageView childImg = findViewById(R.id.imgEditTaskChild);
         childImg.setImageResource(task.getChildImgID());
     }
@@ -105,14 +107,24 @@ public class EditTaskActivity extends AppCompatActivity {
         nextChildBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (task.getCurrentChildID() == childManager.getChildList().size()-1) {
-                    task.setCurrentChildID(0);
-                    task.setChildName(childManager.getChildName(0));
+                if (childManager.noChildren()) {
+                    Toast.makeText(EditTaskActivity.this,
+                            "No children configured, \ncannot assign to next child!", Toast.LENGTH_SHORT).show();
+                } else if (childManager.getChildList().size() == 1) {
+                    Toast.makeText(EditTaskActivity.this,
+                            "Only one children present, \ncannot assign to next child!", Toast.LENGTH_SHORT).show();
                 } else {
-                    task.setCurrentChildID(task.getCurrentChildID()+1);
-                    task.setChildName(childManager.getChildName(task.getCurrentChildID()));
+                    if (task.getCurrentChildID() == childManager.getChildList().size() - 1) {
+                        task.setCurrentChildID(0);
+                        task.setChildName(childManager.getChildName(0));
+                        // add task.setChildImgID(childManager.getChildPortrait(0));
+                    } else {
+                        task.setCurrentChildID(task.getCurrentChildID() + 1);
+                        task.setChildName(childManager.getChildName(task.getCurrentChildID()));
+                        //add task.setChildImgID(childManager.getChildPortrait(task.getCurrentChildID()));
+                    }
+                    finish();
                 }
-                finish();
             }
         });
     }
