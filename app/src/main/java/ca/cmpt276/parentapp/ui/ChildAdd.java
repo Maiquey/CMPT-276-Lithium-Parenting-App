@@ -280,11 +280,13 @@ public class ChildAdd extends AppCompatActivity {
                 } else {
 
 
-                    File dir = new File(Environment.getExternalStorageDirectory(), "SaveImage");
+                    File file = new File(Environment.getExternalStorageDirectory(), "SaveImage");
+                    File dir= new File(file.getAbsolutePath()+ "/MyPics");
                     if(!dir.exists()){
-                        dir.mkdir();
+                        dir.mkdirs();
                     }
 
+                    String filename = String.format("%d.png", System.currentTimeMillis());
 
                     //https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-
                     // from-internal-memory-in-android
@@ -294,17 +296,17 @@ public class ChildAdd extends AppCompatActivity {
 //
 //                    File directory = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);
 //
-                    File file= new File(dir, System.currentTimeMillis() + ".jpg");
 //
 //
+                    File outFile = new File(dir, filename);
                     try {
 
-                        outputStream = new FileOutputStream(file);
+                        outputStream = new FileOutputStream(outFile);
                     }
                     catch(FileNotFoundException exception) {
                         exception.printStackTrace();
                     }
-                    bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                    bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
 
                     try{
                         outputStream.flush();
@@ -317,13 +319,13 @@ public class ChildAdd extends AppCompatActivity {
                     }catch (IOException e){
                         e.printStackTrace();
                     }
-//                    directoryPath = directory.getAbsolutePath();
+
 
                 Child child = new Child(name);
                 ChildManager.getInstance().addChild(child);
                 String message = name + getString(R.string.x_added);
                 Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
-//                    children.setPath(directoryPath);
+//                children.setPath(directoryPath);
                 finish();
             }
 
