@@ -117,7 +117,7 @@ public class ChildList extends AppCompatActivity {
             TextView nameView = (TextView) itemView.findViewById(R.id.config_item_name);
             nameView.setText(currentChild.getName());
 
-//            ImageView imageView = (ImageView) itemView.findViewById(R.id.photo);
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.photo);
 //            try{
 //                File file = new File(child.getPath(), currentChild + ".jpg");
 //                Bitmap bm = BitmapFactory.decodeStream(new FileInputStream(file));
