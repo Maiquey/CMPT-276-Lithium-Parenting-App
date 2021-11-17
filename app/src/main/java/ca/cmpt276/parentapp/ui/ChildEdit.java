@@ -15,6 +15,9 @@ import android.widget.Toast;
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.SaveLoadData;
+import ca.cmpt276.parentapp.model.Task;
+import ca.cmpt276.parentapp.model.WhosTurnManager;
 
 /**
  * ChildEdit class:
@@ -26,7 +29,8 @@ public class ChildEdit extends AppCompatActivity {
     private int childIndex;
     private final String PREF = "PICKING_CHILD_INDEX";
     public static final String PICKING_CHILD_INDEX = "picking child index new";
-
+    private WhosTurnManager whosTurnManager;
+    private String taskFilePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,11 @@ public class ChildEdit extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.edit_child_title);
         ab.setDisplayHomeAsUpEnabled(true);
+
+        taskFilePath = getFilesDir().getPath().toString() + "/SaveTaskInfo3.json";
+        whosTurnManager = WhosTurnManager.getInstance();
+        whosTurnManager.getTasks().clear();
+        whosTurnManager.setTaskList(SaveLoadData.loadTaskList(taskFilePath));
 
         extractExtras();
         inputFields();
@@ -55,7 +64,13 @@ public class ChildEdit extends AppCompatActivity {
             public void onClick(View view) {
                 String message = ChildManager.getInstance().getChild(childIndex).getName() + getString(R.string.x_deleted);
                 ChildManager.getInstance().removeChildAtIndex(childIndex);
+                for (Task task : whosTurnManager.getTasks()) {
+                    if (task.getCurrentChildID() > childIndex) {
+                        task.setCurrentChildID(task.getCurrentChildID() - 1);
+                    }
+                }
 
+                SaveLoadData.saveTaskList(taskFilePath, whosTurnManager.getTasks());
                 //save new pickingChildIndex which may have changed due to deletion
                 SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();

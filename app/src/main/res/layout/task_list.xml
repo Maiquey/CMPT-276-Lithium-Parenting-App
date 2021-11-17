@@ -23,11 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="62dp"
         android:layout_toEndOf="@+id/txtChildToDo"
         android:gravity="center"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/txtTaskNameList"
@@ -51,14 +51,14 @@
 
     <ImageView
         android:id="@+id/imgChildTask"
-        android:layout_width="78dp"
-        android:layout_height="64dp"
+        android:layout_width="59dp"
+        android:layout_height="50dp"
         android:layout_alignBottom="@+id/txtChildToDo"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="33dp"
         tools:srcCompat="@tools:sample/avatars" />
 
 </RelativeLayout>

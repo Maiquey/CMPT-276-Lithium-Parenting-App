@@ -54,7 +54,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 } else {
                     Task task;
                     if (childManager.noChildren()) {
-                        Child unknown = new Child("Unknown");
+                        Child unknown = new Child("No child assigned");
                         task = new Task(taskName, unknown.getName(), 0, R.drawable.heads_coloured);
                     } else {
                         task = new Task(taskName, childManager.getChildName(0), 0, R.drawable.heads); //change R.drawable.heads to childManager.getChildPortrait(0);

@@ -23,6 +23,7 @@ import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.WhosTurnManager;
 
 public class WhosTurnActivity extends AppCompatActivity {
+    public static final String NO_CHILDREN_ASSIGNED = "No child assigned";
     private WhosTurnManager whosTurnManager;
     private ChildManager childManager;
     private ArrayAdapter<Task> adapter;
@@ -106,8 +107,8 @@ public class WhosTurnActivity extends AppCompatActivity {
             TextView txtNextChild = (TextView) itemView.findViewById(R.id.txtNextChildName);
 
             if (childManager.noChildren()) {
-                txtNextChild.setText("Unknown");
-                currentTask.setChildName("Unknown");
+                txtNextChild.setText(NO_CHILDREN_ASSIGNED);
+                currentTask.setChildName(NO_CHILDREN_ASSIGNED);
                 currentTask.setCurrentChildID(0);
             } else if (childManager.getChildList().size() == 1) {
                 currentTask.setChildName(childManager.getChildName(0));
@@ -115,8 +116,9 @@ public class WhosTurnActivity extends AppCompatActivity {
                 //add currentTask.setChildImgID(childManager.getChildPortrait(0));
             } else {
                 if (currentTask.getCurrentChildID() >= childManager.getChildList().size()) {
-                    currentTask.setCurrentChildID(currentTask.getCurrentChildID() - 1);
+                    currentTask.setCurrentChildID(0);
                 }
+                // add currentTask.setChildImgID(childManager.getChildPortrait(0));
                 currentTask.setChildName(childManager.getChildName(currentTask.getCurrentChildID()));
             }
 
