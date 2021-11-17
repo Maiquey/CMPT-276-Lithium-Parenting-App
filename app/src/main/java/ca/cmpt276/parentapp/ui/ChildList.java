@@ -101,7 +101,13 @@ public class ChildList extends AppCompatActivity {
 //        Bitmap photo = image;
 //        ByteArrayOutputStream os = new ByteArrayOutputStream();
 //        byte[] bit = os.toByteArray();
-//        String imageEncoded = Base64.encode
+//        String imageEncoded = Base64.encodeToString(bit, Base64.DEFAULT);
+//
+//        return imageEncoded;
+//    }
+
+//    public static String decode(String input){
+//        byte[] decodeByte = Ba;
 //    }
 
     @Override

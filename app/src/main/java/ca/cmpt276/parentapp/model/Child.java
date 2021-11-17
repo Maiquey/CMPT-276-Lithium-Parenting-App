@@ -11,6 +11,13 @@ import androidx.annotation.NonNull;
  */
 public class Child {
     private String name;
+    private String photo;
+
+
+    public Child (String name, String photo){
+        this.name= name;
+        this.photo = photo ;
+    }
 
     public Child(String name) {
         this.name = name;
@@ -22,6 +29,14 @@ public class Child {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoto(){
+        return photo;
+    }
+
+    public void setPhoto(){
+        this.photo = photo;
     }
 
     @NonNull
