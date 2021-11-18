@@ -15,7 +15,8 @@ public class ChildManager {
     private static ChildManager instance;
     private ArrayList<Child> childList;
     private ArrayList<CoinFlipData> coinFlipHistory;
-    private int pickingChildIndex;
+    private ArrayList<Child> coinFlipQueue;
+    private ArrayList<Integer> queueOrder;
 
     public static ChildManager getInstance() {
         if (instance == null) {
@@ -27,6 +28,8 @@ public class ChildManager {
     private ChildManager() {
         childList = new ArrayList<>();
         coinFlipHistory = new ArrayList<>();
+        coinFlipQueue = new ArrayList<>();
+        queueOrder = new ArrayList<>();
     }
 
     public ArrayList<Child> getChildList(){
@@ -49,22 +52,19 @@ public class ChildManager {
         childList.add(child);
     }
 
+    public void addIndexToQueueOrder(int i){
+        queueOrder.add(i);
+    }
+
     public void addCoinFlip(CoinFlipData coinFlip){
         coinFlipHistory.add(coinFlip);
     }
 
     public void removeChild(Child child) {
-        int childIndex = childList.indexOf(child);
-        if (childIndex < pickingChildIndex){
-            pickingChildIndex--;
-        }
         childList.remove(child);
     }
 
     public void removeChildAtIndex(int i){
-        if (i < pickingChildIndex){
-            pickingChildIndex--;
-        }
         childList.remove(i);
     }
 
@@ -82,36 +82,34 @@ public class ChildManager {
     }
 
     public Child getPickingChild(){
-        if (pickingChildIndex >= childList.size()){
-            pickingChildIndex = 0;
-        }
-        return childList.get(pickingChildIndex);
+        return coinFlipQueue.get(0);
     }
 
-    public void updatePickingChild() {
-        pickingChildIndex++;
-        if (pickingChildIndex >= numOfChildren()){
-            pickingChildIndex = 0;
-        }
+    public void updateQueue() {
+        Child child = coinFlipQueue.get(0);
+        coinFlipQueue.remove(0);
+        coinFlipQueue.add(child);
+
+        int index = queueOrder.get(0);
+        queueOrder.remove(0);
+        queueOrder.add(index);
     }
 
-    public void setPickingChildIndex(int pickingChildIndex){
-        this.pickingChildIndex = pickingChildIndex;
+    public void moveChildToFrontOfQueue(int i){
+        int index = queueOrder.get(i);
+        queueOrder.remove(i);
+        queueOrder.add(0, index);
+        loadQueue();
     }
-
-    public int getPickingChildIndex() {
-        return pickingChildIndex;
-    }
-
     public ArrayList<Child> children() {
         return childList;
     }
 
     //method for unit tests
-    public void cleanSingleton(){
-        childList.clear();
-        pickingChildIndex = 0;
-    }
+//    public void cleanSingleton(){
+//        childList.clear();
+//        pickingChildIndex = 0;
+//    }
 
     public ArrayList<CoinFlipData> getCoinFlipHistory() {
         return coinFlipHistory;
@@ -119,5 +117,34 @@ public class ChildManager {
 
     public void setCoinFlipHistory(ArrayList<CoinFlipData> coinFlipHistory) {
         this.coinFlipHistory = coinFlipHistory;
+    }
+
+    public ArrayList<Child> getCoinFlipQueue() {
+        return coinFlipQueue;
+    }
+
+    public ArrayList<Integer> getQueueOrder() {
+        return queueOrder;
+    }
+
+    public void setQueueOrder(ArrayList<Integer> queueOrder) {
+        this.queueOrder = queueOrder;
+    }
+
+    public void loadQueue(){
+        coinFlipQueue.clear();
+        for (int i : queueOrder){
+            coinFlipQueue.add(childList.get(i));
+        }
+    }
+
+    public void fixQueueOrderIndices(int removedIndex){
+        queueOrder.remove((Integer) removedIndex);
+
+        for (int i = 0; i < queueOrder.size(); i++){
+            if (removedIndex < queueOrder.get(i)){
+                queueOrder.set(i, queueOrder.get(i) - 1);
+            }
+        }
     }
 }

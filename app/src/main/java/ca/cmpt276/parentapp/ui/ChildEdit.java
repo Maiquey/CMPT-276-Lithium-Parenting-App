@@ -54,13 +54,8 @@ public class ChildEdit extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String message = ChildManager.getInstance().getChild(childIndex).getName() + getString(R.string.x_deleted);
+                ChildManager.getInstance().fixQueueOrderIndices(childIndex);
                 ChildManager.getInstance().removeChildAtIndex(childIndex);
-
-                //save new pickingChildIndex which may have changed due to deletion
-                SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(PICKING_CHILD_INDEX, ChildManager.getInstance().getPickingChildIndex());
-                editor.apply();
 
                 Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                 finish();

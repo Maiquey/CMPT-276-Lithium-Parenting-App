@@ -53,6 +53,7 @@ public class ChildAdd extends AppCompatActivity {
                 else {
                     Child child = new Child(name);
                     ChildManager.getInstance().addChild(child);
+                    ChildManager.getInstance().addIndexToQueueOrder(ChildManager.getInstance().numOfChildren() - 1);
 
                     String message = name + getString(R.string.x_added);
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();

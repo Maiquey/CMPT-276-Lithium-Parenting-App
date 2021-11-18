@@ -49,6 +49,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private ChildManager childManager;
     private String flipFilePath;
     private String childFilePath;
+    private String queueOrderFilePath;
     private final String PREF = "PICKING_CHILD_INDEX";
 
     public static Intent makeIntent(Context context) {
@@ -67,18 +68,20 @@ public class CoinFlipActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         flipFilePath = getFilesDir().getPath().toString() + "/CoinFlipHistory6.json";
         childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
+        queueOrderFilePath = getFilesDir().getPath().toString() + "/SaveQueueOrderInfo.json";
 
         childManager = ChildManager.getInstance();
-
-        SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
-        int pickingChildIndex = preferences.getInt(PICKING_CHILD_INDEX, 0);
-        childManager.setPickingChildIndex(pickingChildIndex);
 
         childManager.getCoinFlipHistory().clear();
         childManager.setCoinFlipHistory(SaveLoadData.loadFlipHistoryList(flipFilePath));
 
         childManager.getChildList().clear();
         childManager.setChildList(SaveLoadData.loadChildList(childFilePath));
+
+        childManager.getQueueOrder().clear();
+        childManager.setQueueOrder(SaveLoadData.loadQueueOrder(queueOrderFilePath));
+
+        childManager.loadQueue();
 
         coinFlip = new CoinFlip();
 
@@ -222,10 +225,8 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         SaveLoadData.saveFlipHistoryList(flipFilePath,
                 childManager.getCoinFlipHistory());
-        SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(PICKING_CHILD_INDEX, childManager.getPickingChildIndex());
-        editor.apply();
+        SaveLoadData.saveQueueOrder(queueOrderFilePath,
+                childManager.getQueueOrder());
         super.onPause();
     }
 
@@ -262,4 +263,9 @@ public class CoinFlipActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        childManager.loadQueue();
+        super.onResume();
+    }
 }

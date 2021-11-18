@@ -35,7 +35,7 @@ public class CoinFlip {
         int randomInt = (int) (Math.random() * 100);
         isHeads = (randomInt % 2 == 0);
         pickerWon = (isHeads == pickerPickedHeads);
-        childManager.updatePickingChild();
+        childManager.updateQueue();
     }
 
     public void randomFlip(){

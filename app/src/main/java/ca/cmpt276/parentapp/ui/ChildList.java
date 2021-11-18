@@ -31,7 +31,8 @@ public class ChildList extends AppCompatActivity {
 
     private ChildManager childManager;
     private ArrayAdapter<Child> adapter;
-    String childFilePath;
+    private String childFilePath;
+    private String queueOrderFilePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +44,12 @@ public class ChildList extends AppCompatActivity {
 
         childManager = ChildManager.getInstance();
         childManager.getChildList().clear();
+        childManager.getQueueOrder().clear();
 
         childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
+        queueOrderFilePath = getFilesDir().getPath().toString() + "/SaveQueueOrderInfo.json";
         childManager.setChildList(SaveLoadData.loadChildList(childFilePath));
+        childManager.setQueueOrder(SaveLoadData.loadQueueOrder(queueOrderFilePath));
         childClickHandler();
         setupChildAdd();
 
@@ -89,6 +93,8 @@ public class ChildList extends AppCompatActivity {
     protected void onPause() {
         SaveLoadData.saveChildList(childFilePath,
                 childManager.getChildList());
+        SaveLoadData.saveQueueOrder(queueOrderFilePath,
+                childManager.getQueueOrder());
         super.onPause();
     }
 

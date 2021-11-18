@@ -109,4 +109,31 @@ public class SaveLoadData {
         }
         return childManager.getChildList();
     }
+
+    public static void saveQueueOrder(String queueOrderFilePath, ArrayList<Integer> queueOrder){
+        try {
+            String jsonQueueOrder = myGson.toJson(queueOrder);
+            FileWriter fileWriter = new FileWriter(queueOrderFilePath);
+            fileWriter.write(jsonQueueOrder);
+            fileWriter.close();
+        } catch (IOException exception){
+            System.out.println("Exception " + exception.getMessage());
+        }
+    }
+
+    public static ArrayList<Integer> loadQueueOrder(String queueOrderFilePath){
+        File inputQueueList = new File(queueOrderFilePath);
+        try{
+            JsonElement queueIndex = JsonParser.parseReader(new FileReader(inputQueueList));
+            JsonArray jsonArrayIndex = queueIndex.getAsJsonArray();
+            for (JsonElement i : jsonArrayIndex){
+                int index = i.getAsInt();
+                childManager.addIndexToQueueOrder(index);
+            }
+        } catch (FileNotFoundException e) {
+            //do nothing if no file found
+            Log.e("TAG", "CHILD FILE NOT FOUND");
+        }
+        return childManager.getQueueOrder();
+    }
 }
