@@ -15,12 +15,14 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -115,18 +117,27 @@ public class SaveLoadData {
         return childManager.getChildList();
     }
 
-    public static String encode(Bitmap image){
-        Bitmap photo = image;
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        byte[] bit = os.toByteArray();
-        String imageEncoded = Base64.encodeToString(bit, Base64.DEFAULT);
-
-        return imageEncoded;
+    /*Adapted from https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa */
+    public static String encode(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
     }
 
-    public static Bitmap decode(String input){
-        byte[] decodedByte = Base64.decode(input, 0);
+    public static Bitmap decode(String image){
+        try{
+            byte [] encodeByte=Base64.decode(image,Base64.DEFAULT);
 
-        return BitmapFactory.decodeByteArray(decodedByte,0, decodedByte.length);
+            InputStream inputStream  = new ByteArrayInputStream(encodeByte);
+            Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
     }
+
+
 }

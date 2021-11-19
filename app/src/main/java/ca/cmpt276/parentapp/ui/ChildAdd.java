@@ -53,6 +53,7 @@ public class ChildAdd extends AppCompatActivity {
     private static final int STORAGE_REQUEST = 101;
     String cameraPermission[];
     String storagePermission[];
+    Uri newPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +95,7 @@ public class ChildAdd extends AppCompatActivity {
             }
         });
 
-        setupAdd();
+        setupAdd(newPhoto);
     }
 
     public static Intent makeIntent(Context context) {
@@ -136,6 +137,7 @@ public class ChildAdd extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri uriResult = result.getUri();
+                newPhoto = uriResult;
                 //Picasso.with(this).load(uriResult).into(imageView);
                 imageView.setImageURI(uriResult);
             }
@@ -189,7 +191,7 @@ public class ChildAdd extends AppCompatActivity {
 
     }
 
-    private void setupAdd() {
+    private void setupAdd(Uri photoChild) {
         Button save = (Button) findViewById(R.id.btnAddChild);
         save.setOnClickListener(new View.OnClickListener() {
 
@@ -202,9 +204,12 @@ public class ChildAdd extends AppCompatActivity {
                 } else {
 
                     //BitmapDrawable drawable = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                    Bitmap bitmapImage = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                    //imageView.setImageURI(photoChild);
+                    BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+                    Bitmap bitmapImage = drawable.getBitmap();
 
                     String portrait = SaveLoadData.encode(bitmapImage);
+                    Log.e("TAG", "portrait is: " + portrait);
                     Child child = new Child(name, portrait);
                     ChildManager.getInstance().addChild(child);
                     String message = name + getString(R.string.x_added);

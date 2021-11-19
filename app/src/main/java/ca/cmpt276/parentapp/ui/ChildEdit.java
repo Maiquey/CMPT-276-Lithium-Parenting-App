@@ -38,6 +38,7 @@ import java.io.OutputStream;
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.SaveLoadData;
 
 /**
  * ChildEdit class:
@@ -55,6 +56,7 @@ public class ChildEdit extends AppCompatActivity {
     ImageView imageView;
     String cameraPermission[];
     String storagePermission[];
+    private ChildManager childManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class ChildEdit extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.edit_child_title);
         ab.setDisplayHomeAsUpEnabled(true);
+
+        childManager = ChildManager.getInstance();
 
         extractExtras();
         inputFields();
@@ -78,6 +82,9 @@ public class ChildEdit extends AppCompatActivity {
 
         //adding new image.
         imageView = (ImageView) findViewById(R.id.childPhoto);
+
+        Bitmap theMap = SaveLoadData.decode(childManager.getChild(childIndex).getPhoto());
+        imageView.setImageBitmap(theMap);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +107,8 @@ public class ChildEdit extends AppCompatActivity {
                 }
             }
         });
-    };
+
+    }
 
     public static Intent makeIntent(Context context, int index) {
         Intent intent = new Intent(context, ChildEdit.class);
@@ -184,13 +192,13 @@ public class ChildEdit extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = ChildManager.getInstance().getChild(childIndex).getName() + getString(R.string.x_deleted);
-                ChildManager.getInstance().removeChildAtIndex(childIndex);
+                String message = childManager.getChild(childIndex).getName() + getString(R.string.x_deleted);
+                childManager.removeChildAtIndex(childIndex);
 
                 //save new pickingChildIndex which may have changed due to deletion
                 SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(PICKING_CHILD_INDEX, ChildManager.getInstance().getPickingChildIndex());
+                editor.putInt(PICKING_CHILD_INDEX, childManager.getPickingChildIndex());
                 editor.apply();
 
                 Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
@@ -213,46 +221,16 @@ public class ChildEdit extends AppCompatActivity {
                 }
                 else {
 
-
-                    File dir = new File(Environment.getExternalStorageDirectory(), "SaveImage");
-                    if(!dir.exists()){
-                        dir.mkdirs();
-                    }
-
-                    File file = new File(dir, System.currentTimeMillis()+ ".jpg");
-
 //                    https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-
 //                     from-internal-memory-in-android
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                     Bitmap bitmapImage = drawable.getBitmap();
-//                    ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
-//
-//                    File directory = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);
-//
-//
-//
-                    try {
 
-                        outputStream = new FileOutputStream(file);
-                        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                    }
-                    catch(FileNotFoundException exception) {
-                        exception.printStackTrace();
-                    }
+                    String newPhoto = SaveLoadData.encode(bitmapImage);
 
-                    try{
-                        outputStream.flush();
-                    }catch(IOException e){
-                        e.printStackTrace();
-                    }
+                    childManager.getChild(childIndex).setName(name);
+                    childManager.getChild(childIndex).setPhoto(newPhoto);
 
-                    try{
-                        outputStream.close();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
-
-                    ChildManager.getInstance().getChild(childIndex).setName(name);
                     String message = getString(R.string.edited);
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                     finish();
@@ -262,7 +240,7 @@ public class ChildEdit extends AppCompatActivity {
     }
 
     private void inputFields() {
-        Child child = ChildManager.getInstance().getChild(childIndex);
+        Child child = childManager.getChild(childIndex);
 
         EditText name = (EditText) findViewById(R.id.editTextSelectedChild);
         name.setText((child.getName()));

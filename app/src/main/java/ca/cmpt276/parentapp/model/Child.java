@@ -35,7 +35,7 @@ public class Child {
         return photo;
     }
 
-    public void setPhoto(){
+    public void setPhoto(String photo){
         this.photo = photo;
     }
 
