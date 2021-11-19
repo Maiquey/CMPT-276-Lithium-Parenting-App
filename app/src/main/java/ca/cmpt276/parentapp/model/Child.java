@@ -14,6 +14,7 @@ public class Child {
     private String photo;
 
 
+
     public Child (String name, String photo){
         this.name= name;
         this.photo = photo ;

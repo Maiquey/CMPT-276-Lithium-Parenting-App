@@ -17,15 +17,6 @@ public class ChildManager {
     private ArrayList<CoinFlipData> coinFlipHistory;
     private int pickingChildIndex;
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    String path;
 
     public static ChildManager getInstance() {
         if (instance == null) {
