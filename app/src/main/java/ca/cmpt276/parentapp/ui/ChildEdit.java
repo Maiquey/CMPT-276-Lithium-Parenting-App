@@ -8,17 +8,12 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,12 +23,6 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
@@ -41,8 +30,6 @@ import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.SaveLoadData;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.WhosTurnManager;
-import ca.cmpt276.parentapp.model.SaveLoadData;
-import ca.cmpt276.parentapp.model.SaveLoadData;
 
 /**
  * ChildEdit class:
@@ -52,7 +39,6 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
 public class ChildEdit extends AppCompatActivity {
 
     private int childIndex;
-    OutputStream outputStream;
     private final String PREF = "PICKING_CHILD_INDEX";
     public static final String PICKING_CHILD_INDEX = "picking child index new";
     private static final int CAMERA_REQUEST = 100;
@@ -63,12 +49,6 @@ public class ChildEdit extends AppCompatActivity {
     private ChildManager childManager;
     private WhosTurnManager whosTurnManager;
     private String taskFilePath;
-    private static final int CAMERA_REQUEST = 100;
-    private static final int STORAGE_REQUEST = 101;
-    ImageView imageView;
-    String cameraPermission[];
-    String storagePermission[];
-    private ChildManager childManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,8 +198,6 @@ public class ChildEdit extends AppCompatActivity {
                         task.setCurrentChildID(task.getCurrentChildID() - 1);
                     }
                 }
-                String message = childManager.getChild(childIndex).getName() + getString(R.string.x_deleted);
-                childManager.removeChildAtIndex(childIndex);
 
                 SaveLoadData.saveTaskList(taskFilePath, whosTurnManager.getTasks());
                 //save new pickingChildIndex which may have changed due to deletion
@@ -247,16 +225,7 @@ public class ChildEdit extends AppCompatActivity {
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                 }
                 else {
-
-//                    https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-
-//                     from-internal-memory-in-android
-                    BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-                    Bitmap bitmapImage = drawable.getBitmap();
-
-                    String newPhoto = SaveLoadData.encode(bitmapImage);
-
-                    childManager.getChild(childIndex).setName(name);
-                    childManager.getChild(childIndex).setPhoto(newPhoto);
+                    ChildManager.getInstance().getChild(childIndex).setName(name);
 
                     String message = getString(R.string.edited);
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
@@ -267,7 +236,7 @@ public class ChildEdit extends AppCompatActivity {
     }
 
     private void inputFields() {
-        Child child = childManager.getChild(childIndex);
+        Child child = ChildManager.getInstance().getChild(childIndex);
 
         EditText name = (EditText) findViewById(R.id.editTextSelectedChild);
         name.setText((child.getName()));
