@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/child_screen_background"
     tools:context=".ui.ChildEdit">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -23,28 +22,27 @@
         android:text="@string/delete_child"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#BD6D6D"
+
         android:textColorLink="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.173"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.748"
+        app:layout_constraintTop_toBottomOf="@+id/add_image"
+        app:layout_constraintVertical_bias="0.137"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnApplyChange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#36972B"
         android:text="@string/apply_change"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.831"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.748" />
+        app:layout_constraintTop_toBottomOf="@+id/btnDeleteChild" />
 
     <EditText
         android:id="@+id/editTextSelectedChild"
@@ -84,18 +82,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.293"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSelectedChild"
+        app:layout_constraintVertical_bias="0.052"
         app:srcCompat="@drawable/childphoto" />
 
     <TextView
         android:id="@+id/add_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="12dp"
         android:text="Tap on the picture to add a new image"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/childPhoto" />
 

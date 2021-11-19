@@ -122,17 +122,11 @@ public class ChildList extends AppCompatActivity {
             nameView.setText(currentChild.getName());
 
 
-//            ImageView imageView = (ImageView) itemView.findViewById(R.id.photo);
-//            try {
-//                File f = new File(children.getPath(), currentChild + ".jpg");
-//                Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(f));
-//                imageView.setImageBitmap(bitmap);
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
+            Bitmap bitmap = SaveLoadData.decode(currentChild.getPhoto());
 
-//            imageView.setImageBitmap(bitmap);
-//
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.photo);
+            imageView.setImageBitmap(bitmap);
+
 
 
 
