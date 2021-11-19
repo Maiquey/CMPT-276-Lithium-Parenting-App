@@ -42,6 +42,7 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.WhosTurnManager;
 import ca.cmpt276.parentapp.model.SaveLoadData;
+import ca.cmpt276.parentapp.model.SaveLoadData;
 
 /**
  * ChildEdit class:
@@ -54,6 +55,12 @@ public class ChildEdit extends AppCompatActivity {
     OutputStream outputStream;
     private final String PREF = "PICKING_CHILD_INDEX";
     public static final String PICKING_CHILD_INDEX = "picking child index new";
+    private static final int CAMERA_REQUEST = 100;
+    private static final int STORAGE_REQUEST = 101;
+    ImageView imageView;
+    String cameraPermission[];
+    String storagePermission[];
+    private ChildManager childManager;
     private WhosTurnManager whosTurnManager;
     private String taskFilePath;
     private static final int CAMERA_REQUEST = 100;
@@ -76,6 +83,8 @@ public class ChildEdit extends AppCompatActivity {
         whosTurnManager = WhosTurnManager.getInstance();
         whosTurnManager.getTasks().clear();
         whosTurnManager.setTaskList(SaveLoadData.loadTaskList(taskFilePath));
+
+        childManager = ChildManager.getInstance();
 
         childManager = ChildManager.getInstance();
 
@@ -209,6 +218,8 @@ public class ChildEdit extends AppCompatActivity {
                         task.setCurrentChildID(task.getCurrentChildID() - 1);
                     }
                 }
+                String message = childManager.getChild(childIndex).getName() + getString(R.string.x_deleted);
+                childManager.removeChildAtIndex(childIndex);
 
                 SaveLoadData.saveTaskList(taskFilePath, whosTurnManager.getTasks());
                 //save new pickingChildIndex which may have changed due to deletion
@@ -222,6 +233,7 @@ public class ChildEdit extends AppCompatActivity {
             }
         });
     }
+
 
     private void setupApplyChange() {
         Button apply = (Button) findViewById(R.id.btnApplyChange);
