@@ -104,7 +104,8 @@ public class SaveLoadData {
             for (JsonElement child : jsonArrayChild){
                 JsonObject childObject = child.getAsJsonObject();
                 String name = childObject.get("name").getAsString();
-                Child newChild = new Child(name);
+                String photo = childObject.get("photo").getAsString();
+                Child newChild = new Child(name, photo);
                 childManager.addChild(newChild);
             }
         } catch (FileNotFoundException e) {

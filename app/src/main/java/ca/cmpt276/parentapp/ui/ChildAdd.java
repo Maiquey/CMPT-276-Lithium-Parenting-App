@@ -1,36 +1,28 @@
 package ca.cmpt276.parentapp.ui;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -72,9 +64,6 @@ public class ChildAdd extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         editTextChildAdd = findViewById(R.id.editTextChildAdd);
 
-        setupAdd();
-
-
         //https://youtu.be/2tRw6Q2JXGo
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         cameraPermission = new String[]{Manifest.permission.CAMERA,
@@ -104,6 +93,8 @@ public class ChildAdd extends AppCompatActivity {
                 }
             }
         });
+
+        setupAdd();
     }
 
     public static Intent makeIntent(Context context) {
@@ -145,11 +136,26 @@ public class ChildAdd extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri uriResult = result.getUri();
-                Picasso.with(this).load(uriResult).into(imageView);
-
+                //Picasso.with(this).load(uriResult).into(imageView);
+                imageView.setImageURI(uriResult);
             }
         }
     }
+    /*
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
+            mImageUri = data.getData();
+            CropImage.activity(mImageUri).setAspectRatio(1, 1).start(PostActivity.this);
+
+            mSelectImage.setImageURI(mImageUri);
+        }
+    }
+}
+
+     */
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -181,19 +187,7 @@ public class ChildAdd extends AppCompatActivity {
             }
         }
 
-
     }
-
-    public static String encode(Bitmap image){
-        Bitmap photo = image;
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        byte[] bit = os.toByteArray();
-        String imageEncoded = Base64.encodeToString(bit, Base64.DEFAULT);
-
-        return imageEncoded;
-    }
-
-
 
     private void setupAdd() {
         Button save = (Button) findViewById(R.id.btnAddChild);
@@ -207,45 +201,8 @@ public class ChildAdd extends AppCompatActivity {
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                 } else {
 
-                    //https://youtu.be/oLcxTunwaFk
-
-                    File dir = new File(Environment.getExternalStorageDirectory(), "SaveImage");
-                    if(!dir.exists()){
-                        dir.mkdirs();
-                    }
-
-                    File file = new File(dir, System.currentTimeMillis()+ ".jpg");
-
-//                    https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-
-//                     from-internal-memory-in-android
-                    BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-                    Bitmap bitmapImage = drawable.getBitmap();
-//                    ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
-//
-//                    File directory = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);
-//
-//
-//
-                    try {
-
-                        outputStream = new FileOutputStream(file);
-                        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                    }
-                    catch(FileNotFoundException exception) {
-                        exception.printStackTrace();
-                    }
-
-                    try{
-                        outputStream.flush();
-                    }catch(IOException e){
-                        e.printStackTrace();
-                    }
-
-                    try{
-                        outputStream.close();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
+                    //BitmapDrawable drawable = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                    Bitmap bitmapImage = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
                     String portrait = SaveLoadData.encode(bitmapImage);
                     Child child = new Child(name, portrait);
