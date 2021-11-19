@@ -1,7 +1,5 @@
 package ca.cmpt276.parentapp.ui;
 
-import static android.util.Base64.DEFAULT;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +13,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,7 +29,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Base64;
 
 /**
  * ChildList class:
@@ -97,18 +96,6 @@ public class ChildList extends AppCompatActivity {
         });
     }
 
-//    public static String encode(Bitmap image){
-//        Bitmap photo = image;
-//        ByteArrayOutputStream os = new ByteArrayOutputStream();
-//        byte[] bit = os.toByteArray();
-//        String imageEncoded = Base64.encodeToString(bit, Base64.DEFAULT);
-//
-//        return imageEncoded;
-//    }
-
-//    public static String decode(String input){
-//        byte[] decodeByte = Ba;
-//    }
 
     @Override
     protected void onPause() {
@@ -134,7 +121,25 @@ public class ChildList extends AppCompatActivity {
             TextView nameView = (TextView) itemView.findViewById(R.id.config_item_name);
             nameView.setText(currentChild.getName());
 
+//            ImageView imageView = (ImageView) itemView.findViewById(R.id.photo);
+
+            Bitmap bitmap = SaveLoadData.decode(currentChild.getPhoto());
+
             ImageView imageView = (ImageView) itemView.findViewById(R.id.photo);
+            imageView.setImageBitmap(bitmap);
+//
+//            String path = Environment.getExternalStorageDirectory().getAbsolutePath();
+//
+//            Bitmap bitmap = null;
+//            File f = new File(path);
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//            try {
+//                bitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            imageView.setImageBitmap(bitmap);
 //            if(currentChild.getPhoto()==null){
 //                imageView.setImageResource(R.drawable.childphoto);
 //            }
@@ -142,11 +147,13 @@ public class ChildList extends AppCompatActivity {
 //                Bitmap icon = decode(currentChild.getPhoto());
 //                imageView.setImageBitmap(icon);
 //            }
+
+
 //            try{
 //                File file = new File(child.getPath(), currentChild + ".jpg");
 //                Bitmap bm = BitmapFactory.decodeStream(new FileInputStream(file));
-//
-//                imageView.setImageBitmap(bm);
+//                ImageView img=(ImageView)findViewById(R.id.childPhoto);
+//                imageView.setImageBitmap(img);
 //            }catch(FileNotFoundException fileNotFoundException){
 //                fileNotFoundException.printStackTrace();
 //            }

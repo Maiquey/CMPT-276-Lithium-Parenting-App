@@ -13,9 +13,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,9 +28,12 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
@@ -41,8 +47,7 @@ import ca.cmpt276.parentapp.model.ChildManager;
 public class ChildEdit extends AppCompatActivity {
 
     private int childIndex;
-    EditText editTextSelectedChild;
-    private ChildManager children;
+    OutputStream outputStream;
     private final String PREF = "PICKING_CHILD_INDEX";
     public static final String PICKING_CHILD_INDEX = "picking child index new";
     private static final int CAMERA_REQUEST = 100;
@@ -194,48 +199,58 @@ public class ChildEdit extends AppCompatActivity {
         });
     }
 
+
     private void setupApplyChange() {
         Button apply = (Button) findViewById(R.id.btnApplyChange);
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                EditText editBox = (EditText) findViewById(R.id.editTextSelectedChild);
-//                String name = editBox.getText().toString();
-                String name = editTextSelectedChild.getText().toString();
+                EditText editBox = (EditText) findViewById(R.id.editTextSelectedChild);
+                String name = editBox.getText().toString();
                 if (name.matches("")) {
                     String message = getString(R.string.warning_name_empty);
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                 }
                 else {
 
-                    //https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-
-                    // from-internal-memory-in-android
+
+                    File dir = new File(Environment.getExternalStorageDirectory(), "SaveImage");
+                    if(!dir.exists()){
+                        dir.mkdirs();
+                    }
+
+                    File file = new File(dir, System.currentTimeMillis()+ ".jpg");
+
+//                    https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-
+//                     from-internal-memory-in-android
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                     Bitmap bitmapImage = drawable.getBitmap();
-                    ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
-
-                    File directory = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);
-
-                    File mPath= new File(directory, name + ".jpg");
-
-                    FileOutputStream fos = null;
+//                    ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
+//
+//                    File directory = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);
+//
+//
+//
                     try {
-                        fos = new FileOutputStream(mPath);
-                        bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+
+                        outputStream = new FileOutputStream(file);
+                        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                     }
-                    catch(Exception exception) {
+                    catch(FileNotFoundException exception) {
                         exception.printStackTrace();
                     }
-                    finally {
-                        try {
-                            fos.close();
-                        }
-                        catch(IOException exception) {
-                            exception.printStackTrace();
-                        }
+
+                    try{
+                        outputStream.flush();
+                    }catch(IOException e){
+                        e.printStackTrace();
                     }
-                    String path = directory.getAbsolutePath();
-                    children.setPath(path);
+
+                    try{
+                        outputStream.close();
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
 
                     ChildManager.getInstance().getChild(childIndex).setName(name);
                     String message = getString(R.string.edited);

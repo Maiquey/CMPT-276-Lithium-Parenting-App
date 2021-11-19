@@ -19,11 +19,13 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +35,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -42,6 +45,7 @@ import java.io.OutputStream;
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.SaveLoadData;
 
 /**
  * ChildAdd class:
@@ -53,16 +57,10 @@ public class ChildAdd extends AppCompatActivity {
     EditText editTextChildAdd;
     ImageView imageView;
     OutputStream outputStream;
-    private ChildManager children;
-    private String directoryPath;
-    Button btnOpen;
-    Button btnGallery;
-    //    private static final int IMAGE_FROM_GALLERY = 100;
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 101;
     String cameraPermission[];
     String storagePermission[];
-    ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +73,6 @@ public class ChildAdd extends AppCompatActivity {
         editTextChildAdd = findViewById(R.id.editTextChildAdd);
 
         setupAdd();
-        //      setupTakePhoto();
-//        setupAddPhotoFromGallery();
 
 
         //https://youtu.be/2tRw6Q2JXGo
@@ -188,83 +184,15 @@ public class ChildAdd extends AppCompatActivity {
 
     }
 
-    //https://www.youtube.com/watch?v=qO3FFuBrT2E
-//    private void setupTakePhoto() {
-//
-//        imageView = findViewById(R.id.childPhoto);
-//        btnOpen = findViewById(R.id.takePhotobtn);
-//        if(ContextCompat.checkSelfPermission(ChildAdd.this,
-//                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-//            ActivityCompat.requestPermissions(ChildAdd.this,
-//                    new String[]{
-//                        Manifest.permission.CAMERA
-//                    },
-//                    100);
-//        }
-//        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-//                new ActivityResultCallback<ActivityResult>() {
-//            @Override
-//            public void onActivityResult(ActivityResult result) {
-//                if(result.getResultCode()== RESULT_OK && result.getData() != null){
-//                    Bundle bundle = result.getData().getExtras();
-//                    Bitmap bitmap = (Bitmap) bundle.get("data");
-//                    imageView.setImageBitmap(bitmap);
-//                }
-//
-//
-//            }
-//        });
-//        btnOpen.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                if(intent.resolveActivity(getPackageManager())!= null){
-//                    activityResultLauncher.launch(intent);
-//                }
-//            }
-//        });
-//
-//    }
-//
-//
-//    private void setupAddPhotoFromGallery() {
-//
-//        imageView = findViewById(R.id.childPhoto);
-//        btnGallery = findViewById(R.id.chooseFromGallerybtn);
-//
-//        if(ContextCompat.checkSelfPermission(ChildAdd.this,
-//                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-//            ActivityCompat.requestPermissions(ChildAdd.this,
-//                    new String[]{
-//                            Manifest.permission.READ_EXTERNAL_STORAGE
-//                    },
-//                    IMAGE_FROM_GALLERY);
-//        }
-//        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-//                new ActivityResultCallback<ActivityResult>() {
-//                    @Override
-//                    public void onActivityResult(ActivityResult result) {
-//                        if(result.getResultCode()== RESULT_OK && result.getData() != null){
-//                            Bundle bundle = result.getData().getExtras();
-//                            Bitmap bitmap = (Bitmap) bundle.get("data");
-//                            imageView.setImageBitmap(bitmap);
-//                        }
-//
-//                    }
-//                });
-//        btnGallery.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(Intent.ACTION_PICK);
-//                if(intent.resolveActivity(getPackageManager())!= null){
-//                    activityResultLauncher.launch(intent);
-//                }
-//            }
-//        });
-//
-//    }
+    public static String encode(Bitmap image){
+        Bitmap photo = image;
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        byte[] bit = os.toByteArray();
+        String imageEncoded = Base64.encodeToString(bit, Base64.DEFAULT);
+
+        return imageEncoded;
+    }
+
 
 
     private void setupAdd() {
@@ -279,17 +207,17 @@ public class ChildAdd extends AppCompatActivity {
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                 } else {
 
+                    //https://youtu.be/oLcxTunwaFk
 
-                    File file = new File(Environment.getExternalStorageDirectory(), "SaveImage");
-                    File dir= new File(file.getAbsolutePath()+ "/MyPics");
+                    File dir = new File(Environment.getExternalStorageDirectory(), "SaveImage");
                     if(!dir.exists()){
                         dir.mkdirs();
                     }
 
-                    String filename = String.format("%d.png", System.currentTimeMillis());
+                    File file = new File(dir, System.currentTimeMillis()+ ".jpg");
 
-                    //https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-
-                    // from-internal-memory-in-android
+//                    https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-
+//                     from-internal-memory-in-android
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                     Bitmap bitmapImage = drawable.getBitmap();
 //                    ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
@@ -298,15 +226,14 @@ public class ChildAdd extends AppCompatActivity {
 //
 //
 //
-                    File outFile = new File(dir, filename);
                     try {
 
-                        outputStream = new FileOutputStream(outFile);
+                        outputStream = new FileOutputStream(file);
+                        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                     }
                     catch(FileNotFoundException exception) {
                         exception.printStackTrace();
                     }
-                    bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
 
                     try{
                         outputStream.flush();
@@ -320,13 +247,12 @@ public class ChildAdd extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-
-                Child child = new Child(name);
-                ChildManager.getInstance().addChild(child);
-                String message = name + getString(R.string.x_added);
-                Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
-//                children.setPath(directoryPath);
-                finish();
+                    String portrait = SaveLoadData.encode(bitmapImage);
+                    Child child = new Child(name, portrait);
+                    ChildManager.getInstance().addChild(child);
+                    String message = name + getString(R.string.x_added);
+                    Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
+                    finish();
             }
 
 

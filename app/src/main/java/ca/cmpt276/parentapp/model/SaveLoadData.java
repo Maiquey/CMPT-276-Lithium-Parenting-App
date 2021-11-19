@@ -1,5 +1,8 @@
 package ca.cmpt276.parentapp.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -12,6 +15,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -108,5 +112,20 @@ public class SaveLoadData {
             Log.e("TAG", "CHILD FILE NOT FOUND");
         }
         return childManager.getChildList();
+    }
+
+    public static String encode(Bitmap image){
+        Bitmap photo = image;
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        byte[] bit = os.toByteArray();
+        String imageEncoded = Base64.encodeToString(bit, Base64.DEFAULT);
+
+        return imageEncoded;
+    }
+
+    public static Bitmap decode(String input){
+        byte[] decodedByte = Base64.decode(input, 0);
+
+        return BitmapFactory.decodeByteArray(decodedByte,0, decodedByte.length);
     }
 }
