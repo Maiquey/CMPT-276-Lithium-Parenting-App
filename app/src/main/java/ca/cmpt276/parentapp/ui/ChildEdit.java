@@ -167,7 +167,7 @@ public class ChildEdit extends AppCompatActivity {
                         if(camera_granted && storage_granted){
                             pickFromGallery();
                         }else{
-                            Toast.makeText(this, "Please enable your camera and gallery permission",
+                            Toast.makeText(this, "" + R.string.enable_permissions_prompt,
                                     Toast.LENGTH_SHORT).show();
 
                         }
@@ -180,7 +180,7 @@ public class ChildEdit extends AppCompatActivity {
                         if(storage_granted){
                             pickFromGallery();
                         }else{
-                            Toast.makeText(this, "Please enable your gallery permission", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -192,21 +192,15 @@ public class ChildEdit extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = childManager.getChild(childIndex).getName() + getString(R.string.x_deleted);
-                childManager.removeChildAtIndex(childIndex);
-
-                //save new pickingChildIndex which may have changed due to deletion
-                SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(PICKING_CHILD_INDEX, childManager.getPickingChildIndex());
-                editor.apply();
+                String message = ChildManager.getInstance().getChild(childIndex).getName() + getString(R.string.x_deleted);
+                ChildManager.getInstance().fixQueueOrderIndices(childIndex);
+                ChildManager.getInstance().removeChildAtIndex(childIndex);
 
                 Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
     }
-
 
     private void setupApplyChange() {
         Button apply = (Button) findViewById(R.id.btnApplyChange);

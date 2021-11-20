@@ -73,10 +73,11 @@ public class SaveLoadData {
                 String dateAsString = flipObject.get("timeOfFlip").getAsString();
                 LocalDateTime timeOfFlip = LocalDateTime.parse(dateAsString);
                 String nameOfPicker = flipObject.get("whoPicked").getAsString();
+                String photoOfPicker = flipObject.get("whoPickedPicture").getAsString();
                 boolean isHeads = flipObject.get("isHeads").getAsBoolean();
                 boolean pickerPickedHeads = flipObject.get("pickerPickedHeads").getAsBoolean();
                 boolean pickerWon = flipObject.get("pickerWon").getAsBoolean();
-                CoinFlipData coinFlip = new CoinFlipData(timeOfFlip, nameOfPicker,
+                CoinFlipData coinFlip = new CoinFlipData(timeOfFlip, nameOfPicker, photoOfPicker,
                         isHeads, pickerPickedHeads, pickerWon);
                 childManager.addCoinFlip(coinFlip);
             }
@@ -115,6 +116,33 @@ public class SaveLoadData {
             Log.e("TAG", "CHILD FILE NOT FOUND");
         }
         return childManager.getChildList();
+    }
+
+    public static void saveQueueOrder(String queueOrderFilePath, ArrayList<Integer> queueOrder){
+        try {
+            String jsonQueueOrder = myGson.toJson(queueOrder);
+            FileWriter fileWriter = new FileWriter(queueOrderFilePath);
+            fileWriter.write(jsonQueueOrder);
+            fileWriter.close();
+        } catch (IOException exception){
+            System.out.println("Exception " + exception.getMessage());
+        }
+    }
+
+    public static ArrayList<Integer> loadQueueOrder(String queueOrderFilePath){
+        File inputQueueList = new File(queueOrderFilePath);
+        try{
+            JsonElement queueIndex = JsonParser.parseReader(new FileReader(inputQueueList));
+            JsonArray jsonArrayIndex = queueIndex.getAsJsonArray();
+            for (JsonElement i : jsonArrayIndex){
+                int index = i.getAsInt();
+                childManager.addIndexToQueueOrder(index);
+            }
+        } catch (FileNotFoundException e) {
+            //do nothing if no file found
+            Log.e("TAG", "CHILD FILE NOT FOUND");
+        }
+        return childManager.getQueueOrder();
     }
 
     /*Adapted from https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa */

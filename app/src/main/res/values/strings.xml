@@ -70,5 +70,19 @@
     <string name="flip_a_coin">Flip a Coin</string>
     <string name="player_1_won">Player 1 Won!</string>
     <string name="clear_history">clear history</string>
+    <string name="queue_order_title">Coin Flip Queue</string>
+    <string name="enable_permissions_prompt">Please enable your camera and gallery permission</string>
+    <string name="enable_permission_prompt_2">Please enable your gallery permission</string>
+    <string name="no_children_configured">No Children Configured</string>
+    <string name="select">Select\ </string>
+    <string name="to_flip_next">\ to flip next?</string>
+    <string name="position_in_queue">"Position in queue:\ "</string>
+    <string name="tap_on_the_picture_to_add_a_new_image">Tap on the picture to add a new image</string>
+    <string name="select_child">select child</string>
+    <string name="current_queue">Current Queue</string>
+    <string name="select_a_child_to_put_at_the_front_of_the_queue">Select a child to put at the front of the queue</string>
+    <string name="cancel">cancel</string>
+    <string name="ok">ok</string>
+    <string name="empty_flip">empty flip</string>
 
 </resources>

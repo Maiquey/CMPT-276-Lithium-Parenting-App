@@ -138,26 +138,10 @@ public class ChildAdd extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri uriResult = result.getUri();
                 newPhoto = uriResult;
-                //Picasso.with(this).load(uriResult).into(imageView);
                 imageView.setImageURI(uriResult);
             }
         }
     }
-    /*
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
-            mImageUri = data.getData();
-            CropImage.activity(mImageUri).setAspectRatio(1, 1).start(PostActivity.this);
-
-            mSelectImage.setImageURI(mImageUri);
-        }
-    }
-}
-
-     */
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -170,7 +154,7 @@ public class ChildAdd extends AppCompatActivity {
                     if (camera_granted && storage_granted) {
                         pickFromGallery();
                     } else {
-                        Toast.makeText(this, "Please enable your camera and gallery permission",
+                        Toast.makeText(this, "" + R.string.enable_permissions_prompt,
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -183,7 +167,7 @@ public class ChildAdd extends AppCompatActivity {
                     if (storage_granted) {
                         pickFromGallery();
                     } else {
-                        Toast.makeText(this, "Please enable your gallery permission", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -212,15 +196,14 @@ public class ChildAdd extends AppCompatActivity {
                     Log.e("TAG", "portrait is: " + portrait);
                     Child child = new Child(name, portrait);
                     ChildManager.getInstance().addChild(child);
+                    ChildManager.getInstance().addIndexToQueueOrder(ChildManager.getInstance().numOfChildren() - 1);
+
                     String message = name + getString(R.string.x_added);
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                     finish();
+                }
             }
-
-
-        }
-    });
-
+        });
     }
 
 }
