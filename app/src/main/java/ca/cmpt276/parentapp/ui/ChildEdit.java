@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -63,8 +64,6 @@ public class ChildEdit extends AppCompatActivity {
         whosTurnManager = WhosTurnManager.getInstance();
         whosTurnManager.getTasks().clear();
         whosTurnManager.setTaskList(SaveLoadData.loadTaskList(taskFilePath));
-
-        childManager = ChildManager.getInstance();
 
         childManager = ChildManager.getInstance();
 
@@ -191,7 +190,7 @@ public class ChildEdit extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = ChildManager.getInstance().getChild(childIndex).getName() + getString(R.string.x_deleted);
+                String message = childManager.getChild(childIndex).getName() + getString(R.string.x_deleted);
                 childManager.fixQueueOrderIndices(childIndex);
                 childManager.removeChildAtIndex(childIndex);
                 for (Task task : whosTurnManager.getTasks()) {
@@ -219,8 +218,10 @@ public class ChildEdit extends AppCompatActivity {
                     String message = getString(R.string.warning_name_empty);
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                 } else {
-                    ChildManager.getInstance().getChild(childIndex).setName(name);
-
+                    childManager.getChild(childIndex).setName(name);
+                    BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+                    Bitmap bitmapImage = drawable.getBitmap();
+                    childManager.getChild(childIndex).setPhoto(SaveLoadData.encode(bitmapImage));
                     String message = getString(R.string.edited);
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                     finish();
