@@ -42,6 +42,8 @@ public class QueueOrderActivity extends AppCompatActivity {
     private Button okButton;
     private TextView confirmationMessage;
     private String queueOrderFilePath;
+    private TextView title;
+    private TextView prompt;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, QueueOrderActivity.class);
@@ -62,6 +64,8 @@ public class QueueOrderActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.button_cancel);
         okButton = findViewById(R.id.button_confirm);
         confirmationMessage = findViewById(R.id.tv_confirmation);
+        title = findViewById(R.id.tv_queue_title);
+        prompt = findViewById(R.id.tv_queue_order_prompt);
         queueOrderFilePath = getFilesDir().getPath().toString() + "/SaveQueueOrderInfo.json";
 
         populateListView();
@@ -76,6 +80,10 @@ public class QueueOrderActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.listview_queue_order);
         list.setAdapter(adapter);
         hideConfirmation();
+        if (coinFlipQueue.isEmpty()){
+            title.setText("" + R.string.no_children_configured);
+            prompt.setText("");
+        }
     }
 
     private void registerClickCallback() {
@@ -120,7 +128,7 @@ public class QueueOrderActivity extends AppCompatActivity {
         cancelButton.setVisibility(View.VISIBLE);
         okButton.setVisibility(View.VISIBLE);
         confirmationMessage.setVisibility(View.VISIBLE);
-        confirmationMessage.setText("Place " + coinFlipQueue.get(priorityChildIndex).getName() + " at the front of the queue?");
+        confirmationMessage.setText("" + getString(R.string.place) + coinFlipQueue.get(priorityChildIndex).getName() + getString(R.string.at_front_of_queue));
     }
 
     private class QueueAdapter extends ArrayAdapter<Child> {
@@ -147,7 +155,7 @@ public class QueueOrderActivity extends AppCompatActivity {
             TextView childName = (TextView) itemView.findViewById(R.id.tv_child_name);
             TextView numOfChild = (TextView) itemView.findViewById(R.id.tv_queue_position);
 
-            numOfChild.setText("Position in queue: " + (coinFlipQueue.indexOf(currentChild) + 1));
+            numOfChild.setText("" + getString(R.string.position_in_queue) + (coinFlipQueue.indexOf(currentChild) + 1));
             childName.setText("" + currentChild.getName());
 
             return itemView;

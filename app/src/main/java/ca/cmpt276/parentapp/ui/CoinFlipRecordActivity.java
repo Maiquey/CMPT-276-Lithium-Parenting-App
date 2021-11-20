@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,6 +37,8 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
 
     private ChildManager childManager;
     private ArrayList<CoinFlipData> flipHistory;
+    private Button deleteButton;
+    private String flipFilePath;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinFlipRecordActivity.class);
@@ -52,11 +55,12 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
         ab.setTitle(R.string.coin_flip_record_title);
         ab.setDisplayHomeAsUpEnabled(true);
 
+        flipFilePath = getFilesDir().getPath().toString() + "/CoinFlipHistory6.json";
         childManager = ChildManager.getInstance();
         flipHistory = childManager.getCoinFlipHistory();
 
         populateListView();
-        //setUpDeleteButton();
+        setUpDeleteButton();
     }
 
     private void populateListView() {
@@ -65,7 +69,18 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
-
+    private void setUpDeleteButton(){
+        deleteButton = findViewById(R.id.button_clear_history);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                childManager.getCoinFlipHistory().clear();
+                SaveLoadData.saveFlipHistoryList(flipFilePath,
+                        childManager.getCoinFlipHistory());
+                populateListView();
+            }
+        });
+    }
 
     private class MyListAdapter extends ArrayAdapter<CoinFlipData> {
         public MyListAdapter() {

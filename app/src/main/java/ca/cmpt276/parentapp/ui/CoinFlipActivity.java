@@ -43,7 +43,6 @@ public class CoinFlipActivity extends AppCompatActivity {
     private Button flipButton;
     private Button flipAgainButton;
     private Button coinFlipHistory;
-    private Button deleteButton;
     private Button queueOrderButton;
     private TextView prompt;
     private TextView flipResult;
@@ -101,8 +100,6 @@ public class CoinFlipActivity extends AppCompatActivity {
         flipResult = findViewById(R.id.tv_result);
         coinFlipAnimation = AnimationUtils.loadAnimation(this, R.anim.coin_flip);
         coinTossSound = MediaPlayer.create(this, R.raw.coin_sound_effect);
-
-        setUpClearHistoryButton();
 
         setUpButtons();
         updateUI();
@@ -215,17 +212,6 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     }
 
-    private void setUpClearHistoryButton(){
-        deleteButton = findViewById(R.id.button_clear_history_flip_coin);
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                childManager.getCoinFlipHistory().clear();
-            }
-        });
-    }
-
     private void showResults() {
         if(coinFlip.isHeads()){
             coinImage.setImageResource(R.drawable.heads_coloured);
@@ -262,13 +248,13 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinFlipAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                deleteButton.setVisibility(View.INVISIBLE);
+                queueOrderButton.setVisibility(View.INVISIBLE);
                 coinFlipHistory.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                deleteButton.setVisibility(View.VISIBLE);
+                queueOrderButton.setVisibility(View.VISIBLE);
                 coinFlipHistory.setVisibility(View.VISIBLE);
                 initiateCoinFlip();
             }

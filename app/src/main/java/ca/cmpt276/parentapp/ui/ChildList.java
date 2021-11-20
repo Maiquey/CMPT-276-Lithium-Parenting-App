@@ -127,43 +127,10 @@ public class ChildList extends AppCompatActivity {
             TextView nameView = (TextView) itemView.findViewById(R.id.config_item_name);
             nameView.setText(currentChild.getName());
 
-//            ImageView imageView = (ImageView) itemView.findViewById(R.id.photo);
-
             Bitmap bitmap = SaveLoadData.decode(currentChild.getPhoto());
 
             ImageView imageView = (ImageView) itemView.findViewById(R.id.photo);
             imageView.setImageBitmap(bitmap);
-//
-//            String path = Environment.getExternalStorageDirectory().getAbsolutePath();
-//
-//            Bitmap bitmap = null;
-//            File f = new File(path);
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//            try {
-//                bitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//            imageView.setImageBitmap(bitmap);
-//            if(currentChild.getPhoto()==null){
-//                imageView.setImageResource(R.drawable.childphoto);
-//            }
-//            else{
-//                Bitmap icon = decode(currentChild.getPhoto());
-//                imageView.setImageBitmap(icon);
-//            }
-
-
-//            try{
-//                File file = new File(child.getPath(), currentChild + ".jpg");
-//                Bitmap bm = BitmapFactory.decodeStream(new FileInputStream(file));
-//                ImageView img=(ImageView)findViewById(R.id.childPhoto);
-//                imageView.setImageBitmap(img);
-//            }catch(FileNotFoundException fileNotFoundException){
-//                fileNotFoundException.printStackTrace();
-//            }
-
 
             return itemView;
         }
