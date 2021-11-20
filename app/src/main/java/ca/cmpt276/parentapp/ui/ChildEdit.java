@@ -155,36 +155,36 @@ public class ChildEdit extends AppCompatActivity {
         }
     }
 
-        @Override
-        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            switch(requestCode){
-                case CAMERA_REQUEST:{
-                    if(grantResults.length>0){
-                        boolean camera_granted = grantResults[0]==(PackageManager.PERMISSION_GRANTED);
-                        boolean storage_granted = grantResults[1]==(PackageManager.PERMISSION_GRANTED);
-                        if(camera_granted && storage_granted){
-                            pickFromGallery();
-                        }else{
-                            Toast.makeText(this, "" + R.string.enable_permissions_prompt,
-                                    Toast.LENGTH_SHORT).show();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case CAMERA_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean camera_granted = grantResults[0] == (PackageManager.PERMISSION_GRANTED);
+                    boolean storage_granted = grantResults[1] == (PackageManager.PERMISSION_GRANTED);
+                    if (camera_granted && storage_granted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(this, "" + R.string.enable_permissions_prompt,
+                                Toast.LENGTH_SHORT).show();
 
-                        }
                     }
                 }
-                break;
-                case STORAGE_REQUEST:{
-                    if(grantResults.length>0){
-                        boolean storage_granted = grantResults[0]==(PackageManager.PERMISSION_GRANTED);
-                        if(storage_granted){
-                            pickFromGallery();
-                        }else{
-                            Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
-                        }
+            }
+            break;
+            case STORAGE_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean storage_granted = grantResults[0] == (PackageManager.PERMISSION_GRANTED);
+                    if (storage_granted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         }
+    }
 
     private void setupDelete() {
         Button delete = (Button) findViewById(R.id.btnDeleteChild);
@@ -192,8 +192,7 @@ public class ChildEdit extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String message = ChildManager.getInstance().getChild(childIndex).getName() + getString(R.string.x_deleted);
-                ChildManager.getInstance().fixQueueOrderIndices(childIndex);
-                ChildManager.getInstance().removeChildAtIndex(childIndex);
+                childManager.fixQueueOrderIndices(childIndex);
                 childManager.removeChildAtIndex(childIndex);
                 for (Task task : whosTurnManager.getTasks()) {
                     if (task.getCurrentChildID() > childIndex) {
@@ -202,11 +201,6 @@ public class ChildEdit extends AppCompatActivity {
                 }
 
                 SaveLoadData.saveTaskList(taskFilePath, whosTurnManager.getTasks());
-                //save new pickingChildIndex which may have changed due to deletion
-                SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(PICKING_CHILD_INDEX, childManager.getPickingChildIndex());
-                editor.apply();
 
                 Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                 finish();

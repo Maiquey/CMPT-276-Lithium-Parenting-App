@@ -49,7 +49,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 String taskName = txtTask.getText().toString();
                 if (taskName.isEmpty()) {
                     Toast.makeText(AddTaskActivity.this,
-                            "" + R.string.task_name_empty_warning, Toast.LENGTH_SHORT).show();
+                             R.string.task_name_empty_warning, Toast.LENGTH_SHORT).show();
 
                 } else {
                     Task task;
@@ -61,7 +61,7 @@ public class AddTaskActivity extends AppCompatActivity {
                     }
                     whosTurnManager.addTask(task);
                     Toast.makeText(AddTaskActivity.this,
-                            "" + R.string.added_task, Toast.LENGTH_SHORT).show();
+                            R.string.added_task, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

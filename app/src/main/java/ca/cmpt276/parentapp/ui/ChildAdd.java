@@ -48,7 +48,6 @@ public class ChildAdd extends AppCompatActivity {
 
     EditText editTextChildAdd;
     ImageView imageView;
-    OutputStream outputStream;
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 101;
     String cameraPermission[];
