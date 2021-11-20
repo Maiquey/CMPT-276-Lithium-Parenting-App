@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
+
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.CoinFlip;
@@ -37,14 +39,12 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private MediaPlayer coinTossSound;
     private Animation coinFlipAnimation;
-    public static final String PICKING_CHILD_INDEX = "picking child index new";
     private Button headsButton;
     private Button tailsButton;
     private Button flipButton;
     private Button flipAgainButton;
     private Button coinFlipHistory;
     private Button queueOrderButton;
-    private Button emptyFlipButton;
     private TextView prompt;
     private TextView flipResult;
     private ImageView coinImage;
@@ -93,7 +93,6 @@ public class CoinFlipActivity extends AppCompatActivity {
         flipAgainButton = findViewById(R.id.button_flip_again);
         coinFlipHistory = findViewById(R.id.button_coinflip_record);
         queueOrderButton = findViewById(R.id.btn_view_queue);
-        emptyFlipButton = findViewById(R.id.btn_empty_flip);
         coinImage = findViewById(R.id.image_coin_state);
         childImage = findViewById(R.id.iv_child_photo);
         prompt = findViewById(R.id.tv_flip_prompt);
@@ -166,13 +165,6 @@ public class CoinFlipActivity extends AppCompatActivity {
             }
         });
 
-        emptyFlipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                childManager.setNextFlipEmpty();
-                updateUI();
-            }
-        });
     }
 
     private void updateUI() {
@@ -212,7 +204,7 @@ public class CoinFlipActivity extends AppCompatActivity {
             else{
                 prompt.setText("" + coinFlip.getWhoPicked() + getString(R.string.x_lost));
             }
-            CoinFlipData coinFlipData = new CoinFlipData(coinFlip.getTimeOfFlip(),
+            CoinFlipData coinFlipData = new CoinFlipData(LocalDateTime.now(),
                                                             coinFlip.getWhoPicked(),
                                                             coinFlip.getWhoPickedPicture(),
                                                             coinFlip.isHeads(),
@@ -263,14 +255,12 @@ public class CoinFlipActivity extends AppCompatActivity {
             public void onAnimationStart(Animation animation) {
                 queueOrderButton.setVisibility(View.INVISIBLE);
                 coinFlipHistory.setVisibility(View.INVISIBLE);
-                emptyFlipButton.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 queueOrderButton.setVisibility(View.VISIBLE);
                 coinFlipHistory.setVisibility(View.VISIBLE);
-                emptyFlipButton.setVisibility(View.VISIBLE);
                 initiateCoinFlip();
             }
 

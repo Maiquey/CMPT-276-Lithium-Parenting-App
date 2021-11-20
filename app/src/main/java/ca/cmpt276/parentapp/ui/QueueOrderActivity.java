@@ -40,6 +40,7 @@ public class QueueOrderActivity extends AppCompatActivity {
     private int priorityChildIndex;
     private Button cancelButton;
     private Button okButton;
+    private Button selectNobodyButton;
     private TextView confirmationMessage;
     private String queueOrderFilePath;
     private TextView title;
@@ -57,12 +58,13 @@ public class QueueOrderActivity extends AppCompatActivity {
         ConstraintLayout constraintLayout = findViewById(R.id.queue_order_layout);
 
         ActionBar ab = getSupportActionBar();
-        ab.setTitle(R.string.queue_order_title);
+        ab.setTitle(R.string.select_a_child);
         ab.setDisplayHomeAsUpEnabled(true);
 
         childManager = ChildManager.getInstance();
         cancelButton = findViewById(R.id.button_cancel);
         okButton = findViewById(R.id.button_confirm);
+        selectNobodyButton = findViewById(R.id.btn_select_nobody);
         confirmationMessage = findViewById(R.id.tv_confirmation);
         title = findViewById(R.id.tv_queue_title);
         prompt = findViewById(R.id.tv_queue_order_prompt);
@@ -114,7 +116,15 @@ public class QueueOrderActivity extends AppCompatActivity {
                 SaveLoadData.saveQueueOrder(queueOrderFilePath,
                         childManager.getQueueOrder());
                 childManager.setNextFlipNotEmpty();
-                populateListView();
+                finish();
+            }
+        });
+
+        selectNobodyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                childManager.setNextFlipEmpty();
+                finish();
             }
         });
     }
@@ -123,9 +133,11 @@ public class QueueOrderActivity extends AppCompatActivity {
         cancelButton.setVisibility(View.INVISIBLE);
         okButton.setVisibility(View.INVISIBLE);
         confirmationMessage.setVisibility(View.INVISIBLE);
+        selectNobodyButton.setVisibility(View.VISIBLE);
     }
 
     private void displayConfirmation(){
+        selectNobodyButton.setVisibility(View.INVISIBLE);
         cancelButton.setVisibility(View.VISIBLE);
         okButton.setVisibility(View.VISIBLE);
         confirmationMessage.setVisibility(View.VISIBLE);

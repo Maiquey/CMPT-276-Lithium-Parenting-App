@@ -80,9 +80,11 @@
     <string name="tap_on_the_picture_to_add_a_new_image">Tap on the picture to add a new image</string>
     <string name="select_child">select child</string>
     <string name="current_queue">Current Queue</string>
-    <string name="select_a_child_to_put_at_the_front_of_the_queue">Select a child to put at the front of the queue</string>
+    <string name="select_a_child_to_pick_the_next_flip">Select a child to pick the next flip</string>
     <string name="cancel">cancel</string>
     <string name="ok">ok</string>
     <string name="empty_flip">empty flip</string>
+    <string name="select_nobody">select nobody</string>
+    <string name="select_a_child">Select Child</string>
 
 </resources>
