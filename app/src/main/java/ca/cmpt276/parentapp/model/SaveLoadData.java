@@ -73,10 +73,11 @@ public class SaveLoadData {
                 String dateAsString = flipObject.get("timeOfFlip").getAsString();
                 LocalDateTime timeOfFlip = LocalDateTime.parse(dateAsString);
                 String nameOfPicker = flipObject.get("whoPicked").getAsString();
+                String photoOfPicker = flipObject.get("whoPickedPicture").getAsString();
                 boolean isHeads = flipObject.get("isHeads").getAsBoolean();
                 boolean pickerPickedHeads = flipObject.get("pickerPickedHeads").getAsBoolean();
                 boolean pickerWon = flipObject.get("pickerWon").getAsBoolean();
-                CoinFlipData coinFlip = new CoinFlipData(timeOfFlip, nameOfPicker,
+                CoinFlipData coinFlip = new CoinFlipData(timeOfFlip, nameOfPicker, photoOfPicker,
                         isHeads, pickerPickedHeads, pickerWon);
                 childManager.addCoinFlip(coinFlip);
             }

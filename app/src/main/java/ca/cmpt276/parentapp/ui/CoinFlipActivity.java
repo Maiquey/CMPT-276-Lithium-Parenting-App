@@ -7,6 +7,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -42,9 +44,11 @@ public class CoinFlipActivity extends AppCompatActivity {
     private Button flipAgainButton;
     private Button coinFlipHistory;
     private Button deleteButton;
+    private Button queueOrderButton;
     private TextView prompt;
     private TextView flipResult;
     private ImageView coinImage;
+    private ImageView childImage;
     private CoinFlip coinFlip;
     private ChildManager childManager;
     private String flipFilePath;
@@ -90,7 +94,9 @@ public class CoinFlipActivity extends AppCompatActivity {
         flipButton = findViewById(R.id.button_flip);
         flipAgainButton = findViewById(R.id.button_flip_again);
         coinFlipHistory = findViewById(R.id.button_coinflip_record);
+        queueOrderButton = findViewById(R.id.btn_view_queue);
         coinImage = findViewById(R.id.image_coin_state);
+        childImage = findViewById(R.id.iv_child_photo);
         prompt = findViewById(R.id.tv_flip_prompt);
         flipResult = findViewById(R.id.tv_result);
         coinFlipAnimation = AnimationUtils.loadAnimation(this, R.anim.coin_flip);
@@ -154,6 +160,14 @@ public class CoinFlipActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        queueOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = QueueOrderActivity.makeIntent(CoinFlipActivity.this);
+                startActivity(intent);
+            }
+        });
     }
 
     private void updateUI() {
@@ -163,6 +177,8 @@ public class CoinFlipActivity extends AppCompatActivity {
         else{
             prompt.setText(R.string.heads_or_tails);
         }
+        Bitmap theMap = SaveLoadData.decode(coinFlip.getWhoPickedPicture());
+        childImage.setImageBitmap(theMap);
         flipResult.setText("");
         coinImage.setImageResource(R.drawable.question_coloured);
         headsButton.setVisibility(View.INVISIBLE);
@@ -188,6 +204,7 @@ public class CoinFlipActivity extends AppCompatActivity {
             }
             CoinFlipData coinFlipData = new CoinFlipData(coinFlip.getTimeOfFlip(),
                                                             coinFlip.getWhoPicked(),
+                                                            coinFlip.getWhoPickedPicture(),
                                                             coinFlip.isHeads(),
                                                             coinFlip.isPickerPickedHeads(),
                                                             coinFlip.isPickerWon());

@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.CoinFlipData;
+import ca.cmpt276.parentapp.model.SaveLoadData;
 
 /**
  * CoinFlipRecordActivity class:
@@ -54,6 +56,7 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
         flipHistory = childManager.getCoinFlipHistory();
 
         populateListView();
+        //setUpDeleteButton();
     }
 
     private void populateListView() {
@@ -61,6 +64,7 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.listview_coinflips);
         list.setAdapter(adapter);
     }
+
 
 
     private class MyListAdapter extends ArrayAdapter<CoinFlipData> {
@@ -79,13 +83,17 @@ public class CoinFlipRecordActivity extends AppCompatActivity {
 
             CoinFlipData currentFlip = flipHistory.get(position);
 
-            ImageView image = (ImageView) itemView.findViewById(R.id.item_icon);
+            ImageView imageWinLoss = (ImageView) itemView.findViewById(R.id.item_icon);
 
             if (currentFlip.isPickerWon()){
-                image.setImageResource(R.drawable.win);
+                imageWinLoss.setImageResource(R.drawable.win);
             }else{
-                image.setImageResource(R.drawable.loss);
+                imageWinLoss.setImageResource(R.drawable.loss);
             }
+
+            ImageView imagePhoto = (ImageView) itemView.findViewById(R.id.iv_history_photo);
+            Bitmap theMap = SaveLoadData.decode(currentFlip.getWhoPickedPicture());
+            imagePhoto.setImageBitmap(theMap);
 
             TextView flipper = (TextView) itemView.findViewById(R.id.item_who_flipped);
 

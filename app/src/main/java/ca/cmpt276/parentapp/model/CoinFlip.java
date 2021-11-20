@@ -13,6 +13,7 @@ public class CoinFlip {
 
     private final LocalDateTime timeOfFlip;
     private final String whoPicked;
+    private final String whoPickedPicture;
     private boolean isHeads;
     private boolean pickerPickedHeads;
     private boolean pickerWon;
@@ -24,10 +25,12 @@ public class CoinFlip {
         if (childManager.noChildren()){
             this.noChildren = true;
             this.whoPicked = null;
+            this.whoPickedPicture = null;
         }
         else{
             this.noChildren = false;
             this.whoPicked = childManager.getPickingChild().getName();
+            this.whoPickedPicture = childManager.getPickingChild().getPhoto();
         }
     }
 
@@ -53,6 +56,10 @@ public class CoinFlip {
 
     public String getWhoPicked() {
         return whoPicked;
+    }
+
+    public String getWhoPickedPicture(){
+        return whoPickedPicture;
     }
 
     public boolean isHeads() {
