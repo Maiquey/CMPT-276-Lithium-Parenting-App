@@ -26,6 +26,13 @@ import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.SaveLoadData;
 
+/**
+ * QueueOrderActivity Class:
+ *
+ * displays the current queue of children in line for a turn at flipping the coin
+ * allows user to select a child to be the next to flip the coin
+ * updates display to show new queue order upon selecting a child to flip next
+ */
 public class QueueOrderActivity extends AppCompatActivity {
 
     private ChildManager childManager;
