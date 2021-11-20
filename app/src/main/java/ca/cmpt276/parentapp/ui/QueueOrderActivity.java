@@ -81,7 +81,7 @@ public class QueueOrderActivity extends AppCompatActivity {
         list.setAdapter(adapter);
         hideConfirmation();
         if (coinFlipQueue.isEmpty()){
-            title.setText("" + R.string.no_children_configured);
+            title.setText(R.string.no_children_configured);
             prompt.setText("");
         }
     }

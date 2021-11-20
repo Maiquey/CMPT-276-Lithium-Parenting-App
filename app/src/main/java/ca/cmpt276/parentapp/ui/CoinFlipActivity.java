@@ -86,8 +86,6 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         childManager.loadQueue();
 
-        coinFlip = new CoinFlip();
-
         headsButton = findViewById(R.id.button_heads);
         tailsButton = findViewById(R.id.button_tails);
         flipButton = findViewById(R.id.button_flip);
@@ -168,6 +166,9 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
+
+        coinFlip = new CoinFlip();
+
         if (!coinFlip.isNoChildren()){
             prompt.setText("" + coinFlip.getWhoPicked() + getString(R.string.x_gets_to_pick));
         }
@@ -269,6 +270,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         childManager.loadQueue();
+        updateUI();
         super.onResume();
     }
 }
