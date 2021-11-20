@@ -11,7 +11,7 @@
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_coin_flip_record.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_edit_task.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_queue_order.xml" value="0.25" />
+        <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_queue_order.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_timeout_timer.xml" value="0.25" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/activity_whos_turn.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jan/AndroidStudioProjects/LithiumParentApp/app/src/main/res/layout/child_config_item.xml" value="0.36666666666666664" />
@@ -26,10 +26,6 @@
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/timer_background_1.xml" value="0.47129629629629627" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/timer_background_2.xml" value="0.47129629629629627" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/timer_background_3.xml" value="0.47129629629629627" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_child_edit.xml" value="0.5744791666666667" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_child_add.xml" value="0.325" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_child_edit.xml" value="0.5744791666666667" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_child_list.xml" value="0.325" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_child_add.xml" value="0.325" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_child_edit.xml" value="0.5744791666666667" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_child_list.xml" value="0.325" />
@@ -37,18 +33,12 @@
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_coin_flip_record.xml" value="0.4015625" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_edit_task.xml" value="1.0" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_main.xml" value="0.2759259259259259" />
+        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_queue_order.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_timeout_timer.xml" value="0.33" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_whos_turn.xml" value="0.415625" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_whos_turn.xml" value="0.415625" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/child_config_item.xml" value="0.325" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/content_child_list.xml" value="0.325" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_whos_turn.xml" value="0.415625" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/child_config_item.xml" value="0.325" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/content_child_list.xml" value="0.325" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/content_main.xml" value="0.2759259259259259" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/item_view.xml" value="0.325" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/task_list.xml" value="0.75" />
-        <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/task_list.xml" value="0.75" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/item_view.xml" value="0.325" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/task_list.xml" value="0.75" />
         <entry key="..\:/Users/samji/AndroidStudioProjects/ParentApp/app/src/main/res/layout/timeout_timer_main.xml" value="0.5" />
