@@ -71,5 +71,7 @@
     <string name="player_1_won">Player 1 Won!</string>
     <string name="clear_history">clear history</string>
     <string name="help_button">Help</string>
+    <string name="team_name">Team Name: Lithium</string>
+    <string name="developers">Developed By: Hitesh Juneja, Jan Mazurek, Chenxu Jia, and Janit Kumar</string>
 
 </resources>
