@@ -8,8 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,16 +21,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-
-import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
@@ -48,7 +38,6 @@ public class ChildAdd extends AppCompatActivity {
 
     EditText editTextChildAdd;
     ImageView imageView;
-    OutputStream outputStream;
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 101;
     String cameraPermission[];
@@ -65,6 +54,7 @@ public class ChildAdd extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         editTextChildAdd = findViewById(R.id.editTextChildAdd);
 
+
         //https://youtu.be/2tRw6Q2JXGo
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         cameraPermission = new String[]{Manifest.permission.CAMERA,
@@ -79,7 +69,7 @@ public class ChildAdd extends AppCompatActivity {
                 int picd = 0;
                 if (picd == 0) {
                     if (!checkCameraPermission()) {
-                        requestCameraPermission();
+                        requestPermissions(cameraPermission, CAMERA_REQUEST);
 
                     } else {
                         pickFromGallery();
@@ -87,7 +77,7 @@ public class ChildAdd extends AppCompatActivity {
 
                 } else if (picd == 1) {
                     if (!checkStoragePermission()) {
-                        requestStoragePermission();
+                        requestPermissions(storagePermission, STORAGE_REQUEST);
                     } else {
                         pickFromGallery();
                     }
@@ -112,23 +102,16 @@ public class ChildAdd extends AppCompatActivity {
 
     }
 
-    private void requestCameraPermission() {
-        requestPermissions(cameraPermission, CAMERA_REQUEST);
-    }
-
-    private void pickFromGallery() {
-        CropImage.activity().start(this);
-    }
-
     private boolean checkStoragePermission() {
         boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == (PackageManager.PERMISSION_GRANTED);
         return result;
     }
 
-    private void requestStoragePermission() {
-        requestPermissions(storagePermission, STORAGE_REQUEST);
+    private void pickFromGallery() {
+        CropImage.activity().start(this);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -138,26 +121,11 @@ public class ChildAdd extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri uriResult = result.getUri();
                 newPhoto = uriResult;
-                //Picasso.with(this).load(uriResult).into(imageView);
                 imageView.setImageURI(uriResult);
             }
         }
     }
-    /*
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
-            mImageUri = data.getData();
-            CropImage.activity(mImageUri).setAspectRatio(1, 1).start(PostActivity.this);
-
-            mSelectImage.setImageURI(mImageUri);
-        }
-    }
-}
-
-     */
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -191,6 +159,7 @@ public class ChildAdd extends AppCompatActivity {
 
     }
 
+    //Add button adds new child with default or selected photo.
     private void setupAdd(Uri photoChild) {
         Button save = (Button) findViewById(R.id.btnAddChild);
         save.setOnClickListener(new View.OnClickListener() {
@@ -203,8 +172,6 @@ public class ChildAdd extends AppCompatActivity {
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                 } else {
 
-                    //BitmapDrawable drawable = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                    //imageView.setImageURI(photoChild);
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                     Bitmap bitmapImage = drawable.getBitmap();
 

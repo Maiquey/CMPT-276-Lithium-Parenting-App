@@ -40,7 +40,6 @@ import java.io.FileNotFoundException;
 public class ChildList extends AppCompatActivity {
 
     private ChildManager childManager;
-    private ChildManager children;
     private ArrayAdapter<Child> adapter;
     String childFilePath;
     @Override
@@ -121,14 +120,10 @@ public class ChildList extends AppCompatActivity {
             TextView nameView = (TextView) itemView.findViewById(R.id.config_item_name);
             nameView.setText(currentChild.getName());
 
-
             Bitmap bitmap = SaveLoadData.decode(currentChild.getPhoto());
 
             ImageView imageView = (ImageView) itemView.findViewById(R.id.photo);
             imageView.setImageBitmap(bitmap);
-
-
-
 
             return itemView;
         }

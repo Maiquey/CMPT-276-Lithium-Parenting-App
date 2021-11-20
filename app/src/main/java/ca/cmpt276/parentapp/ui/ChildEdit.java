@@ -8,17 +8,16 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.ContextWrapper;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Base64;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,13 +26,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
@@ -48,7 +40,6 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
 public class ChildEdit extends AppCompatActivity {
 
     private int childIndex;
-    OutputStream outputStream;
     private final String PREF = "PICKING_CHILD_INDEX";
     public static final String PICKING_CHILD_INDEX = "picking child index new";
     private static final int CAMERA_REQUEST = 100;
@@ -74,8 +65,8 @@ public class ChildEdit extends AppCompatActivity {
         setupApplyChange();
         setupDelete();
 
-        //https://youtu.be/2tRw6Q2JXGo
 
+        //https://youtu.be/2tRw6Q2JXGo
         storagePermission= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -92,7 +83,7 @@ public class ChildEdit extends AppCompatActivity {
                 int picd = 0;
                 if (picd == 0) {
                     if (!checkCameraPermission()) {
-                        requestCameraPermission();
+                        requestPermissions(cameraPermission,CAMERA_REQUEST);
 
                     } else {
                         pickFromGallery();
@@ -100,7 +91,7 @@ public class ChildEdit extends AppCompatActivity {
 
                 } else if (picd == 1) {
                     if (!checkStoragePermission()) {
-                        requestStoragePermission();
+                        requestPermissions(storagePermission, STORAGE_REQUEST);
                     } else {
                         pickFromGallery();
                     }
@@ -125,23 +116,17 @@ public class ChildEdit extends AppCompatActivity {
 
         }
 
-        private void requestCameraPermission(){
-            requestPermissions(cameraPermission,CAMERA_REQUEST);
-        }
+    private boolean checkStoragePermission(){
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                ==(PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
 
-        private void pickFromGallery(){
+
+    private void pickFromGallery(){
             CropImage.activity().start(this);
         }
 
-        private boolean checkStoragePermission(){
-            boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    ==(PackageManager.PERMISSION_GRANTED);
-            return result;
-        }
-
-        private void requestStoragePermission(){
-            requestPermissions(storagePermission, STORAGE_REQUEST);
-        }
 
         @Override
         protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -207,7 +192,7 @@ public class ChildEdit extends AppCompatActivity {
         });
     }
 
-
+    //Lets you edit the name and image of a child.
     private void setupApplyChange() {
         Button apply = (Button) findViewById(R.id.btnApplyChange);
         apply.setOnClickListener(new View.OnClickListener() {
@@ -221,8 +206,6 @@ public class ChildEdit extends AppCompatActivity {
                 }
                 else {
 
-//                    https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-
-//                     from-internal-memory-in-android
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                     Bitmap bitmapImage = drawable.getBitmap();
 
