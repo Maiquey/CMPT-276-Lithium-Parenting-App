@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,18 +18,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
-import ca.cmpt276.parentapp.model.CoinFlipData;
 import ca.cmpt276.parentapp.model.SaveLoadData;
 
 public class QueueOrderActivity extends AppCompatActivity {
@@ -113,6 +106,7 @@ public class QueueOrderActivity extends AppCompatActivity {
                 childManager.moveChildToFrontOfQueue(priorityChildIndex);
                 SaveLoadData.saveQueueOrder(queueOrderFilePath,
                         childManager.getQueueOrder());
+                childManager.setNextFlipNotEmpty();
                 populateListView();
             }
         });
@@ -128,7 +122,7 @@ public class QueueOrderActivity extends AppCompatActivity {
         cancelButton.setVisibility(View.VISIBLE);
         okButton.setVisibility(View.VISIBLE);
         confirmationMessage.setVisibility(View.VISIBLE);
-        confirmationMessage.setText("" + getString(R.string.place) + coinFlipQueue.get(priorityChildIndex).getName() + getString(R.string.at_front_of_queue));
+        confirmationMessage.setText("" + getString(R.string.select) + coinFlipQueue.get(priorityChildIndex).getName() + getString(R.string.to_flip_next));
     }
 
     private class QueueAdapter extends ArrayAdapter<Child> {

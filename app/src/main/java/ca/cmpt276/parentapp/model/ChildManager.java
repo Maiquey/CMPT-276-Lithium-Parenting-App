@@ -17,6 +17,7 @@ public class ChildManager {
     private ArrayList<CoinFlipData> coinFlipHistory;
     private ArrayList<Child> coinFlipQueue;
     private ArrayList<Integer> queueOrder;
+    private boolean nextFlipEmpty = false;
 
     public String getPath() {
         return path;
@@ -157,5 +158,17 @@ public class ChildManager {
                 queueOrder.set(i, queueOrder.get(i) - 1);
             }
         }
+    }
+
+    public void setNextFlipEmpty(){
+        nextFlipEmpty = true;
+    }
+
+    public void setNextFlipNotEmpty(){
+        nextFlipEmpty = false;
+    }
+
+    public boolean isNextFlipEmpty(){
+        return nextFlipEmpty;
     }
 }

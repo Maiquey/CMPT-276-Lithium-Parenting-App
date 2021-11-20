@@ -44,6 +44,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private Button flipAgainButton;
     private Button coinFlipHistory;
     private Button queueOrderButton;
+    private Button emptyFlipButton;
     private TextView prompt;
     private TextView flipResult;
     private ImageView coinImage;
@@ -92,6 +93,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         flipAgainButton = findViewById(R.id.button_flip_again);
         coinFlipHistory = findViewById(R.id.button_coinflip_record);
         queueOrderButton = findViewById(R.id.btn_view_queue);
+        emptyFlipButton = findViewById(R.id.btn_empty_flip);
         coinImage = findViewById(R.id.image_coin_state);
         childImage = findViewById(R.id.iv_child_photo);
         prompt = findViewById(R.id.tv_flip_prompt);
@@ -163,17 +165,26 @@ public class CoinFlipActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        emptyFlipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                childManager.setNextFlipEmpty();
+                updateUI();
+            }
+        });
     }
 
     private void updateUI() {
 
         coinFlip = new CoinFlip();
 
-        if (!coinFlip.isNoChildren()){
-            prompt.setText("" + coinFlip.getWhoPicked() + getString(R.string.x_gets_to_pick));
-        }
-        else{
+        if (coinFlip.isNoChildren() || childManager.isNextFlipEmpty()){
+            childImage.setVisibility(View.INVISIBLE);
             prompt.setText(R.string.heads_or_tails);
+        } else {
+            childImage.setVisibility(View.VISIBLE);
+            prompt.setText("" + coinFlip.getWhoPicked() + getString(R.string.x_gets_to_pick));
         }
         Bitmap theMap = SaveLoadData.decode(coinFlip.getWhoPickedPicture());
         childImage.setImageBitmap(theMap);
@@ -187,9 +198,10 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private void initiateCoinFlip(){
 
-        if(coinFlip.isNoChildren()){
+        if(coinFlip.isNoChildren() || childManager.isNextFlipEmpty()){
             coinFlip.randomFlip();
             showResults();
+            childManager.setNextFlipNotEmpty();
         }
         else{
             coinFlip.doCoinFlip();
@@ -251,12 +263,14 @@ public class CoinFlipActivity extends AppCompatActivity {
             public void onAnimationStart(Animation animation) {
                 queueOrderButton.setVisibility(View.INVISIBLE);
                 coinFlipHistory.setVisibility(View.INVISIBLE);
+                emptyFlipButton.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 queueOrderButton.setVisibility(View.VISIBLE);
                 coinFlipHistory.setVisibility(View.VISIBLE);
+                emptyFlipButton.setVisibility(View.VISIBLE);
                 initiateCoinFlip();
             }
 
