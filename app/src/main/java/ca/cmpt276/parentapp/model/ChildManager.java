@@ -18,6 +18,16 @@ public class ChildManager {
     private ArrayList<Child> coinFlipQueue;
     private ArrayList<Integer> queueOrder;
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    String path;
+
     public static ChildManager getInstance() {
         if (instance == null) {
             instance = new ChildManager();
@@ -47,6 +57,7 @@ public class ChildManager {
     public int numOfChildren() {
         return childList.size();
     }
+
 
     public void addChild(Child child) {
         childList.add(child);

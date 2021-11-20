@@ -1,5 +1,8 @@
 package ca.cmpt276.parentapp.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -12,11 +15,14 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -100,7 +106,8 @@ public class SaveLoadData {
             for (JsonElement child : jsonArrayChild){
                 JsonObject childObject = child.getAsJsonObject();
                 String name = childObject.get("name").getAsString();
-                Child newChild = new Child(name);
+                String photo = childObject.get("photo").getAsString();
+                Child newChild = new Child(name, photo);
                 childManager.addChild(newChild);
             }
         } catch (FileNotFoundException e) {
@@ -136,4 +143,28 @@ public class SaveLoadData {
         }
         return childManager.getQueueOrder();
     }
+
+    /*Adapted from https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa */
+    public static String encode(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
+    public static Bitmap decode(String image){
+        try{
+            byte [] encodeByte=Base64.decode(image,Base64.DEFAULT);
+
+            InputStream inputStream  = new ByteArrayInputStream(encodeByte);
+            Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
+
+
 }
