@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 /**
  * SaveLoadData class:
- *
+ * <p>
  * class used to save/load configured children and coin flip history
  */
 public class SaveLoadData {
@@ -47,6 +47,7 @@ public class SaveLoadData {
                                   LocalDateTime localDateTime) throws IOException {
                     jsonWriter.value(localDateTime.toString());
                 }
+
                 @Override
                 public LocalDateTime read(JsonReader jsonReader) throws IOException {
                     return LocalDateTime.parse(jsonReader.nextString());
@@ -135,12 +136,12 @@ public class SaveLoadData {
         try {
             JsonElement taskElement = JsonParser.parseReader(new FileReader(inputTaskList));
             JsonArray jsonArrayTask = taskElement.getAsJsonArray();
-            for (JsonElement task: jsonArrayTask) {
+            for (JsonElement task : jsonArrayTask) {
                 JsonObject taskObject = task.getAsJsonObject();
                 String taskName = taskObject.get("taskName").getAsString();
                 String childName = taskObject.get("childName").getAsString();
                 int childID = taskObject.get("currentChildID").getAsInt();
-                int childImgID = taskObject.get("childImgID").getAsInt();
+                String childImgID = taskObject.get("childImgID").getAsString();
                 Task newTask = new Task(taskName, childName, childID, childImgID);
                 whosTurnManager.addTask(newTask);
             }
@@ -153,22 +154,22 @@ public class SaveLoadData {
     }
 
     /*Adapted from https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa */
-    public static String encode(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+    public static String encode(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
 
-    public static Bitmap decode(String image){
-        try{
-            byte [] encodeByte=Base64.decode(image,Base64.DEFAULT);
+    public static Bitmap decode(String image) {
+        try {
+            byte[] encodeByte = Base64.decode(image, Base64.DEFAULT);
 
-            InputStream inputStream  = new ByteArrayInputStream(encodeByte);
-            Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+            InputStream inputStream = new ByteArrayInputStream(encodeByte);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             return bitmap;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }

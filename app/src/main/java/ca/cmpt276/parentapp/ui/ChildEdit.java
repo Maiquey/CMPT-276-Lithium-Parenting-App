@@ -33,7 +33,7 @@ import ca.cmpt276.parentapp.model.WhosTurnManager;
 
 /**
  * ChildEdit class:
- *
+ * <p>
  * UI class for editing a configured child's name in the configure child activity
  */
 public class ChildEdit extends AppCompatActivity {
@@ -75,7 +75,7 @@ public class ChildEdit extends AppCompatActivity {
 
         //https://youtu.be/2tRw6Q2JXGo
 
-        storagePermission= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
@@ -115,76 +115,76 @@ public class ChildEdit extends AppCompatActivity {
         return intent;
     }
 
-        private boolean checkCameraPermission(){
-            boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                    ==(PackageManager.PERMISSION_GRANTED);
-            boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    ==(PackageManager.PERMISSION_GRANTED);
-            return result && result1;
+    private boolean checkCameraPermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                == (PackageManager.PERMISSION_GRANTED);
+        boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == (PackageManager.PERMISSION_GRANTED);
+        return result && result1;
 
-        }
+    }
 
-        private void requestCameraPermission(){
-            requestPermissions(cameraPermission,CAMERA_REQUEST);
-        }
+    private void requestCameraPermission() {
+        requestPermissions(cameraPermission, CAMERA_REQUEST);
+    }
 
-        private void pickFromGallery(){
-            CropImage.activity().start(this);
-        }
+    private void pickFromGallery() {
+        CropImage.activity().start(this);
+    }
 
-        private boolean checkStoragePermission(){
-            boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    ==(PackageManager.PERMISSION_GRANTED);
-            return result;
-        }
+    private boolean checkStoragePermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
 
-        private void requestStoragePermission(){
-            requestPermissions(storagePermission, STORAGE_REQUEST);
-        }
+    private void requestStoragePermission() {
+        requestPermissions(storagePermission, STORAGE_REQUEST);
+    }
 
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if(resultCode==RESULT_OK){
-                    Uri uriResult = result.getUri();
-                    Picasso.with(this).load(uriResult).into(imageView);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri uriResult = result.getUri();
+                Picasso.with(this).load(uriResult).into(imageView);
 
-                }
             }
         }
+    }
 
-        @Override
-        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            switch(requestCode){
-                case CAMERA_REQUEST:{
-                    if(grantResults.length>0){
-                        boolean camera_granted = grantResults[0]==(PackageManager.PERMISSION_GRANTED);
-                        boolean storage_granted = grantResults[1]==(PackageManager.PERMISSION_GRANTED);
-                        if(camera_granted && storage_granted){
-                            pickFromGallery();
-                        }else{
-                            Toast.makeText(this, "Please enable your camera and gallery permission",
-                                    Toast.LENGTH_SHORT).show();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case CAMERA_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean camera_granted = grantResults[0] == (PackageManager.PERMISSION_GRANTED);
+                    boolean storage_granted = grantResults[1] == (PackageManager.PERMISSION_GRANTED);
+                    if (camera_granted && storage_granted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(this, "Please enable your camera and gallery permission",
+                                Toast.LENGTH_SHORT).show();
 
-                        }
-                    }
-                }
-                break;
-                case STORAGE_REQUEST:{
-                    if(grantResults.length>0){
-                        boolean storage_granted = grantResults[0]==(PackageManager.PERMISSION_GRANTED);
-                        if(storage_granted){
-                            pickFromGallery();
-                        }else{
-                            Toast.makeText(this, "Please enable your gallery permission", Toast.LENGTH_SHORT).show();
-                        }
                     }
                 }
             }
+            break;
+            case STORAGE_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean storage_granted = grantResults[0] == (PackageManager.PERMISSION_GRANTED);
+                    if (storage_granted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(this, "Please enable your gallery permission", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
         }
+    }
 
     private void setupDelete() {
         Button delete = (Button) findViewById(R.id.btnDeleteChild);
@@ -223,8 +223,7 @@ public class ChildEdit extends AppCompatActivity {
                 if (name.matches("")) {
                     String message = getString(R.string.warning_name_empty);
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     ChildManager.getInstance().getChild(childIndex).setName(name);
 
                     String message = getString(R.string.edited);
@@ -240,7 +239,7 @@ public class ChildEdit extends AppCompatActivity {
 
         EditText name = (EditText) findViewById(R.id.editTextSelectedChild);
         name.setText((child.getName()));
-        
+
     }
 
     private void extractExtras() {

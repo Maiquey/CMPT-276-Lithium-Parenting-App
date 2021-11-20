@@ -88,7 +88,7 @@ public class EditTaskActivity extends AppCompatActivity {
         editTextTask.setText(task.getTaskName());
         currentChild.setText(task.getChildName());
         ImageView childImg = findViewById(R.id.imgEditTaskChild);
-        childImg.setImageResource(task.getChildImgID());
+        childImg.setImageBitmap(SaveLoadData.decode(task.getChildImgID()));
     }
 
 
@@ -117,11 +117,11 @@ public class EditTaskActivity extends AppCompatActivity {
                     if (task.getCurrentChildID() == childManager.getChildList().size() - 1) {
                         task.setCurrentChildID(0);
                         task.setChildName(childManager.getChildName(0));
-                        // add task.setChildImgID(childManager.getChildPortrait(0));
+                        task.setChildImgID(childManager.getChild(0).getPhoto());
                     } else {
                         task.setCurrentChildID(task.getCurrentChildID() + 1);
                         task.setChildName(childManager.getChildName(task.getCurrentChildID()));
-                        //add task.setChildImgID(childManager.getChildPortrait(task.getCurrentChildID()));
+                        task.setChildImgID(childManager.getChild(task.getCurrentChildID()).getPhoto());
                     }
                     finish();
                 }

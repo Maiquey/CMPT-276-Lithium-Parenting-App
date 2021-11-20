@@ -4,19 +4,18 @@ import androidx.annotation.NonNull;
 
 /**
  * Child class:
- *
+ * <p>
  * Class representing a configured child
  * Stores the child's name
- *
  */
 public class Child {
     private String name;
     private String photo;
 
 
-    public Child (String name, String photo){
-        this.name= name;
-        this.photo = photo ;
+    public Child(String name, String photo) {
+        this.name = name;
+        this.photo = photo;
     }
 
     public Child(String name) {
@@ -31,11 +30,11 @@ public class Child {
         this.name = name;
     }
 
-    public String getPhoto(){
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo){
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 

@@ -4,9 +4,9 @@ public class Task {
     private String taskName;
     private String childName;
     private int currentChildID;
-    private int childImgID;
+    private String childImgID;
 
-    public Task(String taskName, String childName, int currentChildID, int childImgID) {
+    public Task(String taskName, String childName, int currentChildID, String childImgID) {
         this.taskName = taskName;
         this.childName = childName;
         this.currentChildID = currentChildID;
@@ -37,11 +37,11 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public int getChildImgID() {
+    public String getChildImgID() {
         return childImgID;
     }
 
-    public void setChildImgID(int id) {
+    public void setChildImgID(String id) {
         this.childImgID = id;
     }
 }

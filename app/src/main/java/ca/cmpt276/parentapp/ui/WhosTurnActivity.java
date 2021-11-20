@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class WhosTurnActivity extends AppCompatActivity {
     public static Intent makeIntent(Context context) {
         return new Intent(context, WhosTurnActivity.class);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +71,7 @@ public class WhosTurnActivity extends AppCompatActivity {
     }
 
     private void populateTaskList() {
-        if(adapter != null) {
+        if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
         adapter = new MyListAdapter();
@@ -106,25 +108,31 @@ public class WhosTurnActivity extends AppCompatActivity {
             txtTaskName.setText(currentTask.getTaskName());
             TextView txtNextChild = (TextView) itemView.findViewById(R.id.txtNextChildName);
 
+            ImageView imgChild = (ImageView) itemView.findViewById(R.id.imgChildTask);
+
             if (childManager.noChildren()) {
                 txtNextChild.setText(NO_CHILDREN_ASSIGNED);
                 currentTask.setChildName(NO_CHILDREN_ASSIGNED);
                 currentTask.setCurrentChildID(0);
+                imgChild.setVisibility(View.INVISIBLE);
             } else if (childManager.getChildList().size() == 1) {
                 currentTask.setChildName(childManager.getChildName(0));
                 currentTask.setCurrentChildID(0);
-                //add currentTask.setChildImgID(childManager.getChildPortrait(0));
+                currentTask.setChildImgID(childManager.getChild(0).getPhoto());
+                imgChild.setVisibility(View.VISIBLE);
             } else {
                 if (currentTask.getCurrentChildID() >= childManager.getChildList().size()) {
                     currentTask.setCurrentChildID(0);
                 }
-                // add currentTask.setChildImgID(childManager.getChildPortrait(0));
+                currentTask.setChildImgID(childManager.getChild(currentTask.getCurrentChildID()).getPhoto());
                 currentTask.setChildName(childManager.getChildName(currentTask.getCurrentChildID()));
+                imgChild.setVisibility(View.VISIBLE);
             }
 
             txtNextChild.setText(currentTask.getChildName());
-            ImageView imgChild = (ImageView) itemView.findViewById(R.id.imgChildTask);
-            imgChild.setImageResource(currentTask.getChildImgID());
+
+            Bitmap photoBitmap = SaveLoadData.decode(String.valueOf(currentTask.getChildImgID()));
+            imgChild.setImageBitmap(photoBitmap);
 
             return itemView;
         }
@@ -138,12 +146,12 @@ public class WhosTurnActivity extends AppCompatActivity {
         ImageView imgRocketPNG = findViewById(R.id.imgRocket);
         ImageView imgArrowPNG = findViewById(R.id.imgArrow);
 
-        if (whosTurnManager.getTasks().size() > 0){
+        if (whosTurnManager.getTasks().size() > 0) {
             txtDirection.setVisibility(View.GONE);
             txtEmptyMsg.setVisibility(View.GONE);
             imgRocketPNG.setVisibility(View.GONE);
             imgArrowPNG.setVisibility(View.GONE);
-        }else{
+        } else {
             txtDirection.setVisibility(View.VISIBLE);
             txtEmptyMsg.setVisibility(View.VISIBLE);
             imgRocketPNG.setVisibility(View.VISIBLE);
