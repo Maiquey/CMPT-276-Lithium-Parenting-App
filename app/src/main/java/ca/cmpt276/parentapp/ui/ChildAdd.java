@@ -41,14 +41,13 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
 
 /**
  * ChildAdd class:
- *
+ * <p>
  * UI class for adding a child in the configure child activity
  */
 public class ChildAdd extends AppCompatActivity {
 
     EditText editTextChildAdd;
     ImageView imageView;
-    OutputStream outputStream;
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 101;
     String cameraPermission[];
@@ -204,6 +203,7 @@ public class ChildAdd extends AppCompatActivity {
                 }
             }
         });
+
     }
 
 }
