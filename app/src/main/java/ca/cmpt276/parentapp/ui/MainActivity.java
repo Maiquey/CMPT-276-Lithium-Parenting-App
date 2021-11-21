@@ -44,8 +44,20 @@ public class MainActivity extends AppCompatActivity {
         setupTimeoutTimerPage();
         setupCoinFlip();
         setupChildBtn();
+        setupHelp();
         setupWhosTurn();
+    }
 
+
+    private void setupHelp() {
+        Button btn2 = findViewById(R.id.helpbtn);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = Help.makeIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupTimeoutTimerPage() {
