@@ -19,6 +19,7 @@ public class Help extends AppCompatActivity {
         setContentView(R.layout.activity_help);
 
         ActionBar ab = getSupportActionBar();
+        ab.setTitle(R.string.help);
         ab.setDisplayHomeAsUpEnabled(true);
 
         TextView references = (TextView) findViewById(R.id.help_references);
