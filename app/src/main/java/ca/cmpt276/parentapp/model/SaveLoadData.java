@@ -30,6 +30,7 @@ import java.util.ArrayList;
  * SaveLoadData class:
  * <p>
  * class used to save/load configured children and coin flip history
+ *
  */
 public class SaveLoadData {
 
