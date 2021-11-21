@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
 import ca.cmpt276.parentapp.R;
@@ -19,6 +20,9 @@ public class Help extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
+        TextView references = (TextView) findViewById(R.id.help_references);
+        references.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public static Intent makeIntent(Context context) {

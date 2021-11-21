@@ -73,5 +73,7 @@
     <string name="help_button">Help</string>
     <string name="team_name">Team Name: Lithium</string>
     <string name="developers">Developed By: Hitesh Juneja, Jan Mazurek, Chenxu Jia, and Janit Kumar</string>
+    <string name="help_copyright">Copyright/References</string>
+    <string name="references">○ Main Menu Background:\n <a href="https://www.vhv.rs/viewpic/hJoohwo_family-planning-background-design-hd-png-download/">https://www.vhv.rs/viewpic/hJoohwo_family-planning-background-design-hd-png-download/</a>\n○ Default Child Photo:\n <a href="https://www.pngwing.com/en/free-png-zlrfk/download">https://www.pngwing.com/en/free-png-zlrfk/download</a>\n○ Rocket Task Image:\n <a href="https://www.pinterest.ca/pin/571535008960566560/">https://www.pinterest.ca/pin/571535008960566560/</a>\n○ Coin Flip Sound:\n <a href="https://elements.envato.com/coin-throws-5-P6YRTSZ?utm_source=mixkit&amp;;utm_medium=referral&amp;;utm_campaign=elements_mixkit_cs_sfx_tag">https://elements.envato.com/coin-throws-5-P6YRTSZ?utm_source=mixkit&amp;;utm_medium=referral&amp;;utm_campaign=elements_mixkit_cs_sfx_tag</a></string>
 
 </resources>
