@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
-
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
@@ -73,8 +71,7 @@ public class ChildEdit extends AppCompatActivity {
         setupDelete();
 
         //https://youtu.be/2tRw6Q2JXGo
-
-        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermission= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
@@ -207,6 +204,7 @@ public class ChildEdit extends AppCompatActivity {
         });
     }
 
+    //Lets you edit the name and image of a child.
     private void setupApplyChange() {
         Button apply = (Button) findViewById(R.id.btnApplyChange);
         apply.setOnClickListener(new View.OnClickListener() {

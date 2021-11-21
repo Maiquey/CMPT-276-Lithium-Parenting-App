@@ -40,7 +40,6 @@ import java.io.FileNotFoundException;
 public class ChildList extends AppCompatActivity {
 
     private ChildManager childManager;
-    private ChildManager child;
     private ArrayAdapter<Child> adapter;
     private String childFilePath;
     private String queueOrderFilePath;

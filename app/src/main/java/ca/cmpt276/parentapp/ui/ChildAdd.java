@@ -8,8 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,16 +21,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-
-import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
@@ -142,6 +131,7 @@ public class ChildAdd extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -174,6 +164,7 @@ public class ChildAdd extends AppCompatActivity {
 
     }
 
+    //Add button adds new child with default or selected photo.
     private void setupAdd(Uri photoChild) {
         Button save = (Button) findViewById(R.id.btnAddChild);
         save.setOnClickListener(new View.OnClickListener() {
@@ -185,9 +176,6 @@ public class ChildAdd extends AppCompatActivity {
                     String message = getString(R.string.warning_name_empty);
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                 } else {
-
-                    //BitmapDrawable drawable = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                    //imageView.setImageURI(photoChild);
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                     Bitmap bitmapImage = drawable.getBitmap();
 

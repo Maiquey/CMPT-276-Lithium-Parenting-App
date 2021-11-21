@@ -19,15 +19,6 @@ public class ChildManager {
     private ArrayList<Integer> queueOrder;
     private boolean nextFlipEmpty = false;
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    String path;
 
     public static ChildManager getInstance() {
         if (instance == null) {
