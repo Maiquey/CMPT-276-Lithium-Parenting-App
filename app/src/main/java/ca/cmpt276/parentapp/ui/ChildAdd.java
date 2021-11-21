@@ -30,7 +30,7 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
 
 /**
  * ChildAdd class:
- *
+ * <p>
  * UI class for adding a child in the configure child activity
  */
 public class ChildAdd extends AppCompatActivity {
@@ -191,6 +191,7 @@ public class ChildAdd extends AppCompatActivity {
                 }
             }
         });
+
     }
 
 }

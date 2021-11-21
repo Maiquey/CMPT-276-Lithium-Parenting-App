@@ -109,7 +109,7 @@ public class ChildList extends AppCompatActivity {
         super.onPause();
     }
 
-    private class MyListAdapter extends ArrayAdapter<Child> {
+    class MyListAdapter extends ArrayAdapter<Child> {
         public MyListAdapter() {
             super(ChildList.this, R.layout.child_config_item, childManager.children());
         }

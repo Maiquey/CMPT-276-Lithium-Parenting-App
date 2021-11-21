@@ -132,11 +132,11 @@ public class CoinFlipActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 flipButton.setVisibility(View.INVISIBLE);
-                if (!coinFlip.isNoChildren()){
+                if (coinFlip.isNoChildren() || childManager.isNextFlipEmpty()){
+                    playFlipAnimation();
+                }else{
                     headsButton.setVisibility(View.VISIBLE);
                     tailsButton.setVisibility(View.VISIBLE);
-                }else{
-                    playFlipAnimation();
                 }
             }
         });

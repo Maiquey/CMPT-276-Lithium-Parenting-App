@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,10 +27,12 @@ import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.SaveLoadData;
+import ca.cmpt276.parentapp.model.Task;
+import ca.cmpt276.parentapp.model.WhosTurnManager;
 
 /**
  * ChildEdit class:
- *
+ * <p>
  * UI class for editing a configured child's name in the configure child activity
  */
 public class ChildEdit extends AppCompatActivity {
@@ -45,6 +46,8 @@ public class ChildEdit extends AppCompatActivity {
     String cameraPermission[];
     String storagePermission[];
     private ChildManager childManager;
+    private WhosTurnManager whosTurnManager;
+    private String taskFilePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,11 @@ public class ChildEdit extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.edit_child_title);
         ab.setDisplayHomeAsUpEnabled(true);
+
+        taskFilePath = getFilesDir().getPath().toString() + "/SaveTaskInfo3.json";
+        whosTurnManager = WhosTurnManager.getInstance();
+        whosTurnManager.getTasks().clear();
+        whosTurnManager.setTaskList(SaveLoadData.loadTaskList(taskFilePath));
 
         childManager = ChildManager.getInstance();
 
@@ -103,85 +111,92 @@ public class ChildEdit extends AppCompatActivity {
         return intent;
     }
 
-        private boolean checkCameraPermission(){
-            boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                    ==(PackageManager.PERMISSION_GRANTED);
-            boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    ==(PackageManager.PERMISSION_GRANTED);
-            return result && result1;
+    private boolean checkCameraPermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                == (PackageManager.PERMISSION_GRANTED);
+        boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == (PackageManager.PERMISSION_GRANTED);
+        return result && result1;
 
-        }
+    }
 
-        private void requestCameraPermission(){
-            requestPermissions(cameraPermission,CAMERA_REQUEST);
-        }
+    private void requestCameraPermission() {
+        requestPermissions(cameraPermission, CAMERA_REQUEST);
+    }
 
-        private void pickFromGallery(){
-            CropImage.activity().start(this);
-        }
+    private void pickFromGallery() {
+        CropImage.activity().start(this);
+    }
 
-        private boolean checkStoragePermission(){
-            boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    ==(PackageManager.PERMISSION_GRANTED);
-            return result;
-        }
+    private boolean checkStoragePermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
 
-        private void requestStoragePermission(){
-            requestPermissions(storagePermission, STORAGE_REQUEST);
-        }
+    private void requestStoragePermission() {
+        requestPermissions(storagePermission, STORAGE_REQUEST);
+    }
 
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if(resultCode==RESULT_OK){
-                    Uri uriResult = result.getUri();
-                    Picasso.with(this).load(uriResult).into(imageView);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri uriResult = result.getUri();
+                Picasso.with(this).load(uriResult).into(imageView);
 
-                }
             }
         }
+    }
 
-        @Override
-        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            switch(requestCode){
-                case CAMERA_REQUEST:{
-                    if(grantResults.length>0){
-                        boolean camera_granted = grantResults[0]==(PackageManager.PERMISSION_GRANTED);
-                        boolean storage_granted = grantResults[1]==(PackageManager.PERMISSION_GRANTED);
-                        if(camera_granted && storage_granted){
-                            pickFromGallery();
-                        }else{
-                            Toast.makeText(this, "" + R.string.enable_permissions_prompt,
-                                    Toast.LENGTH_SHORT).show();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case CAMERA_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean camera_granted = grantResults[0] == (PackageManager.PERMISSION_GRANTED);
+                    boolean storage_granted = grantResults[1] == (PackageManager.PERMISSION_GRANTED);
+                    if (camera_granted && storage_granted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(this, "" + R.string.enable_permissions_prompt,
+                                Toast.LENGTH_SHORT).show();
 
-                        }
-                    }
-                }
-                break;
-                case STORAGE_REQUEST:{
-                    if(grantResults.length>0){
-                        boolean storage_granted = grantResults[0]==(PackageManager.PERMISSION_GRANTED);
-                        if(storage_granted){
-                            pickFromGallery();
-                        }else{
-                            Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
-                        }
                     }
                 }
             }
+            break;
+            case STORAGE_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean storage_granted = grantResults[0] == (PackageManager.PERMISSION_GRANTED);
+                    if (storage_granted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
         }
+    }
 
     private void setupDelete() {
         Button delete = (Button) findViewById(R.id.btnDeleteChild);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = ChildManager.getInstance().getChild(childIndex).getName() + getString(R.string.x_deleted);
-                ChildManager.getInstance().fixQueueOrderIndices(childIndex);
-                ChildManager.getInstance().removeChildAtIndex(childIndex);
+                String message = childManager.getChild(childIndex).getName() + getString(R.string.x_deleted);
+                childManager.fixQueueOrderIndices(childIndex);
+                childManager.removeChildAtIndex(childIndex);
+                for (Task task : whosTurnManager.getTasks()) {
+                    if (task.getCurrentChildID() > childIndex) {
+                        task.setCurrentChildID(task.getCurrentChildID() - 1);
+                    }
+                }
+
+                SaveLoadData.saveTaskList(taskFilePath, whosTurnManager.getTasks());
 
                 Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                 finish();
@@ -200,16 +215,11 @@ public class ChildEdit extends AppCompatActivity {
                 if (name.matches("")) {
                     String message = getString(R.string.warning_name_empty);
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
+                    childManager.getChild(childIndex).setName(name);
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                     Bitmap bitmapImage = drawable.getBitmap();
-
-                    String newPhoto = SaveLoadData.encode(bitmapImage);
-
-                    childManager.getChild(childIndex).setName(name);
-                    childManager.getChild(childIndex).setPhoto(newPhoto);
-
+                    childManager.getChild(childIndex).setPhoto(SaveLoadData.encode(bitmapImage));
                     String message = getString(R.string.edited);
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                     finish();
@@ -219,11 +229,11 @@ public class ChildEdit extends AppCompatActivity {
     }
 
     private void inputFields() {
-        Child child = childManager.getChild(childIndex);
+        Child child = ChildManager.getInstance().getChild(childIndex);
 
         EditText name = (EditText) findViewById(R.id.editTextSelectedChild);
         name.setText((child.getName()));
-        
+
     }
 
     private void extractExtras() {
