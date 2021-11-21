@@ -20,29 +20,42 @@
 
     <TextView
         android:id="@+id/item_who_flipped"
-        android:layout_width="330dp"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="2dp"
-        android:layout_toEndOf="@+id/item_icon"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="3dp"
+        android:layout_toEndOf="@+id/iv_history_photo"
         android:textSize="20sp" />
 
     <TextView
         android:id="@+id/item_flip_result"
-        android:layout_width="329dp"
+        android:layout_width="238dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/item_who_flipped"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="1dp"
-        android:layout_toEndOf="@+id/item_icon" />
+        android:layout_alignStart="@+id/item_who_flipped"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="-1dp" />
 
     <TextView
         android:id="@+id/item_DateTime"
-        android:layout_width="327dp"
+        android:layout_width="239dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/item_flip_result"
+        android:layout_alignStart="@+id/item_flip_result"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="3dp" />
+
+    <ImageView
+        android:id="@+id/iv_history_photo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="3dp"
-        android:layout_toEndOf="@+id/item_icon" />
+        android:layout_toEndOf="@+id/item_icon"
+        android:adjustViewBounds="true"
+        android:maxWidth="80dp"
+        android:maxHeight="80dp"
+        android:minWidth="80dp"
+        android:minHeight="80dp"
+        app:srcCompat="@drawable/blank_coloured" />
 </RelativeLayout>

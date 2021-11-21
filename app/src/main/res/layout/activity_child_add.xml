@@ -4,20 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/child_screen_background"
     tools:context=".ui.ChildAdd">
 
     <Button
         android:id="@+id/btnAddChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="@string/btnAdd"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.796"
+        app:layout_constraintTop_toBottomOf="@+id/add_image"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -59,7 +57,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextChildAdd"
-        app:layout_constraintVertical_bias="0.175"
+        app:layout_constraintVertical_bias="0.078"
         app:srcCompat="@drawable/childphoto" />
 
     <TextView
@@ -67,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:text="Tap on the picture to add a new image"
+        android:text="@string/tap_on_the_picture_to_add_a_new_image"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

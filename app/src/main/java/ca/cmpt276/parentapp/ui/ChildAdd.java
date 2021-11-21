@@ -8,8 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,16 +21,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-
-import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
@@ -41,14 +30,13 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
 
 /**
  * ChildAdd class:
- *
+ * <p>
  * UI class for adding a child in the configure child activity
  */
 public class ChildAdd extends AppCompatActivity {
 
     EditText editTextChildAdd;
     ImageView imageView;
-    OutputStream outputStream;
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 101;
     String cameraPermission[];
@@ -138,26 +126,11 @@ public class ChildAdd extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri uriResult = result.getUri();
                 newPhoto = uriResult;
-                //Picasso.with(this).load(uriResult).into(imageView);
                 imageView.setImageURI(uriResult);
             }
         }
     }
-    /*
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
-            mImageUri = data.getData();
-            CropImage.activity(mImageUri).setAspectRatio(1, 1).start(PostActivity.this);
-
-            mSelectImage.setImageURI(mImageUri);
-        }
-    }
-}
-
-     */
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -170,7 +143,7 @@ public class ChildAdd extends AppCompatActivity {
                     if (camera_granted && storage_granted) {
                         pickFromGallery();
                     } else {
-                        Toast.makeText(this, "Please enable your camera and gallery permission",
+                        Toast.makeText(this, "" + R.string.enable_permissions_prompt,
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -183,7 +156,7 @@ public class ChildAdd extends AppCompatActivity {
                     if (storage_granted) {
                         pickFromGallery();
                     } else {
-                        Toast.makeText(this, "Please enable your gallery permission", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -191,6 +164,7 @@ public class ChildAdd extends AppCompatActivity {
 
     }
 
+    //Add button adds new child with default or selected photo.
     private void setupAdd(Uri photoChild) {
         Button save = (Button) findViewById(R.id.btnAddChild);
         save.setOnClickListener(new View.OnClickListener() {
@@ -202,9 +176,6 @@ public class ChildAdd extends AppCompatActivity {
                     String message = getString(R.string.warning_name_empty);
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                 } else {
-
-                    //BitmapDrawable drawable = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                    //imageView.setImageURI(photoChild);
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                     Bitmap bitmapImage = drawable.getBitmap();
 
@@ -212,14 +183,14 @@ public class ChildAdd extends AppCompatActivity {
                     Log.e("TAG", "portrait is: " + portrait);
                     Child child = new Child(name, portrait);
                     ChildManager.getInstance().addChild(child);
+                    ChildManager.getInstance().addIndexToQueueOrder(ChildManager.getInstance().numOfChildren() - 1);
+
                     String message = name + getString(R.string.x_added);
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                     finish();
+                }
             }
-
-
-        }
-    });
+        });
 
     }
 

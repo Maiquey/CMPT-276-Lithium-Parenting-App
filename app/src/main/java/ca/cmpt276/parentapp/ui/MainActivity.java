@@ -45,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
         setupCoinFlip();
         setupChildBtn();
         setupHelp();
+        setupWhosTurn();
     }
+
 
     private void setupHelp() {
         Button btn2 = findViewById(R.id.helpbtn);
@@ -86,6 +88,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = CoinFlipActivity.makeIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setupWhosTurn(){
+        Button whosTurnBtn = findViewById(R.id.whosturnBtn);
+        whosTurnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = WhosTurnActivity.makeIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
