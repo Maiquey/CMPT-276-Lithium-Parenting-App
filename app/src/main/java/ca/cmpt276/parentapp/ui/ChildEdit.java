@@ -8,16 +8,13 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,7 +62,6 @@ public class ChildEdit extends AppCompatActivity {
         setupApplyChange();
         setupDelete();
 
-
         //https://youtu.be/2tRw6Q2JXGo
         storagePermission= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         cameraPermission = new String[]{Manifest.permission.CAMERA,
@@ -83,7 +79,7 @@ public class ChildEdit extends AppCompatActivity {
                 int picd = 0;
                 if (picd == 0) {
                     if (!checkCameraPermission()) {
-                        requestPermissions(cameraPermission,CAMERA_REQUEST);
+                        requestCameraPermission();
 
                     } else {
                         pickFromGallery();
@@ -91,7 +87,7 @@ public class ChildEdit extends AppCompatActivity {
 
                 } else if (picd == 1) {
                     if (!checkStoragePermission()) {
-                        requestPermissions(storagePermission, STORAGE_REQUEST);
+                        requestStoragePermission();
                     } else {
                         pickFromGallery();
                     }
@@ -116,17 +112,23 @@ public class ChildEdit extends AppCompatActivity {
 
         }
 
-    private boolean checkStoragePermission(){
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                ==(PackageManager.PERMISSION_GRANTED);
-        return result;
-    }
+        private void requestCameraPermission(){
+            requestPermissions(cameraPermission,CAMERA_REQUEST);
+        }
 
-
-    private void pickFromGallery(){
+        private void pickFromGallery(){
             CropImage.activity().start(this);
         }
 
+        private boolean checkStoragePermission(){
+            boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    ==(PackageManager.PERMISSION_GRANTED);
+            return result;
+        }
+
+        private void requestStoragePermission(){
+            requestPermissions(storagePermission, STORAGE_REQUEST);
+        }
 
         @Override
         protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -152,7 +154,7 @@ public class ChildEdit extends AppCompatActivity {
                         if(camera_granted && storage_granted){
                             pickFromGallery();
                         }else{
-                            Toast.makeText(this, "Please enable your camera and gallery permission",
+                            Toast.makeText(this, "" + R.string.enable_permissions_prompt,
                                     Toast.LENGTH_SHORT).show();
 
                         }
@@ -165,7 +167,7 @@ public class ChildEdit extends AppCompatActivity {
                         if(storage_granted){
                             pickFromGallery();
                         }else{
-                            Toast.makeText(this, "Please enable your gallery permission", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -177,14 +179,9 @@ public class ChildEdit extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = childManager.getChild(childIndex).getName() + getString(R.string.x_deleted);
-                childManager.removeChildAtIndex(childIndex);
-
-                //save new pickingChildIndex which may have changed due to deletion
-                SharedPreferences preferences = getSharedPreferences(PREF, MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(PICKING_CHILD_INDEX, childManager.getPickingChildIndex());
-                editor.apply();
+                String message = ChildManager.getInstance().getChild(childIndex).getName() + getString(R.string.x_deleted);
+                ChildManager.getInstance().fixQueueOrderIndices(childIndex);
+                ChildManager.getInstance().removeChildAtIndex(childIndex);
 
                 Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                 finish();
@@ -205,7 +202,6 @@ public class ChildEdit extends AppCompatActivity {
                     Toast.makeText(ChildEdit.this, message, Toast.LENGTH_SHORT).show();
                 }
                 else {
-
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                     Bitmap bitmapImage = drawable.getBitmap();
 

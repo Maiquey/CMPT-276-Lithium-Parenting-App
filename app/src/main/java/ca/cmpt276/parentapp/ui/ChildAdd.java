@@ -23,7 +23,6 @@ import androidx.core.content.ContextCompat;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
-
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
@@ -54,7 +53,6 @@ public class ChildAdd extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         editTextChildAdd = findViewById(R.id.editTextChildAdd);
 
-
         //https://youtu.be/2tRw6Q2JXGo
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         cameraPermission = new String[]{Manifest.permission.CAMERA,
@@ -69,7 +67,7 @@ public class ChildAdd extends AppCompatActivity {
                 int picd = 0;
                 if (picd == 0) {
                     if (!checkCameraPermission()) {
-                        requestPermissions(cameraPermission, CAMERA_REQUEST);
+                        requestCameraPermission();
 
                     } else {
                         pickFromGallery();
@@ -77,7 +75,7 @@ public class ChildAdd extends AppCompatActivity {
 
                 } else if (picd == 1) {
                     if (!checkStoragePermission()) {
-                        requestPermissions(storagePermission, STORAGE_REQUEST);
+                        requestStoragePermission();
                     } else {
                         pickFromGallery();
                     }
@@ -102,16 +100,23 @@ public class ChildAdd extends AppCompatActivity {
 
     }
 
-    private boolean checkStoragePermission() {
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == (PackageManager.PERMISSION_GRANTED);
-        return result;
+    private void requestCameraPermission() {
+        requestPermissions(cameraPermission, CAMERA_REQUEST);
     }
 
     private void pickFromGallery() {
         CropImage.activity().start(this);
     }
 
+    private boolean checkStoragePermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
+
+    private void requestStoragePermission() {
+        requestPermissions(storagePermission, STORAGE_REQUEST);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -138,7 +143,7 @@ public class ChildAdd extends AppCompatActivity {
                     if (camera_granted && storage_granted) {
                         pickFromGallery();
                     } else {
-                        Toast.makeText(this, "Please enable your camera and gallery permission",
+                        Toast.makeText(this, "" + R.string.enable_permissions_prompt,
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -151,7 +156,7 @@ public class ChildAdd extends AppCompatActivity {
                     if (storage_granted) {
                         pickFromGallery();
                     } else {
-                        Toast.makeText(this, "Please enable your gallery permission", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -171,7 +176,6 @@ public class ChildAdd extends AppCompatActivity {
                     String message = getString(R.string.warning_name_empty);
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                 } else {
-
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                     Bitmap bitmapImage = drawable.getBitmap();
 
@@ -179,15 +183,14 @@ public class ChildAdd extends AppCompatActivity {
                     Log.e("TAG", "portrait is: " + portrait);
                     Child child = new Child(name, portrait);
                     ChildManager.getInstance().addChild(child);
+                    ChildManager.getInstance().addIndexToQueueOrder(ChildManager.getInstance().numOfChildren() - 1);
+
                     String message = name + getString(R.string.x_added);
                     Toast.makeText(ChildAdd.this, message, Toast.LENGTH_SHORT).show();
                     finish();
+                }
             }
-
-
-        }
-    });
-
+        });
     }
 
 }

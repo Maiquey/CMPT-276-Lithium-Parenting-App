@@ -11,13 +11,15 @@ public class CoinFlipData {
 
     private final LocalDateTime timeOfFlip;
     private final String whoPicked;
+    private final String whoPickedPicture;
     private boolean isHeads;
     private boolean pickerPickedHeads;
     private boolean pickerWon;
 
-    public CoinFlipData(LocalDateTime timeOfFlip, String whoPicked, boolean isHeads, boolean pickerPickedHeads, boolean pickerWon) {
+    public CoinFlipData(LocalDateTime timeOfFlip, String whoPicked, String whoPickedPicture, boolean isHeads, boolean pickerPickedHeads, boolean pickerWon) {
         this.timeOfFlip = timeOfFlip;
         this.whoPicked = whoPicked;
+        this.whoPickedPicture = whoPickedPicture;
         this.isHeads = isHeads;
         this.pickerPickedHeads = pickerPickedHeads;
         this.pickerWon = pickerWon;
@@ -29,6 +31,10 @@ public class CoinFlipData {
 
     public String getWhoPicked() {
         return whoPicked;
+    }
+
+    public String getWhoPickedPicture() {
+        return whoPickedPicture;
     }
 
     public boolean isHeads() {
