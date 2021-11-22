@@ -50,6 +50,7 @@ public class ChildAdd extends AppCompatActivity {
     //Uri newPhoto;
     ActivityResultLauncher<Intent> activityResultLauncher;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +98,7 @@ public class ChildAdd extends AppCompatActivity {
                     if (!checkStoragePermission()) {
                         requestStoragePermission();
                     } else {
-                        pickFromGallery();
+                        mGetContent.launch("image/*");
                     }
                 }
             }
@@ -136,9 +137,16 @@ public class ChildAdd extends AppCompatActivity {
         requestPermissions(cameraPermission, CAMERA_REQUEST);
     }
 
-    private void pickFromGallery() {
-        CropImage.activity().start(this);
-    }
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult(
+                new ActivityResultContracts.GetContent(),
+                new ActivityResultCallback<Uri>() {
+        @Override
+        public void onActivityResult(Uri result) {
+            if (result != null) {
+                imageView.setImageURI(result);
+            }
+        }
+    });
 
     private boolean checkStoragePermission() {
         boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -186,7 +194,7 @@ public class ChildAdd extends AppCompatActivity {
                 if (grantResults.length > 0) {
                     boolean storage_granted = grantResults[0] == (PackageManager.PERMISSION_GRANTED);
                     if (storage_granted) {
-                        pickFromGallery();
+                        mGetContent.launch("image/*");
                     } else {
                         Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
                     }

@@ -125,7 +125,8 @@ public class ChildEdit extends AppCompatActivity {
     }
 
     private void pickFromGallery() {
-        CropImage.activity().start(this);
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 
     private boolean checkStoragePermission() {
