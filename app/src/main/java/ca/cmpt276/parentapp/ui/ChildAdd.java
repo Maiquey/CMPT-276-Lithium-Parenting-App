@@ -90,8 +90,8 @@ public class ChildAdd extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(ChildAdd.this).create(); //Read Update
-                alertDialog.setTitle("hi");
-                alertDialog.setMessage("this is my app");
+                alertDialog.setTitle("New Photo");
+                alertDialog.setMessage("Please choose from: ");
 
                 alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Take a picture", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -170,20 +170,6 @@ public class ChildAdd extends AppCompatActivity {
     private void requestStoragePermission() {
         requestPermissions(storagePermission, STORAGE_REQUEST);
     }
-
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Uri uriResult = result.getUri();
-                newPhoto = uriResult;
-                imageView.setImageURI(uriResult);
-            }
-        }
-    }*/
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
