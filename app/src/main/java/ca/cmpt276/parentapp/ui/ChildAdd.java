@@ -1,8 +1,11 @@
 package ca.cmpt276.parentapp.ui;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -45,6 +48,7 @@ public class ChildAdd extends AppCompatActivity {
     ImageView imageView;
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 101;
+    int picd = -1;
     String cameraPermission[];
     String storagePermission[];
     //Uri newPhoto;
@@ -85,22 +89,32 @@ public class ChildAdd extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int picd = 0;
-                if (picd == 0) {
-                    if (!checkCameraPermission()) {
-                        requestCameraPermission();
+                AlertDialog alertDialog = new AlertDialog.Builder(ChildAdd.this).create(); //Read Update
+                alertDialog.setTitle("hi");
+                alertDialog.setMessage("this is my app");
 
-                    } else {
-                        dispatchTakePictureIntent();
-                    }
+                alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Take a picture", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // here you can add functions
+                        if (!checkCameraPermission()) {
+                            requestCameraPermission();
 
-                } else if (picd == 1) {
-                    if (!checkStoragePermission()) {
-                        requestStoragePermission();
-                    } else {
-                        mGetContent.launch("image/*");
+                        } else {
+                            dispatchTakePictureIntent();
+                        }
                     }
-                }
+                });
+                alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Choose from gallery", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (!checkStoragePermission()) {
+                            requestStoragePermission();
+                        } else {
+                            mGetContent.launch("image/*");
+                        }
+                    }
+                });
+                alertDialog.show();
             }
         });
 
@@ -119,7 +133,6 @@ public class ChildAdd extends AppCompatActivity {
             //startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             activityResultLauncher.launch(takePictureIntent);
         } catch (ActivityNotFoundException e) {
-            // display error state to the user
         }
     }
 
