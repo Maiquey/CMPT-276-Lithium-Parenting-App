@@ -174,7 +174,7 @@ public class ChildAdd extends AppCompatActivity {
                     if (camera_granted && storage_granted) {
                         dispatchTakePictureIntent();
                     } else {
-                        Toast.makeText(this, "" + R.string.enable_permissions_prompt,
+                        Toast.makeText(this, R.string.enable_permissions_prompt,
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -187,7 +187,7 @@ public class ChildAdd extends AppCompatActivity {
                     if (storage_granted) {
                         mGetContent.launch("image/*");
                     } else {
-                        Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
