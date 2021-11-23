@@ -25,17 +25,16 @@
         android:id="@+id/btnTimerPage"
         android:layout_width="200dp"
         android:layout_height="51dp"
+        android:layout_marginBottom="16dp"
         android:background='@drawable/custom_button'
         android:text="@string/Timeout_Timer"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/helpbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/space3"
-        app:layout_constraintVertical_bias="0.382" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/coinFlipButton"
@@ -50,52 +49,50 @@
         app:layout_constraintBottom_toTopOf="@+id/btnTimerPage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="@+id/nav_host_fragment_content_main"
-        app:layout_constraintTop_toBottomOf="@+id/whosturnBtn"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="@+id/nav_host_fragment_content_main" />
 
     <Button
         android:id="@+id/whosturnBtn"
         android:layout_width="200dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="16dp"
         android:background='@drawable/custom_button'
         android:text="@string/who_s_turn"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnTimerPage"
+        app:layout_constraintBottom_toTopOf="@+id/coinFlipButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="@+id/nav_host_fragment_content_main" />
 
     <Button
         android:id="@+id/configButton"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="51dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:background='@drawable/custom_button'
         android:text="@string/Configure"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTimerPage" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/space3"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/helpbtn"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="51dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:background='@drawable/custom_button'
         android:text="@string/help_button"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/configButton" />
+        app:layout_constraintStart_toEndOf="@+id/space3" />
 
     <Space
         android:id="@+id/space3"

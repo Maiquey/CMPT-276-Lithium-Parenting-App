@@ -84,7 +84,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"/>
         <receiver android:name=".NotificationReceiver"/>
     </application>
 

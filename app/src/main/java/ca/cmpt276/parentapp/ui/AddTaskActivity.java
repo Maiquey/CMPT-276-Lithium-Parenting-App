@@ -17,6 +17,11 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.WhosTurnManager;
 
+/**
+ * AddTaskActivity:
+ *
+ * activity for adding a task to the who's turn tasklist.
+ */
 public class AddTaskActivity extends AppCompatActivity {
     private ChildManager childManager;
     private WhosTurnManager whosTurnManager;

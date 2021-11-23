@@ -116,8 +116,7 @@ public class SaveLoadData {
                 childManager.addChild(newChild);
             }
         } catch (FileNotFoundException e) {
-            //do nothing if no file found
-            //Log.e("TAG", "CHILD FILE NOT FOUND");
+
         }
         return childManager.getChildList();
     }

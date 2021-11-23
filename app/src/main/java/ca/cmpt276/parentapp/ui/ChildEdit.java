@@ -29,9 +29,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
-
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
@@ -47,8 +44,6 @@ import ca.cmpt276.parentapp.model.WhosTurnManager;
 public class ChildEdit extends AppCompatActivity {
 
     private int childIndex;
-    private final String PREF = "PICKING_CHILD_INDEX";
-    public static final String PICKING_CHILD_INDEX = "picking child index new";
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 101;
     ImageView imageView;
@@ -94,8 +89,6 @@ public class ChildEdit extends AppCompatActivity {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                //if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                // CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Bundle bundle = result.getData().getExtras();
                     Bitmap bitmap = (Bitmap) bundle.get("data");
@@ -182,7 +175,6 @@ public class ChildEdit extends AppCompatActivity {
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
-            //startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             activityResultLauncher.launch(takePictureIntent);
         } catch (ActivityNotFoundException e) {
         }
@@ -201,7 +193,6 @@ public class ChildEdit extends AppCompatActivity {
                     } else {
                         Toast.makeText(this, "" + R.string.enable_permissions_prompt,
                                 Toast.LENGTH_SHORT).show();
-
                     }
                 }
             }

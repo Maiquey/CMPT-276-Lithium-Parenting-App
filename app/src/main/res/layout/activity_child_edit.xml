@@ -23,25 +23,21 @@
         android:textColor="#FFFFFF"
         android:textColorHighlight="#BD6D6D"
         android:textColorLink="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnApplyChange"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_image"
-        app:layout_constraintVertical_bias="0.137"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnApplyChange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#36972B"
         android:text="@string/apply_change"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDeleteChild" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editTextSelectedChild"
@@ -89,7 +85,7 @@
         android:id="@+id/add_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="16dp"
         android:text="@string/tap_on_the_picture_to_add_a_new_image"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

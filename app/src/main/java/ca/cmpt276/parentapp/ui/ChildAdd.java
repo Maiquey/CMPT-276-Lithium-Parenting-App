@@ -25,12 +25,9 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
-import com.theartofdev.edmodo.cropper.CropImage;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
@@ -76,24 +73,22 @@ public class ChildAdd extends AppCompatActivity {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                //if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                   // CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Bundle bundle = result.getData().getExtras();
-                        Bitmap bitmap = (Bitmap) bundle.get("data");
-                        imageView.setImageBitmap(bitmap);
-                    }
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Bundle bundle = result.getData().getExtras();
+                    Bitmap bitmap = (Bitmap) bundle.get("data");
+                    imageView.setImageBitmap(bitmap);
                 }
+            }
         });
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(ChildAdd.this).create(); //Read Update
-                alertDialog.setTitle("New Photo");
-                alertDialog.setMessage("Please choose from: ");
+                alertDialog.setTitle(getString(R.string.new_photo));
+                alertDialog.setMessage(getString(R.string.please_choose_from));
 
-                alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Take a picture", new DialogInterface.OnClickListener() {
+                alertDialog.setButton(Dialog.BUTTON_POSITIVE, getString(R.string.take_a_picture), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // here you can add functions
                         if (!checkCameraPermission()) {
@@ -104,7 +99,7 @@ public class ChildAdd extends AppCompatActivity {
                         }
                     }
                 });
-                alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Choose from gallery", new DialogInterface.OnClickListener() {
+                alertDialog.setButton(Dialog.BUTTON_NEGATIVE, getString(R.string.choose_from_gallery), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (!checkStoragePermission()) {
@@ -125,12 +120,9 @@ public class ChildAdd extends AppCompatActivity {
         return new Intent(context, ChildAdd.class);
     }
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
-            //startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             activityResultLauncher.launch(takePictureIntent);
         } catch (ActivityNotFoundException e) {
         }
@@ -182,7 +174,7 @@ public class ChildAdd extends AppCompatActivity {
                     if (camera_granted && storage_granted) {
                         dispatchTakePictureIntent();
                     } else {
-                        Toast.makeText(this, "" + R.string.enable_permissions_prompt,
+                        Toast.makeText(this, R.string.enable_permissions_prompt,
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -195,7 +187,7 @@ public class ChildAdd extends AppCompatActivity {
                     if (storage_granted) {
                         mGetContent.launch("image/*");
                     } else {
-                        Toast.makeText(this, "" + R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.enable_permission_prompt_2, Toast.LENGTH_SHORT).show();
                     }
                 }
             }

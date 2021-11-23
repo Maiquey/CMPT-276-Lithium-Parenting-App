@@ -23,6 +23,13 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.WhosTurnManager;
 
+/**
+ * WhosTurnActivity Class:
+ *
+ * displays a list of configured tasks and the current child assigned to each task
+ * displays name and picture of child assigned to each task
+ * allows user to select a task to edit or delete the task, or assign the next child to the task
+ */
 public class WhosTurnActivity extends AppCompatActivity {
     public static final String NO_CHILDREN_ASSIGNED = "No child assigned";
     private WhosTurnManager whosTurnManager;

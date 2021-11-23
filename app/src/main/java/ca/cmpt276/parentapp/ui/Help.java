@@ -11,6 +11,12 @@ import android.widget.TextView;
 
 import ca.cmpt276.parentapp.R;
 
+/**
+ * Help Activity
+ *
+ * Displays group name and team members
+ * Lists Copyright resources used and provides links to sources
+ */
 public class Help extends AppCompatActivity {
 
     @Override
@@ -19,6 +25,7 @@ public class Help extends AppCompatActivity {
         setContentView(R.layout.activity_help);
 
         ActionBar ab = getSupportActionBar();
+        ab.setTitle(R.string.help);
         ab.setDisplayHomeAsUpEnabled(true);
 
         TextView references = (TextView) findViewById(R.id.help_references);
