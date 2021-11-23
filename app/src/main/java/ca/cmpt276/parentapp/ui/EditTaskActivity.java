@@ -18,6 +18,12 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.WhosTurnManager;
 
+/**
+ * EditTaskActivity:
+ *
+ * Activity for editing an existing task
+ * allows user to change name of the task, delete the task, or assign the next child to do the task
+ */
 public class EditTaskActivity extends AppCompatActivity {
     public static final String TASK_SELECTED_INDEX = "TaskSelectIndex";
     private WhosTurnManager whosTurnManager;
@@ -109,10 +115,10 @@ public class EditTaskActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (childManager.noChildren()) {
                     Toast.makeText(EditTaskActivity.this,
-                            "No children configured, \ncannot assign to next child!", Toast.LENGTH_SHORT).show();
+                            getString(R.string.no_children_configured_warning), Toast.LENGTH_SHORT).show();
                 } else if (childManager.getChildList().size() == 1) {
                     Toast.makeText(EditTaskActivity.this,
-                            "Only one children present, \ncannot assign to next child!", Toast.LENGTH_SHORT).show();
+                            getString(R.string.only_one_child_warning), Toast.LENGTH_SHORT).show();
                 } else {
                     if (task.getCurrentChildID() == childManager.getChildList().size() - 1) {
                         task.setCurrentChildID(0);

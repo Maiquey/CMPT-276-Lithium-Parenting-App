@@ -11,6 +11,12 @@ import android.widget.TextView;
 
 import ca.cmpt276.parentapp.R;
 
+/**
+ * Help Activity
+ *
+ * Displays group name and team members
+ * Lists Copyright resources used and provides links to sources
+ */
 public class Help extends AppCompatActivity {
 
     @Override

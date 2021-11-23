@@ -50,10 +50,6 @@ public class CoinFlip {
         this.pickerPickedHeads = pickedHeads;
     }
 
-    public LocalDateTime getTimeOfFlip() {
-        return timeOfFlip;
-    }
-
     public String getWhoPicked() {
         return whoPicked;
     }

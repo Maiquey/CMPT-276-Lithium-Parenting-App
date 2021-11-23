@@ -6,9 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -33,7 +31,6 @@ import ca.cmpt276.parentapp.model.SaveLoadData;
  * offers a choice of heads or tails to the child who's turn it is to pick
  * Uses coinFlip model to randomly generate outcome of the coin flip and show result
  * offers navigation to CoinFlipRecordActivity
- * sound effect from https://elements.envato.com/coin-throws-5-P6YRTSZ?utm_source=mixkit&utm_medium=referral&utm_campaign=elements_mixkit_cs_sfx_tag
  */
 public class CoinFlipActivity extends AppCompatActivity {
 
@@ -54,7 +51,6 @@ public class CoinFlipActivity extends AppCompatActivity {
     private String flipFilePath;
     private String childFilePath;
     private String queueOrderFilePath;
-    private final String PREF = "PICKING_CHILD_INDEX";
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinFlipActivity.class);

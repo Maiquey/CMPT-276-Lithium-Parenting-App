@@ -1,5 +1,11 @@
 package ca.cmpt276.parentapp.model;
 
+/**
+ * Task Model Class:
+ *
+ * Stores different information about a configured task
+ * keeps track of which child's turn it is to do the task by holding an index to childList
+ */
 public class Task {
     private String taskName;
     private String childName;

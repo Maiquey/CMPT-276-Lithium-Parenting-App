@@ -50,7 +50,6 @@ public class ChildManager {
         return childList.size();
     }
 
-
     public void addChild(Child child) {
         childList.add(child);
     }
@@ -63,16 +62,8 @@ public class ChildManager {
         coinFlipHistory.add(coinFlip);
     }
 
-    public void removeChild(Child child) {
-        childList.remove(child);
-    }
-
     public void removeChildAtIndex(int i){
         childList.remove(i);
-    }
-
-    public void editChild(int i, String newName) {
-        childList.get(i).setName(newName);
     }
 
     public Child getChild(int i) {
@@ -107,12 +98,6 @@ public class ChildManager {
     public ArrayList<Child> children() {
         return childList;
     }
-
-    //method for unit tests
-//    public void cleanSingleton(){
-//        childList.clear();
-//        pickingChildIndex = 0;
-//    }
 
     public ArrayList<CoinFlipData> getCoinFlipHistory() {
         return coinFlipHistory;
