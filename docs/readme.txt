@@ -11,3 +11,6 @@ User may find the "Finish Setup" page under Settings in the emulator ("Finish se
 App compatible 4", 5", 6", and 10" screen sizes.
 
 In reference to the timeout timer, sometimes the app lags and takes a few extra seconds for the notification to pop up when the timer finishes.
+
+Style guide from Dr. Brian Fraser's CMPT276 Course Website:
+https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/course-info/styleguide
