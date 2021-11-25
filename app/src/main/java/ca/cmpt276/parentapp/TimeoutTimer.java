@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +77,7 @@ public class TimeoutTimer extends AppCompatActivity {
     private long endTime;
     private long setStartTime;
     private AlarmManager alarmManager;
+    private ProgressBar progressBar;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TimeoutTimer.class);
@@ -91,6 +93,8 @@ public class TimeoutTimer extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private int numProgress = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +161,8 @@ public class TimeoutTimer extends AppCompatActivity {
                 long alarmTime = System.currentTimeMillis() + timeLeftInMillies;
                 scheduleNotification(getNotification(getString(R.string.notification_content)), alarmTime);
                 updateCountdownText();
+                updateProgressBar(numProgress);
+                progressBar.setVisibility(View.VISIBLE);
                 startTimer();
             }
         });
@@ -211,6 +217,15 @@ public class TimeoutTimer extends AppCompatActivity {
             }
         });
 
+        progressBar = findViewById(R.id.progress_bar);
+        numProgress = 0;
+        updateProgressBar(numProgress);
+    }
+
+    private void updateProgressBar(int updateProgress) {
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setProgress(updateProgress);
+        progressBar.setMax((int)startTimeInMillies/1000);
     }
 
     private void scheduleNotification(Notification notification, long alarmTime) {
@@ -255,17 +270,24 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     private void startTimer() {
-        endTime = System.currentTimeMillis() + timeLeftInMillies;
+        Toast.makeText(TimeoutTimer.this, ""+numProgress, Toast.LENGTH_SHORT).show();
         countDownTimer = new CountDownTimer(timeLeftInMillies, ONE_SECOND) {
+            int numSeconds = (int)timeLeftInMillies/1000;
+            int numSecondsTotal = (int)startTimeInMillies/1000;
             @Override
             public void onTick(long l) {
                 timeLeftInMillies = l;
+                int secondsLeft = (int) (l/1000);
+                int progressPercentage = numSecondsTotal - ((numSecondsTotal-secondsLeft) * (numSecondsTotal/numSeconds));
+                numProgress = progressPercentage;
+                progressBar.setProgress(progressPercentage);
                 updateCountdownText();
             }
 
             @Override
             public void onFinish() {
                 isTimerRunning = false;
+                progressBar.setProgress(0);
                 updateUI();
             }
         }.start();
@@ -288,6 +310,8 @@ public class TimeoutTimer extends AppCompatActivity {
 
     private void resetTimer() {
         timeLeftInMillies = startTimeInMillies;
+        numProgress = 0;
+        progressBar.setVisibility(View.INVISIBLE);
         Intent intent = new Intent(TimeoutTimer.this, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(TimeoutTimer.this,
                 0,
