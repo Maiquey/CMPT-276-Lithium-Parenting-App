@@ -35,8 +35,9 @@ public class WhosTurnActivity extends AppCompatActivity {
     private WhosTurnManager whosTurnManager;
     private ChildManager childManager;
     private ArrayAdapter<Task> adapter;
-    String taskFilePath;
-    String childFilePath;
+    private String taskFilePath;
+    private String childFilePath;
+    private String taskHistoryFilePath;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, WhosTurnActivity.class);
@@ -53,6 +54,7 @@ public class WhosTurnActivity extends AppCompatActivity {
 
         taskFilePath = getFilesDir().getPath().toString() + "/SaveTaskInfo3.json";
         childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
+        taskHistoryFilePath = getFilesDir().getPath().toString() + "/SaveTaskHistory.json";
 
         whosTurnManager = WhosTurnManager.getInstance();
         childManager = ChildManager.getInstance();
@@ -61,6 +63,8 @@ public class WhosTurnActivity extends AppCompatActivity {
         whosTurnManager.setTaskList(SaveLoadData.loadTaskList(taskFilePath));
         childManager.getChildList().clear();
         childManager.setChildList(SaveLoadData.loadChildList(childFilePath));
+        whosTurnManager.getTaskHistory().clear();
+        whosTurnManager.setTaskHistory(SaveLoadData.loadTaskHistoryList(taskHistoryFilePath));
 
         setupBtnAdd();
         registerClickCallback();
@@ -171,6 +175,7 @@ public class WhosTurnActivity extends AppCompatActivity {
     protected void onPause() {
         SaveLoadData.saveTaskList(taskFilePath,
                 whosTurnManager.getTasks());
+        SaveLoadData.saveTaskHistoryList(taskHistoryFilePath, whosTurnManager.getTaskHistory());
         super.onPause();
     }
 }
