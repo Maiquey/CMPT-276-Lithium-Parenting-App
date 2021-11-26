@@ -113,7 +113,7 @@ public class TaskHistoryActivity extends AppCompatActivity {
             DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("h:mma");
             String formatted = time.format(formatter1) + " @ " + time.format(formatter2);
 
-            dateTime.setText(getString(R.string.date_time) + formatted);
+            dateTime.setText(formatted);
 
             return itemView;
         }
