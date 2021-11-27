@@ -8,70 +8,73 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
-        android:hardwareAccelerated="false"
-        android:largeHeap="true"
-
         android:theme="@style/Theme.LithiumParentApp">
+        <activity
+            android:name=".ui.TaskHistoryActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.Help"
             android:exported="false"
             android:parentActivityName=".ui.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.QueueOrderActivity"
             android:exported="true"
             android:parentActivityName=".ui.CoinFlipActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.EditTaskActivity"
             android:exported="true"
             android:parentActivityName=".ui.WhosTurnActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.AddTaskActivity"
             android:exported="true"
             android:parentActivityName=".ui.WhosTurnActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.WhosTurnActivity"
             android:exported="true"
             android:parentActivityName=".ui.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.CoinFlipRecordActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.CoinFlipActivity"/>
+            android:parentActivityName=".ui.CoinFlipActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.CoinFlipActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.MainActivity"/>
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ChildList"
             android:exported="false"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.MainActivity"/>
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ChildEdit"
             android:exported="false"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.ChildList"/>
+            android:parentActivityName=".ui.ChildList"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ChildAdd"
             android:exported="false"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.ChildList"/>
+            android:parentActivityName=".ui.ChildList"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TimeoutTimer"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            android:parentActivityName=".ui.MainActivity"/>
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
@@ -84,7 +87,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".NotificationReceiver"/>
+
+        <receiver android:name=".NotificationReceiver" />
     </application>
 
 </manifest>

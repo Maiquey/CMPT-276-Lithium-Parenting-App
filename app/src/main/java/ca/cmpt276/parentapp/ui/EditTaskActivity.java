@@ -12,10 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.LocalDateTime;
+
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.SaveLoadData;
 import ca.cmpt276.parentapp.model.Task;
+import ca.cmpt276.parentapp.model.TaskData;
 import ca.cmpt276.parentapp.model.WhosTurnManager;
 
 /**
@@ -32,8 +35,9 @@ public class EditTaskActivity extends AppCompatActivity {
     private TextView currentChild;
     private int taskIndex;
     private String childFilePath;
+    private String taskHistoryFilePath;
 
-    Task task;
+    private Task task;
 
     public static Intent makeIntent(Context context, int index) {
         Intent intent = new Intent(context, EditTaskActivity.class);
@@ -53,6 +57,7 @@ public class EditTaskActivity extends AppCompatActivity {
         childManager.getChildList().clear();
 
         childFilePath = getFilesDir().getPath().toString() + "/SaveChildInfo3.json";
+        taskHistoryFilePath = getFilesDir().getPath().toString() + "/SaveTaskHistory.json";
         childManager.setChildList(SaveLoadData.loadChildList(childFilePath));
 
         whosTurnManager = WhosTurnManager.getInstance();
@@ -66,6 +71,7 @@ public class EditTaskActivity extends AppCompatActivity {
         setupConfirmButton();
         setupCancelButton();
         setupDeleteButton();
+        setupTaskHistoryButton();
     }
 
     private void setupDeleteButton() {
@@ -73,6 +79,8 @@ public class EditTaskActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                whosTurnManager.removeTaskDataByTaskIndex(taskIndex);
+                SaveLoadData.saveTaskHistoryList(taskHistoryFilePath, whosTurnManager.getTaskHistory());
                 whosTurnManager.getTasks().remove(taskIndex);
                 finish();
             }
@@ -120,6 +128,9 @@ public class EditTaskActivity extends AppCompatActivity {
                     Toast.makeText(EditTaskActivity.this,
                             getString(R.string.only_one_child_warning), Toast.LENGTH_SHORT).show();
                 } else {
+                    TaskData theTask = new TaskData(LocalDateTime.now(), task.getCurrentChildID(), taskIndex);
+                    whosTurnManager.addTaskData(theTask);
+                    SaveLoadData.saveTaskHistoryList(taskHistoryFilePath, whosTurnManager.getTaskHistory());
                     if (task.getCurrentChildID() == childManager.getChildList().size() - 1) {
                         task.setCurrentChildID(0);
                         task.setChildName(childManager.getChildName(0));
@@ -131,6 +142,17 @@ public class EditTaskActivity extends AppCompatActivity {
                     }
                     finish();
                 }
+            }
+        });
+    }
+
+    private void setupTaskHistoryButton(){
+        Button taskHistoryBtn = findViewById(R.id.btn_task_history);
+        taskHistoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = TaskHistoryActivity.makeIntent(EditTaskActivity.this, taskIndex);
+                startActivity(intent);
             }
         });
     }

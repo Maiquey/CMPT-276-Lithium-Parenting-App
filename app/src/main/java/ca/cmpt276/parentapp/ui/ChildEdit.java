@@ -52,6 +52,7 @@ public class ChildEdit extends AppCompatActivity {
     private ChildManager childManager;
     private WhosTurnManager whosTurnManager;
     private String taskFilePath;
+    private String taskHistoryFilePath;
     ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
@@ -64,6 +65,8 @@ public class ChildEdit extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         taskFilePath = getFilesDir().getPath().toString() + "/SaveTaskInfo3.json";
+        taskHistoryFilePath = getFilesDir().getPath().toString() + "/SaveTaskHistory.json";
+
         whosTurnManager = WhosTurnManager.getInstance();
         whosTurnManager.getTasks().clear();
         whosTurnManager.setTaskList(SaveLoadData.loadTaskList(taskFilePath));
@@ -215,6 +218,8 @@ public class ChildEdit extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                whosTurnManager.removeTaskDataByChildIndex(childIndex);
+                SaveLoadData.saveTaskHistoryList(taskHistoryFilePath, whosTurnManager.getTaskHistory());
                 String message = childManager.getChild(childIndex).getName() + getString(R.string.x_deleted);
                 childManager.fixQueueOrderIndices(childIndex);
                 childManager.removeChildAtIndex(childIndex);

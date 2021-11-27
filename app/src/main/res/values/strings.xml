@@ -114,5 +114,8 @@
     <string name="choose_from_gallery">Choose from gallery</string>
     <string name="no_children_configured_warning">No children configured, \ncannot assign to next child!</string>
     <string name="only_one_child_warning">Only one children present, \ncannot assign to next child!</string>
+    <string name="task_history">Task History</string>
+    <string name="task_completed_on">Task completed on:</string>
+    <string name="task_title_pre">"Task History - "</string>
 
 </resources>

@@ -203,5 +203,35 @@ public class SaveLoadData {
         }
     }
 
+    public static void saveTaskHistoryList(String taskHistoryPath, ArrayList<TaskData> taskHistory) {
+        try {
+            String jsonString = myGson.toJson(taskHistory);
+            FileWriter fileWriter = new FileWriter(taskHistoryPath);
+            fileWriter.write(jsonString);
+            fileWriter.close();
+        } catch (IOException exception) {
+            System.out.println("Exception " + exception.getMessage());
+        }
+    }
 
+    public static ArrayList<TaskData> loadTaskHistoryList(String taskHistoryPath) {
+        File inputTaskHistory = new File(taskHistoryPath);
+        try {
+            JsonElement taskHistoryElement = JsonParser.parseReader(new FileReader(inputTaskHistory));
+            JsonArray jsonArrayTask = taskHistoryElement.getAsJsonArray();
+            for (JsonElement task : jsonArrayTask) {
+                JsonObject taskObject = task.getAsJsonObject();
+                String dateAsString = taskObject.get("timeOfTask").getAsString();
+                LocalDateTime timeOfTask = LocalDateTime.parse(dateAsString);
+                int childIndex = taskObject.get("childIndex").getAsInt();
+                int taskIndex = taskObject.get("taskIndex").getAsInt();
+                TaskData taskData = new TaskData(timeOfTask, childIndex, taskIndex);
+                whosTurnManager.addTaskData(taskData);
+            }
+        } catch (FileNotFoundException e) {
+            //do nothing if no file found
+            Log.e("TAG", "history Json not found");
+        }
+        return whosTurnManager.getTaskHistory();
+    }
 }
