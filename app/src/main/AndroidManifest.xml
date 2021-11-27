@@ -17,7 +17,9 @@
         android:theme="@style/Theme.LithiumParentApp">
         <activity
             android:name=".ui.TakeBreath"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.Help"
             android:exported="false"

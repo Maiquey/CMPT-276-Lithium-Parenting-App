@@ -46,6 +46,18 @@ public class MainActivity extends AppCompatActivity {
         setupChildBtn();
         setupHelp();
         setupWhosTurn();
+        setupTakeBreath();
+    }
+
+    private void setupTakeBreath() {
+        Button takeBreathBtn = findViewById(R.id.btnBreath);
+        takeBreathBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = TakeBreath.makeTakeBreathIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
     }
 
 
