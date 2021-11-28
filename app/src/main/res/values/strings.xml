@@ -114,6 +114,7 @@
     <string name="choose_from_gallery">Choose from gallery</string>
     <string name="no_children_configured_warning">No children configured, \ncannot assign to next child!</string>
     <string name="only_one_child_warning">Only one children present, \ncannot assign to next child!</string>
+    <string name="take_breath">Take Breath</string>
     <string-array name="breath_array">
         <item>1</item>
         <item>2</item>

@@ -108,8 +108,9 @@
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_marginBottom="12dp"
-        android:text="Take Breath"
-
+        android:text="@string/take_breath"
+        android:textAllCaps="false"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/helpbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
