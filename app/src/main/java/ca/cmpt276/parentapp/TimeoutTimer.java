@@ -47,7 +47,6 @@ import java.util.Locale;
  *
  * Uses AlarmManager to activate a Broadcast Receiver that creates a notification channel when timer is completed.
  * Notification channel is built with text, ringtone and vibration.
- *
  */
 public class TimeoutTimer extends AppCompatActivity {
     public static final String START_TIME_IN_MILLIS = "startTimeInMillis";
