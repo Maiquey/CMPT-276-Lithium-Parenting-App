@@ -544,7 +544,6 @@ public class TimeoutTimer extends AppCompatActivity {
                     btn5Min.setVisibility(View.INVISIBLE);
                     btn10Min.setVisibility(View.INVISIBLE);
                 }
-
                 btnStart.setVisibility(View.VISIBLE);
             }
 
@@ -634,5 +633,6 @@ public class TimeoutTimer extends AppCompatActivity {
         } else {
             progressBar.setVisibility(View.INVISIBLE);
         }
+        updateUI();
     }
 }
