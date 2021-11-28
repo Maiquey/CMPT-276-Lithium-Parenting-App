@@ -28,6 +28,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
+
 import java.util.Locale;
 
 /**
@@ -64,8 +66,11 @@ public class TimeoutTimer extends AppCompatActivity {
     public static final String NUM_PROGRESS = "NUM_PROGRESS";
     public static final String MILLIES_IN_FUTURE = "MILLIES_IN_FUTURE";
     public static final String MILLIES_INTERVAL = "MILLIES_INTERVAL";
+    public static final String SPEED_FACTOR = "SPEED_FACTOR";
+    public static final String LESS_THAN_ONE = "LESS THAN ONE";
 
     private TextView txtCountDownTimer;
+    private TextView txtSpeed;
     private EditText txtEnterTime;
     private Button btnSet;
     private Button btnStart;
@@ -84,9 +89,10 @@ public class TimeoutTimer extends AppCompatActivity {
     private long setStartTime;
     private AlarmManager alarmManager;
     private ProgressBar progressBar;
-    private int speedFactor = 1;
-    private long milliesInFuture = 0;
-    private long milliesInterval = 0;
+    private int speedFactor;
+    private long milliesInFuture;
+    private long milliesInterval;
+    private boolean lessThanOne;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TimeoutTimer.class);
@@ -100,35 +106,92 @@ public class TimeoutTimer extends AppCompatActivity {
                 return true;
             case R.id.speed25:
                 speedFactor = 4;
+                lessThanOne = true;
+                txtSpeed.setText("Speed: 25%");
                 milliesInFuture = timeLeftInMillies*speedFactor;
                 milliesInterval = ONE_SECOND*speedFactor;
+                restartAlarm();
+                saveTimer();
+                loadTimer();
+                return true;
             case R.id.speed50:
                 speedFactor = 2;
+                lessThanOne = true;
+                txtSpeed.setText("Speed: 50%");
                 milliesInFuture = timeLeftInMillies*speedFactor;
                 milliesInterval = ONE_SECOND*speedFactor;
+                restartAlarm();
+                saveTimer();
+                loadTimer();
+                return true;
             case R.id.speed75:
                 speedFactor = (4/3);
+                lessThanOne = true;
+                txtSpeed.setText("Speed: 75%");
                 milliesInFuture = timeLeftInMillies*speedFactor;
                 milliesInterval = ONE_SECOND*speedFactor;
+                restartAlarm();
+                saveTimer();
+                loadTimer();
+                return true;
             case R.id.speed100:
                 speedFactor = 1;
-                milliesInFuture = timeLeftInMillies/speedFactor;
-                milliesInterval = ONE_SECOND/speedFactor;
+                lessThanOne = false;
+                txtSpeed.setText("Speed: 100%");
+                milliesInFuture = timeLeftInMillies;
+                milliesInterval = ONE_SECOND;
+                restartAlarm();
+                saveTimer();
+                loadTimer();
+                return true;
             case R.id.speed200:
                 speedFactor = 2;
+                lessThanOne = false;
+                txtSpeed.setText("Speed: 200%");
                 milliesInFuture = timeLeftInMillies/speedFactor;
                 milliesInterval = ONE_SECOND/speedFactor;
+                restartAlarm();
+                saveTimer();
+                loadTimer();
+                return true;
             case R.id.speed300:
                 speedFactor = 3;
+                lessThanOne = false;
+                txtSpeed.setText("Speed: 300%");
                 milliesInFuture = timeLeftInMillies/speedFactor;
                 milliesInterval = ONE_SECOND/speedFactor;
+                restartAlarm();
+                saveTimer();
+                loadTimer();
+                return true;
             case R.id.speed400:
                 speedFactor = 4;
+                lessThanOne = false;
+                txtSpeed.setText("Speed: 400%");
                 milliesInFuture = timeLeftInMillies/speedFactor;
                 milliesInterval = ONE_SECOND/speedFactor;
+                restartAlarm();
+
+                saveTimer();
+                loadTimer();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void restartAlarm() {
+        if (isTimerRunning) {
+            Intent intent = new Intent(TimeoutTimer.this, NotificationReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(TimeoutTimer.this,
+                    0,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmManager.cancel(pendingIntent);
+            long alarmTime = System.currentTimeMillis() + milliesInFuture;
+            scheduleNotification(getNotification(getString(R.string.notification_content)), alarmTime);
+        }
+        endTime = System.currentTimeMillis() + milliesInFuture;
     }
 
     private int numProgress = 0;
@@ -151,6 +214,8 @@ public class TimeoutTimer extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         txtEnterTime = findViewById(R.id.txtEnterTime);
+        txtSpeed = findViewById(R.id.txtSpeed);
+        txtSpeed.setText("Speed: 100%");
         txtCountDownTimer = findViewById(R.id.txtCountDown);
         btnSet = findViewById(R.id.btnSetTime);
         btnStart = findViewById(R.id.btnStart);
@@ -166,9 +231,13 @@ public class TimeoutTimer extends AppCompatActivity {
         startTimeInMillies = ONE_MINUTE;
         timeLeftInMillies = startTimeInMillies;
 
-
-
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        speedFactor = 1;
+        lessThanOne = false;
+
+        milliesInFuture = timeLeftInMillies;
+        milliesInterval = ONE_SECOND;
 
         btnSet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,14 +267,12 @@ public class TimeoutTimer extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long alarmTime = System.currentTimeMillis() + timeLeftInMillies;
+                long alarmTime = System.currentTimeMillis() + milliesInFuture;
                 scheduleNotification(getNotification(getString(R.string.notification_content)), alarmTime);
                 updateCountdownText();
                 updateProgressBar(numProgress);
                 progressBar.setVisibility(View.VISIBLE);
-                milliesInFuture = startTimeInMillies;
-                milliesInFuture = ONE_SECOND;
-                startTimer();
+                startTimer(milliesInFuture, milliesInterval);
             }
         });
 
@@ -274,8 +341,11 @@ public class TimeoutTimer extends AppCompatActivity {
     private void updateProgressBar(int updateProgress) {
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setProgress(updateProgress);
-        progressBar.setMax((int)startTimeInMillies/1000 / speedFactor);
-
+        if (lessThanOne) {
+            progressBar.setMax((int)startTimeInMillies/1000 * speedFactor);
+        } else {
+            progressBar.setMax((int)startTimeInMillies/1000 / speedFactor);
+        }
     }
 
     private void scheduleNotification(Notification notification, long alarmTime) {
@@ -319,13 +389,27 @@ public class TimeoutTimer extends AppCompatActivity {
         resetTimer();
     }
 
-    private void startTimer() {
-        endTime = System.currentTimeMillis() + timeLeftInMillies;
-        countDownTimer = new CountDownTimer(timeLeftInMillies/speedFactor, ONE_SECOND/speedFactor) {
+    private void startTimer(long updateMilliesLeft, long updateInterval) {
+        endTime = System.currentTimeMillis() + updateMilliesLeft;
+
+        countDownTimer = new CountDownTimer(updateMilliesLeft, updateInterval) {
             int numSecondsTotal = (int)startTimeInMillies/1000;
             @Override
             public void onTick(long l) {
-                timeLeftInMillies = l*speedFactor;
+                if (lessThanOne){
+                    timeLeftInMillies = l/(speedFactor);
+
+                } else {
+                    timeLeftInMillies = l*(speedFactor);
+                }
+                //timeLeftInMillies = l*(speedFactor);
+                if (lessThanOne) {
+                    milliesInFuture = timeLeftInMillies*speedFactor;
+                } else {
+                    milliesInFuture = timeLeftInMillies/speedFactor;
+                }
+
+                //Toast.makeText(TimeoutTimer.this, "speed factor: "+speedFactor, Toast.LENGTH_SHORT).show();
                 int secondsLeft = (int) (l/1000);
                 int progressPercentage = numSecondsTotal - (numSecondsTotal-secondsLeft);
                 numProgress = progressPercentage;
@@ -352,6 +436,14 @@ public class TimeoutTimer extends AppCompatActivity {
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
+        if (lessThanOne) {
+            milliesInFuture = timeLeftInMillies*speedFactor;
+            milliesInterval = ONE_SECOND*speedFactor;
+        } else {
+            milliesInFuture = timeLeftInMillies/speedFactor;
+            milliesInterval = ONE_SECOND/speedFactor;
+        }
+
         countDownTimer.cancel();
         isTimerRunning = false;
         updateUI();
@@ -359,7 +451,16 @@ public class TimeoutTimer extends AppCompatActivity {
 
     private void resetTimer() {
         timeLeftInMillies = startTimeInMillies;
+        if (lessThanOne) {
+            milliesInFuture = timeLeftInMillies;
+            milliesInterval = ONE_SECOND;
+        } else {
+            milliesInFuture = timeLeftInMillies;
+            milliesInterval = ONE_SECOND;
+        }
+        speedFactor = 1;
         numProgress = 0;
+        txtSpeed.setText("Speed: 100%");
         progressBar.setVisibility(View.INVISIBLE);
         Intent intent = new Intent(TimeoutTimer.this, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(TimeoutTimer.this,
@@ -476,6 +577,8 @@ public class TimeoutTimer extends AppCompatActivity {
         editor.putInt(NUM_PROGRESS, numProgress);
         editor.putLong(MILLIES_IN_FUTURE, milliesInFuture);
         editor.putLong(MILLIES_INTERVAL, milliesInterval);
+        editor.putInt(SPEED_FACTOR, speedFactor);
+        editor.putBoolean(LESS_THAN_ONE, lessThanOne);
         editor.apply();
     }
 
@@ -496,8 +599,11 @@ public class TimeoutTimer extends AppCompatActivity {
         timeLeftInMillies = preferences.getLong(MILLIS_LEFT, ONE_MINUTE);
         isTimerRunning = preferences.getBoolean(IS_TIMER_RUNNING, false);
         numProgress = preferences.getInt(NUM_PROGRESS, 0);
-        milliesInFuture = preferences.getLong(MILLIES_IN_FUTURE, 0);
-        milliesInterval = preferences.getLong(MILLIES_INTERVAL, 0);
+        milliesInFuture = preferences.getLong(MILLIES_IN_FUTURE, ONE_MINUTE);
+        milliesInterval = preferences.getLong(MILLIES_INTERVAL, ONE_SECOND);
+        speedFactor = preferences.getInt(SPEED_FACTOR, 1);
+        lessThanOne = preferences.getBoolean(LESS_THAN_ONE, false);
+        //Toast.makeText(TimeoutTimer.this, "speed factor" + speedFactor, Toast.LENGTH_SHORT).show();
         updateUI();
         updateCountdownText();
 
@@ -505,16 +611,26 @@ public class TimeoutTimer extends AppCompatActivity {
 
         if (isTimerRunning) {
             endTime = preferences.getLong(END_TIME, 0);
-            timeLeftInMillies = endTime - System.currentTimeMillis();
-            //Toast.makeText(TimeoutTimer.this,"endtime is "+endTime, Toast.LENGTH_SHORT).show();
-            if (timeLeftInMillies < 0) {
+            if (lessThanOne) {
+                timeLeftInMillies = (endTime - System.currentTimeMillis()) / speedFactor;
+            } else {
+                //Toast.makeText(TimeoutTimer.this, "timeLeft " + (endTime - System.currentTimeMillis())/1000, Toast.LENGTH_SHORT).show();
+                timeLeftInMillies = (endTime - System.currentTimeMillis()) * speedFactor;
+            }
+
+            if (lessThanOne) {
+                milliesInFuture = timeLeftInMillies * speedFactor;
+            } else {
+                milliesInFuture = timeLeftInMillies / speedFactor;
+            }
+
+            if (milliesInFuture < 0) {
                 timeLeftInMillies = 0;
                 isTimerRunning = false;
                 updateUI();
                 updateCountdownText();
             } else {
-
-                startTimer();
+                startTimer(milliesInFuture, milliesInterval);
             }
         } else {
             progressBar.setVisibility(View.INVISIBLE);
