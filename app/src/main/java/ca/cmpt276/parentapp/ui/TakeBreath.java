@@ -85,6 +85,10 @@ public class TakeBreath extends AppCompatActivity {
         breathState = newState;
     }
 
+    public static Intent makeIntent (Context context) {
+        Intent intent = new Intent(context, TakeBreath.class);
+        return intent;
+    }
     private void waiting() {
         breathBtn.setText(R.string.in);
         inhaleAnim.clearAnimation();
@@ -292,8 +296,4 @@ public class TakeBreath extends AppCompatActivity {
         });
     }
 
-    public static Intent makeTakeBreathIntent (Context context) {
-        Intent intent = new Intent(context, TakeBreath.class);
-        return intent;
-    }
 }

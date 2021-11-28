@@ -37,8 +37,8 @@
 
     <Spinner
         android:id="@+id/breath_spinner"
-        android:layout_width="179dp"
-        android:layout_height="56dp"
+        android:layout_width="131dp"
+        android:layout_height="52dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
@@ -86,6 +86,7 @@
         android:id="@+id/num_remaining"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="@string/_2"
         android:textAlignment="center"
         android:textColor="#000000"
@@ -93,12 +94,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/breaths_remaining"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.241" />
+        app:layout_constraintVertical_bias="0.24" />
 
     <TextView
         android:id="@+id/together"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="@string/breath_together"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -106,7 +108,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/num_remaining"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.241" />
+        app:layout_constraintVertical_bias="0.24" />
 
     <Button
         android:id="@+id/begin_btn"
@@ -130,10 +132,10 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.182"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.241" />
+        app:layout_constraintVertical_bias="0.24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

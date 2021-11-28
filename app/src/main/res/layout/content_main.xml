@@ -14,24 +14,24 @@
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btnTimerPage"
         android:layout_width="200dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="20dp"
         android:background='@drawable/custom_button'
         android:text="@string/Timeout_Timer"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/helpbtn"
+        app:layout_constraintBottom_toTopOf="@+id/btnBreath"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
@@ -40,22 +40,22 @@
         android:id="@+id/coinFlipButton"
         android:layout_width="200dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="16dp"
-        android:background='@drawable/custom_button'
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custom_button"
         android:text="@string/flip_a_coin"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btnTimerPage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/nav_host_fragment_content_main" />
 
     <Button
         android:id="@+id/whosturnBtn"
         android:layout_width="200dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="20dp"
         android:background='@drawable/custom_button'
         android:text="@string/who_s_turn"
         android:textAllCaps="false"
@@ -63,7 +63,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/coinFlipButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/nav_host_fragment_content_main" />
 
     <Button
@@ -105,10 +105,13 @@
 
     <Button
         android:id="@+id/btnBreath"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
         android:text="Take Breath"
+
+        app:layout_constraintBottom_toTopOf="@+id/helpbtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

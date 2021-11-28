@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         takeBreathBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = TakeBreath.makeTakeBreathIntent(MainActivity.this);
+                Intent intent = TakeBreath.makeIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
