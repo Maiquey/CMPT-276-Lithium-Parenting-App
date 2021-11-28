@@ -1,5 +1,6 @@
 package ca.cmpt276.parentapp.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = TakeBreath.makeIntent(MainActivity.this);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -116,4 +118,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //exiting from takebreath
+    public static Intent makeIntent (Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
 }

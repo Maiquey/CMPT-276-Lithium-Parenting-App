@@ -198,7 +198,7 @@ public class TakeBreath extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                numOfBreaths = 3;
+                numOfBreaths = 2;
                 saveCount();
             }
         });
@@ -264,6 +264,7 @@ public class TakeBreath extends AppCompatActivity {
         breathBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                //begin to inhale
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     if(breathState == State.WAITING) {
                         switchState(State.INHALING);
@@ -272,6 +273,7 @@ public class TakeBreath extends AppCompatActivity {
                     }
                 }
 
+                //for inhaling
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     if(event.getEventTime() - event.getDownTime() < 3000) {
                         if (breathState == State.INHALING) {
@@ -282,6 +284,7 @@ public class TakeBreath extends AppCompatActivity {
                         }
                     }
 
+                    //for exhaling
                     else {
                         if(breathState == State.INHALING) {
                             switchState(State.EXHALING);
@@ -294,6 +297,17 @@ public class TakeBreath extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+
+    //takes to the main activity when user presses back button.
+    @Override
+    public void onBackPressed(){
+
+        exhaleMusic.release();
+        Intent intent = MainActivity.makeIntent(TakeBreath.this);
+        startActivity(intent);
+        TakeBreath.this.finish();
     }
 
 }

@@ -25,7 +25,7 @@
         android:id="@+id/btnTimerPage"
         android:layout_width="200dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="8dp"
         android:background='@drawable/custom_button'
         android:text="@string/Timeout_Timer"
         android:textAllCaps="false"
@@ -40,7 +40,7 @@
         android:id="@+id/coinFlipButton"
         android:layout_width="200dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/custom_button"
         android:text="@string/flip_a_coin"
         android:textAllCaps="false"
@@ -55,7 +55,7 @@
         android:id="@+id/whosturnBtn"
         android:layout_width="200dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="12dp"
         android:background='@drawable/custom_button'
         android:text="@string/who_s_turn"
         android:textAllCaps="false"
@@ -107,7 +107,7 @@
         android:id="@+id/btnBreath"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="12dp"
         android:text="Take Breath"
 
         app:layout_constraintBottom_toTopOf="@+id/helpbtn"
