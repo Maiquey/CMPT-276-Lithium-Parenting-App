@@ -321,11 +321,8 @@ public class TakeBreath extends AppCompatActivity {
     //takes to the main activity when user presses back button.
     @Override
     public void onBackPressed(){
-
         exhaleMusic.release();
-        Intent intent = MainActivity.makeIntent(TakeBreath.this);
-        startActivity(intent);
-        TakeBreath.this.finish();
+        finish();
     }
 
 }
