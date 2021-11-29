@@ -1,5 +1,6 @@
 package ca.cmpt276.parentapp.ui;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -43,9 +45,24 @@ public class TakeBreath extends AppCompatActivity {
     private ImageView exhaleAnim;
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_breath);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("Take Breath");
+        ab.setDisplayHomeAsUpEnabled(true);
 
         displayBreaths = findViewById(R.id.num_remaining);
         displayCurrentState = findViewById(R.id.current_state);
