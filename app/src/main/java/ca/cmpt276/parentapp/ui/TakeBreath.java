@@ -268,12 +268,8 @@ public class TakeBreath extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     if(breathState == State.WAITING) {
                         switchState(State.INHALING);
-                        if(event.getEventTime()>3000){
-                            handler.postDelayed(hintRelease,10000);
-                        }
-                        if(event.getEventTime()==3000){
-                            handler.postDelayed(changeButton,3000);
-                        }
+                        handler.postDelayed(hintRelease,10000);
+                        handler.postDelayed(changeButton,3000);
                     }
                 }
 
