@@ -33,6 +33,19 @@ public class TakeBreath extends AppCompatActivity {
     private TextView displayBreaths;
     private TextView displayCurrentState;
     private Spinner spinner;
+    private TextView enterNumBreathsPrompt;
+    private TextView breathHelp;
+    private TextView breathInstruction;
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
 
     public enum State {
         WAITING, INHALING, EXHALING, COMPLETE,
@@ -68,6 +81,9 @@ public class TakeBreath extends AppCompatActivity {
         displayCurrentState = findViewById(R.id.current_state);
         beginBtn = findViewById(R.id.begin_btn);
         breathBtn = findViewById(R.id.breath_btn);
+        enterNumBreathsPrompt = findViewById(R.id.tv_enter_num_of_breaths);
+        breathHelp = findViewById(R.id.tv_breath_help);
+        breathInstruction = findViewById(R.id.tv_breath_instructions);
 
         inhaleAnim = findViewById(R.id.inhale_anim);
         exhaleAnim = findViewById(R.id.exhale_anim);
@@ -88,14 +104,17 @@ public class TakeBreath extends AppCompatActivity {
                 break;
             case EXHALING:
                 displayCurrentState.setText(R.string.exhaling);
+                exhaleHelp();
                 exhaling();
                 break;
             case INHALING:
                 displayCurrentState.setText(R.string.inhaling);
+                inhaleHelp();
                 inhaling();
                 break;
             case COMPLETE:
                 displayCurrentState.setText(R.string.complete);
+                completeHelp();
                 breathBtn.setText(R.string.good_job);
                 break;
         }
@@ -110,7 +129,7 @@ public class TakeBreath extends AppCompatActivity {
         breathBtn.setText(R.string.in);
         inhaleAnim.clearAnimation();
         displayBreaths.setText(""+numOfBreaths);
-        Toast.makeText(TakeBreath.this, getString(R.string.breath_help), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(TakeBreath.this, getString(R.string.breath_help), Toast.LENGTH_SHORT).show();
     }
 
     private void inhaling() {
@@ -125,7 +144,7 @@ public class TakeBreath extends AppCompatActivity {
         }
         inhaleMusic = MediaPlayer.create(TakeBreath.this, R.raw.inhale_music);
         inhaleMusic.start();
-        Toast.makeText(TakeBreath.this, R.string.breathe_in, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(TakeBreath.this, R.string.breathe_in, Toast.LENGTH_SHORT).show();
     }
 
     private void exhaling() {
@@ -140,7 +159,7 @@ public class TakeBreath extends AppCompatActivity {
         exhaleMusic = MediaPlayer.create(TakeBreath.this, R.raw.exhale_music);
         exhaleMusic.start();
         breathBtn.setText(R.string.out);
-        Toast.makeText(TakeBreath.this, R.string.breath_out, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(TakeBreath.this, R.string.breath_out, Toast.LENGTH_SHORT).show();
     }
 
     private void initiateSpinner() {
@@ -237,9 +256,11 @@ public class TakeBreath extends AppCompatActivity {
         beginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TakeBreath.this, getString(R.string.breath_help), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TakeBreath.this, getString(R.string.breath_help), Toast.LENGTH_SHORT).show();
+                inhaleHelp();
                 beginBtn.setVisibility(View.INVISIBLE);
                 spinner.setVisibility(View.INVISIBLE);
+                enterNumBreathsPrompt.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -260,6 +281,16 @@ public class TakeBreath extends AppCompatActivity {
                 else if(numOfBreaths == 0){
                     if (breathState == State.EXHALING) {
                         switchState(State.COMPLETE);
+                    }
+                }
+            }
+        };
+        final Runnable inhaleHint = new Runnable() {
+            @Override
+            public void run() {
+                if(numOfBreaths > 0){
+                    if (breathState == State.WAITING) {
+                        inhaleHelp();
                     }
                 }
             }
@@ -307,6 +338,7 @@ public class TakeBreath extends AppCompatActivity {
                         if(breathState == State.INHALING) {
                             switchState(State.EXHALING);
                             handler.postDelayed(afterExhaling,3000);
+                            handler.postDelayed(inhaleHint,10000);
                             handler.removeCallbacks(hintRelease);
                         }
                     }
@@ -317,6 +349,25 @@ public class TakeBreath extends AppCompatActivity {
         });
     }
 
+    private void inhaleHelp(){
+        breathHelp.setText("Breathe in");
+        breathInstruction.setText("(Press and hold button)");
+    }
+
+    private void exhaleHelp(){
+        breathHelp.setText("Breathe out");
+        breathInstruction.setText("");
+    }
+
+    private void completeHelp(){
+        breathHelp.setText("Breaths Complete");
+        breathInstruction.setText("");
+    }
+
+    private void clearHelp(){
+        breathHelp.setText("");
+        breathInstruction.setText("");
+    }
 
     //takes to the main activity when user presses back button.
     @Override
