@@ -333,6 +333,7 @@ public class TakeBreath extends AppCompatActivity {
                             inhaleMusic.release();
                             handler.removeCallbacks(hintRelease);
                             handler.removeCallbacks(changeButton);
+
                         }
                     }
 
