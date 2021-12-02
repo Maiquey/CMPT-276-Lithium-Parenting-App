@@ -114,6 +114,41 @@
     <string name="choose_from_gallery">Choose from gallery</string>
     <string name="no_children_configured_warning">No children configured, \ncannot assign to next child!</string>
     <string name="only_one_child_warning">Only one children present, \ncannot assign to next child!</string>
+    <string name="take_breath">Take Breath</string>
+    <string-array name="breath_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+    <string name="waiting">Waiting</string>
+    <string name="exhaling">Exhaling</string>
+    <string name="inhaling">Inhaling</string>
+    <string name="complete">Complete</string>
+    <string name="good_job">Good Job!</string>
+    <string name="in">In</string>
+    <string name="out">Out</string>
+    <string name="breath_help">Keep Holding Button and Inhale</string>
+    <string name="breathe_in">Breathe In</string>
+    <string name="breath_out">Breathe Out</string>
+    <string name="release_help">Release Button and Exhale</string>
+    <string name="state">Let\'s begin</string>
+    <string name="breaths_remaining">Let us take\t</string>
+    <string name="breath_together">\tbreath together</string>
+    <string name="_2">2</string>
+    <string name="begin">Begin</string>
+    <string name="breath_setup_directions">Enter Number of Breaths to Take</string>
+    <string name="press_and_hold_button">(Press and hold button)</string>
+    <string name="breaths_complete">Breaths Complete</string>
+    <string name="let_us_take_x">"Let us take "</string>
+    <string name="one_breath_together">" breath together"</string>
+    <string name="several_breaths_together">" breaths together"</string>
     <string name="task_history">Task History</string>
     <string name="task_completed_on">Task completed on:</string>
     <string name="task_title_pre">"Task History - "</string>
