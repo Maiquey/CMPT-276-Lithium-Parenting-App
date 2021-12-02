@@ -144,5 +144,13 @@
     <string name="_2">2</string>
     <string name="begin">Begin</string>
     <string name="breath_setup_directions">Enter Number of Breaths to Take</string>
+    <string name="press_and_hold_button">(Press and hold button)</string>
+    <string name="breaths_complete">Breaths Complete</string>
+    <string name="let_us_take_x">"Let us take "</string>
+    <string name="one_breath_together">" breath together"</string>
+    <string name="several_breaths_together">" breaths together"</string>
+    <string name="task_history">Task History</string>
+    <string name="task_completed_on">Task completed on:</string>
+    <string name="task_title_pre">"Task History - "</string>
 
 </resources>

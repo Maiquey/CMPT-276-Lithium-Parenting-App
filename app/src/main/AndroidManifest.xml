@@ -16,6 +16,10 @@
         android:screenOrientation="portrait"
         android:theme="@style/Theme.LithiumParentApp">
         <activity
+            android:name=".ui.TaskHistoryActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.TakeBreath"
             android:exported="false"
             android:parentActivityName=".ui.MainActivity"
@@ -88,7 +92,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <receiver android:name=".NotificationReceiver" />
     </application>
 
