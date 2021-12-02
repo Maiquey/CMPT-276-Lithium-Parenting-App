@@ -274,6 +274,7 @@ public class TakeBreath extends AppCompatActivity {
                         }
                         if(event.getEventTime()==3000){
                             handler.postDelayed(changeButton,3000);
+
                         }
                     }
                 }
