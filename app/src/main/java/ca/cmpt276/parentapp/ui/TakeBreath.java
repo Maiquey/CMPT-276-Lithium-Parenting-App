@@ -25,6 +25,14 @@ import android.widget.Toast;
 
 import ca.cmpt276.parentapp.R;
 
+/**
+ * Take Breath Class:
+ *
+ * Manages States for Taking Breath
+ * Allows user to breathe in and out.
+ * Displays animation and plays sound for inhaling and exhaling.
+ */
+
 public class TakeBreath extends AppCompatActivity {
 
     private static int numOfBreaths;
