@@ -128,7 +128,7 @@ public class TakeBreath extends AppCompatActivity {
     private void waiting() {
         breathBtn.setText(R.string.in);
         inhaleAnim.clearAnimation();
-        displayBreaths.setText(""+numOfBreaths);
+        updateBreathsDisplay();
 //        Toast.makeText(TakeBreath.this, getString(R.string.breath_help), Toast.LENGTH_SHORT).show();
     }
 
@@ -180,56 +180,9 @@ public class TakeBreath extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    numOfBreaths = 1;
-                    saveCount();
-                    displayBreaths.setText(""+numOfBreaths);
-                }
-                if (position == 1) {
-                    numOfBreaths = 2;
-                    saveCount();
-                    displayBreaths.setText(""+numOfBreaths);
-                }
-                if (position == 2) {
-                    numOfBreaths = 3;
-                    saveCount();
-                    displayBreaths.setText(""+numOfBreaths);
-                }
-                if (position == 3) {
-                    numOfBreaths = 4;
-                    saveCount();
-                    displayBreaths.setText(""+numOfBreaths);
-                }
-                if (position == 4) {
-                    numOfBreaths = 5;
-                    saveCount();
-                    displayBreaths.setText(""+numOfBreaths);
-                }
-                if (position == 5) {
-                    numOfBreaths = 6;
-                    saveCount();
-                    displayBreaths.setText(""+numOfBreaths);
-                }
-                if (position == 6) {
-                    numOfBreaths = 7;
-                    saveCount();
-                    displayBreaths.setText(""+numOfBreaths);
-                }
-                if (position == 7) {
-                    numOfBreaths = 8;
-                    saveCount();
-                    displayBreaths.setText(""+numOfBreaths);
-                }
-                if (position == 8) {
-                    numOfBreaths = 9;
-                    saveCount();
-                    displayBreaths.setText(""+numOfBreaths);
-                }
-                if (position == 9) {
-                    numOfBreaths = 10;
-                    saveCount();
-                    displayBreaths.setText(""+numOfBreaths);
-                }
+                numOfBreaths = position + 1;
+                saveCount();
+                updateBreathsDisplay();
             }
 
             @Override
@@ -271,7 +224,7 @@ public class TakeBreath extends AppCompatActivity {
             @Override
             public void run() {
                 numOfBreaths--;
-                displayBreaths.setText(""+numOfBreaths);
+                updateBreathsDisplay();
                 if(numOfBreaths > 0){
                     if (breathState == State.EXHALING) {
                         switchState(State.WAITING);
@@ -364,9 +317,12 @@ public class TakeBreath extends AppCompatActivity {
         breathInstruction.setText("");
     }
 
-    private void clearHelp(){
-        breathHelp.setText("");
-        breathInstruction.setText("");
+    private void updateBreathsDisplay(){
+        if (numOfBreaths == 1){
+            displayBreaths.setText("Let us take " + numOfBreaths + " breath together");
+        } else {
+            displayBreaths.setText("Let us take " + numOfBreaths + " breaths together");
+        }
     }
 
     //takes to the main activity when user presses back button.
