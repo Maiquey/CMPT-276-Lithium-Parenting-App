@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/list_gradient">
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="327dp"
+        android:layout_height="327dp"
+        android:indeterminateOnly="false"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        app:layout_constraintBottom_toBottomOf="@+id/txtCountDown"
+        app:layout_constraintEnd_toEndOf="@+id/txtCountDown"
+        app:layout_constraintStart_toStartOf="@+id/txtCountDown"
+        app:layout_constraintTop_toTopOf="@+id/txtCountDown"
+        tools:progress="100" />
     <EditText
         android:id="@+id/txtEnterTime"
         android:layout_width="wrap_content"
@@ -188,12 +199,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Space
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="306dp" />
-
-    <Space
         android:id="@+id/space5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -210,6 +215,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/space2" />
+
+    <TextView
+        android:id="@+id/txtSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="speed: "
+        app:layout_constraintEnd_toStartOf="@+id/btnSet10Min"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toEndOf="@+id/btnSet5Min"
+        app:layout_constraintTop_toBottomOf="@+id/btnSet10Min" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
