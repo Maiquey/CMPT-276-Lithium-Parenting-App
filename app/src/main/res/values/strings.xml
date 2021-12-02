@@ -152,5 +152,6 @@
     <string name="task_history">Task History</string>
     <string name="task_completed_on">Task completed on:</string>
     <string name="task_title_pre">"Task History - "</string>
+    <string name="speed">speed:</string>
 
 </resources>
