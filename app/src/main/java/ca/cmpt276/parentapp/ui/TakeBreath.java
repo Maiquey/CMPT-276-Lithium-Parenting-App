@@ -37,16 +37,6 @@ public class TakeBreath extends AppCompatActivity {
     private TextView breathHelp;
     private TextView breathInstruction;
 
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-
     public enum State {
         WAITING, INHALING, EXHALING, COMPLETE,
     }
@@ -59,13 +49,11 @@ public class TakeBreath extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -129,7 +117,6 @@ public class TakeBreath extends AppCompatActivity {
         breathBtn.setText(R.string.in);
         inhaleAnim.clearAnimation();
         updateBreathsDisplay();
-//        Toast.makeText(TakeBreath.this, getString(R.string.breath_help), Toast.LENGTH_SHORT).show();
     }
 
     private void inhaling() {
@@ -144,7 +131,6 @@ public class TakeBreath extends AppCompatActivity {
         }
         inhaleMusic = MediaPlayer.create(TakeBreath.this, R.raw.inhale_music);
         inhaleMusic.start();
-//        Toast.makeText(TakeBreath.this, R.string.breathe_in, Toast.LENGTH_SHORT).show();
     }
 
     private void exhaling() {
@@ -159,7 +145,6 @@ public class TakeBreath extends AppCompatActivity {
         exhaleMusic = MediaPlayer.create(TakeBreath.this, R.raw.exhale_music);
         exhaleMusic.start();
         breathBtn.setText(R.string.out);
-//        Toast.makeText(TakeBreath.this, R.string.breath_out, Toast.LENGTH_SHORT).show();
     }
 
     private void initiateSpinner() {
@@ -209,7 +194,6 @@ public class TakeBreath extends AppCompatActivity {
         beginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(TakeBreath.this, getString(R.string.breath_help), Toast.LENGTH_SHORT).show();
                 inhaleHelp();
                 beginBtn.setVisibility(View.INVISIBLE);
                 spinner.setVisibility(View.INVISIBLE);
@@ -309,29 +293,28 @@ public class TakeBreath extends AppCompatActivity {
     }
 
     private void inhaleHelp(){
-        breathHelp.setText("Breathe in");
-        breathInstruction.setText("(Press and hold button)");
+        breathHelp.setText(R.string.breathe_in);
+        breathInstruction.setText(R.string.press_and_hold_button);
     }
 
     private void exhaleHelp(){
-        breathHelp.setText("Breathe out");
+        breathHelp.setText(R.string.breath_out);
         breathInstruction.setText("");
     }
 
     private void completeHelp(){
-        breathHelp.setText("Breaths Complete");
+        breathHelp.setText(R.string.breaths_complete);
         breathInstruction.setText("");
     }
 
     private void updateBreathsDisplay(){
         if (numOfBreaths == 1){
-            displayBreaths.setText("Let us take " + numOfBreaths + " breath together");
+            displayBreaths.setText("" + getString(R.string.let_us_take_x) + numOfBreaths + getString(R.string.one_breath_together));
         } else {
-            displayBreaths.setText("Let us take " + numOfBreaths + " breaths together");
+            displayBreaths.setText("" + getString(R.string.let_us_take_x) + numOfBreaths + getString(R.string.several_breaths_together));
         }
     }
 
-    //takes to the main activity when user presses back button.
     @Override
     public void onBackPressed(){
         exhaleMusic.release();
