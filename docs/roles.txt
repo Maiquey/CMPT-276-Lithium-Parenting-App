@@ -11,3 +11,10 @@ Jan - Scrum Master
 Sam - Repo Manager
 Hitesh - Product Owner
 Janit - Team Member
+
+Iteration 3 Roles:
+
+Jan - Product Owner
+Sam - Team Member
+Hitesh - Repo Manager
+Janit - Scrum Master
