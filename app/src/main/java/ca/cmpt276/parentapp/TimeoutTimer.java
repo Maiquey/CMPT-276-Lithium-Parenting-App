@@ -606,6 +606,10 @@ public class TimeoutTimer extends AppCompatActivity {
         updateUI();
         updateCountdownText();
         updateProgressBar(numProgress);
+        progressBar.setProgress((int)(startTimeInMillies - (startTimeInMillies - timeLeftInMillies)) / speedFactor);
+        if (lessThanOne) {
+            progressBar.setProgress((int)(startTimeInMillies - (startTimeInMillies - timeLeftInMillies)) * speedFactor);
+        }
         txtSpeed.setText(speedString);
         if (isTimerRunning) {
             endTime = preferences.getLong(END_TIME, 0);
