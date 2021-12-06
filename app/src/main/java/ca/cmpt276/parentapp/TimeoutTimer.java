@@ -350,9 +350,9 @@ public class TimeoutTimer extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setProgress(updateProgress);
         if (lessThanOne) {
-            progressBar.setMax((int) startTimeInMillies / ONE_SECOND * speedFactor);
+            progressBar.setMax((int) startTimeInMillies * speedFactor);
         } else {
-            progressBar.setMax((int) startTimeInMillies / ONE_SECOND / speedFactor);
+            progressBar.setMax((int) startTimeInMillies / speedFactor);
         }
     }
 
@@ -401,7 +401,7 @@ public class TimeoutTimer extends AppCompatActivity {
         endTime = System.currentTimeMillis() + updateMilliesLeft;
 
         countDownTimer = new CountDownTimer(updateMilliesLeft, updateInterval) {
-            int numSecondsTotal = (int) startTimeInMillies / ONE_SECOND;
+            int numSecondsTotal = (int) startTimeInMillies;
 
             @Override
             public void onTick(long l) {
@@ -417,7 +417,7 @@ public class TimeoutTimer extends AppCompatActivity {
                     milliesInFuture = timeLeftInMillies / speedFactor;
                 }
 
-                int secondsLeft = (int) (l / ONE_SECOND);
+                int secondsLeft = (int) (l);
                 int progressPercentage = numSecondsTotal - (numSecondsTotal - secondsLeft);
                 numProgress = progressPercentage;
                 updateProgressBar(progressPercentage);
